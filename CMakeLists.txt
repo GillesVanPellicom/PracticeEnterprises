@@ -17,6 +17,8 @@ set(SOURCE_FILES main.cpp
         gui/ChessWindow.h
         gui/ChessScene.cpp
         gui/ChessScene.h
+        Game.cpp
+        Game.h
 )
 add_executable(PracticeEnterprises ${SOURCE_FILES}
         lib/mini/ini.h)

@@ -783,6 +783,8 @@ PracticeEnterprises_autogen/timestamp: \
 	/Users/gvp/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/Darwin.cmake \
 	/Users/gvp/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake \
 	/Users/gvp/CLionProjects/PracticeEnterprises/CMakeLists.txt \
+	/Users/gvp/CLionProjects/PracticeEnterprises/Game.cpp \
+	/Users/gvp/CLionProjects/PracticeEnterprises/Game.h \
 	/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/3.27.8/CMakeCCompiler.cmake \
 	/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/3.27.8/CMakeCXXCompiler.cmake \
 	/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/3.27.8/CMakeSystem.cmake \

@@ -81,6 +81,14 @@ build CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.o: CXX_COMPILER__Pra
   OBJECT_DIR = CMakeFiles/PracticeEnterprises.dir
   OBJECT_FILE_DIR = CMakeFiles/PracticeEnterprises.dir/gui
 
+build CMakeFiles/PracticeEnterprises.dir/Game.cpp.o: CXX_COMPILER__PracticeEnterprises_unscanned_Debug /Users/gvp/CLionProjects/PracticeEnterprises/Game.cpp || cmake_object_order_depends_target_PracticeEnterprises
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/PracticeEnterprises.dir/Game.cpp.o.d
+  FLAGS = -g -std=gnu++2b -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1 -fcolor-diagnostics
+  INCLUDES = -isystem /Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/PracticeEnterprises_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtWidgets.framework/Headers -isystem /opt/homebrew/lib/QtGui.framework/Headers
+  OBJECT_DIR = CMakeFiles/PracticeEnterprises.dir
+  OBJECT_FILE_DIR = CMakeFiles/PracticeEnterprises.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PracticeEnterprises
@@ -89,7 +97,7 @@ build CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.o: CXX_COMPILER__Pra
 #############################################
 # Link the executable PracticeEnterprises
 
-build PracticeEnterprises: CXX_EXECUTABLE_LINKER__PracticeEnterprises_Debug CMakeFiles/PracticeEnterprises.dir/PracticeEnterprises_autogen/mocs_compilation.cpp.o CMakeFiles/PracticeEnterprises.dir/main.cpp.o CMakeFiles/PracticeEnterprises.dir/gui/ChessWindow.cpp.o CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.o | /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore || PracticeEnterprises_autogen PracticeEnterprises_autogen_timestamp_deps
+build PracticeEnterprises: CXX_EXECUTABLE_LINKER__PracticeEnterprises_Debug CMakeFiles/PracticeEnterprises.dir/PracticeEnterprises_autogen/mocs_compilation.cpp.o CMakeFiles/PracticeEnterprises.dir/main.cpp.o CMakeFiles/PracticeEnterprises.dir/gui/ChessWindow.cpp.o CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.o CMakeFiles/PracticeEnterprises.dir/Game.cpp.o | /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore || PracticeEnterprises_autogen PracticeEnterprises_autogen_timestamp_deps
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.2.sdk -mmacosx-version-min=14.1
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets  /opt/homebrew/lib/QtGui.framework/Versions/A/QtGui  /opt/homebrew/lib/QtCore.framework/Versions/A/QtCore  -framework IOKit  -framework DiskArbitration  -Xlinker -framework -Xlinker OpenGL  -Xlinker -framework -Xlinker AGL  -framework AppKit  -framework ImageIO  -framework Metal
   LINK_PATH = -iframework /opt/homebrew/lib
@@ -148,7 +156,7 @@ build PracticeEnterprises_autogen/timestamp PracticeEnterprises_autogen/mocs_com
 #############################################
 # Phony custom command for CMakeFiles/PracticeEnterprises_autogen_timestamp_deps
 
-build CMakeFiles/PracticeEnterprises_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/PracticeEnterprises_autogen_timestamp_deps: phony /opt/homebrew/share/qt/libexec/moc /opt/homebrew/share/qt/libexec/uic /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets
+build CMakeFiles/PracticeEnterprises_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/PracticeEnterprises_autogen_timestamp_deps: phony /opt/homebrew/share/qt/libexec/uic /opt/homebrew/share/qt/libexec/moc /opt/homebrew/lib/QtWidgets.framework/Versions/A/QtWidgets
 
 
 #############################################

@@ -4,7 +4,7 @@
 // ║                Handles the Qt scene, view and menubar.                           ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/11                                                        ║
-// ║ Version      : 1.0                                                               ║
+// ║ Version      : 1.1                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
@@ -17,45 +17,9 @@ ChessWindow::ChessWindow(QWidget *parent) : QMainWindow(parent) {
   setCentralWidget(view);
   createActions();
   createMenus();
-
+  show();
 }
 
-void ChessWindow::onFileQuit() {
-
-}
-
-void ChessWindow::onFileSave() {
-  std::cout << "Everything seems to be in order with save" << std::endl;
-}
-
-void ChessWindow::onFileLoad() {
-  std::cout << "Everything seems to be in order with load" << std::endl;
-
-}
-
-void ChessWindow::onVisualizeMoves() {
-
-}
-
-void ChessWindow::onVisualizeThreatenedEnemy() {
-
-}
-
-void ChessWindow::onVisualizeThreatenedPlayer() {
-
-}
-
-void ChessWindow::onGameUndo() {
-
-}
-
-void ChessWindow::onGameRedo() {
-
-}
-
-void ChessWindow::onFileNew() {
-
-}
 
 void ChessWindow::createMenus() {
   // Menu

@@ -342,6 +342,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/Users/gvp/CLionProjects/PracticeEnterprises/Game.h",
+			"MU",
+			"EWIEGA46WW/moc_Game.cpp",
+			null
+		],
+		[
 			"/Users/gvp/CLionProjects/PracticeEnterprises/gui/ChessScene.h",
 			"MU",
 			"DMHXEJ42XS/moc_ChessScene.cpp",
@@ -418,6 +424,7 @@
 	"SETTINGS_FILE" : "/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/PracticeEnterprises_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[ "/Users/gvp/CLionProjects/PracticeEnterprises/Game.cpp", "MU", null ],
 		[
 			"/Users/gvp/CLionProjects/PracticeEnterprises/gui/ChessScene.cpp",
 			"MU",

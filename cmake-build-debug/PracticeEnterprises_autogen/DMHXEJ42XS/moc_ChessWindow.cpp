@@ -111,15 +111,15 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChessWindowENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   68,    2, 0x08,    1 /* Private */,
-       3,    0,   69,    2, 0x08,    2 /* Private */,
-       4,    0,   70,    2, 0x08,    3 /* Private */,
-       5,    0,   71,    2, 0x08,    4 /* Private */,
-       6,    0,   72,    2, 0x08,    5 /* Private */,
-       7,    0,   73,    2, 0x08,    6 /* Private */,
-       8,    0,   74,    2, 0x08,    7 /* Private */,
-       9,    0,   75,    2, 0x08,    8 /* Private */,
-      10,    0,   76,    2, 0x08,    9 /* Private */,
+       1,    0,   68,    2, 0x09,    1 /* Protected */,
+       3,    0,   69,    2, 0x09,    2 /* Protected */,
+       4,    0,   70,    2, 0x09,    3 /* Protected */,
+       5,    0,   71,    2, 0x09,    4 /* Protected */,
+       6,    0,   72,    2, 0x09,    5 /* Protected */,
+       7,    0,   73,    2, 0x09,    6 /* Protected */,
+       8,    0,   74,    2, 0x09,    7 /* Protected */,
+       9,    0,   75,    2, 0x09,    8 /* Protected */,
+      10,    0,   76,    2, 0x09,    9 /* Protected */,
 
  // slots: parameters
     QMetaType::Void,
