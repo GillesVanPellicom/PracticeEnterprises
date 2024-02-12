@@ -8,6 +8,7 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include <QApplication>
+#include "lib/mini/ini.h"
 #include "Game.h"
 
 int main(int argc, char* argv[]) {

@@ -1,7 +1,6 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
 // ║ Name         : ChessScene.h                                                      ║
-// ║ Description  : eeefzeihfeukzfuizefhezihfzofueheeee.                              ║
-// ║                efzzefzefezffffffffffffffffffffffffffff                           ║
+// ║ Description  : Definitions of the QGraphicsScene                                 ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/11                                                        ║
 // ║ Version      : 1.0                                                               ║
@@ -14,6 +13,11 @@
 #include <QColor>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <iostream>
+#include <regex>
+
+#include "../lib/mini/ini.h"
+
 
 class ChessScene : public QGraphicsScene {
  Q_OBJECT
@@ -33,7 +37,30 @@ class ChessScene : public QGraphicsScene {
   int cellWidth;
   int boardMargin;
 
+  /**
+   * Reads out colorscheme.ini and populates variables.
+   */
+  void readColorConfig();
+
+  /**
+   * Converts a hex color code as a string to QColor object.
+   * @param hex input string
+   * @return QColor object
+   */
+  QColor hexstrToQColor(std::string& hex);
+
+  /**
+   * Draws a specific tile.
+   * Calculates color of tile based on location.
+   * @param x
+   * @param y
+   */
   void drawTile(int x, int y);
+
+  /**
+   *  Draws the entire bord
+   *  Utilizes drawTile()
+   */
   void drawBoard();
 };
 
