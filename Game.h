@@ -17,18 +17,19 @@ class ChessWindow;
 #include <iostream>
 
 class Game : public ChessWindow {
-  Q_OBJECT
+ Q_OBJECT
  private:
   // GUI event handlers
-   void onFileQuit() override;
-   void onFileNew() override;
-   void onFileSave() override;
-   void onFileLoad() override;
-   void onGameUndo() override;
-   void onGameRedo() override;
-   void onVisualizeMoves() override;
-   void onVisualizeThreatenedEnemy() override;
-   void onVisualizeThreatenedPlayer() override;
+  void onFileQuit() override;
+  void onFileNew() override;
+  void onFileSave() override;
+  void onFileLoad() override;
+  void onGameUndo() override;
+  void onGameRedo() override;
+  void onVisualizeMoves() override;
+  void onVisualizeThreatenedEnemy() override;
+  void onVisualizeThreatenedPlayer() override;
+
 };
 
 #endif //PRACTICEENTERPRISES__GAME_H_

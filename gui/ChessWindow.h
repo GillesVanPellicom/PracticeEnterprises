@@ -21,13 +21,15 @@
 #include <QAction>
 #include <iostream>
 
+#include "ChessScene.h"
+
 class ChessWindow : public QMainWindow {
  Q_OBJECT
 
  public:
   explicit ChessWindow(QWidget* parent = nullptr);
 
- // Abstract menu bar event handlers
+  // Abstract menu bar event handlers
  protected slots:
   virtual void onFileQuit() = 0;
   virtual void onFileNew() = 0;

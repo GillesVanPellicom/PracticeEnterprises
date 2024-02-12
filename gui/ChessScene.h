@@ -13,11 +13,12 @@
 
 #include <QColor>
 #include <QGraphicsScene>
-
+#include <QGraphicsRectItem>
 
 class ChessScene : public QGraphicsScene {
+ Q_OBJECT
  public:
-  explicit ChessScene(QObject* parent);
+  explicit ChessScene(QObject* parent = nullptr);
  private:
   QColor whiteSquareColor;
   QColor whiteSquareSelectedColor;
@@ -31,6 +32,9 @@ class ChessScene : public QGraphicsScene {
 
   int cellWidth;
   int boardMargin;
+
+  void drawTile(int x, int y);
+  void drawBoard();
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_

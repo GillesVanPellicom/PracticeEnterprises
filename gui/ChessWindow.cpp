@@ -10,16 +10,14 @@
 
 #include "ChessWindow.h"
 
-
-ChessWindow::ChessWindow(QWidget *parent) : QMainWindow(parent) {
-  scene = new QGraphicsScene();
+ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
+  scene = new ChessScene(this);
   view = new QGraphicsView(scene);
   setCentralWidget(view);
   createActions();
   createMenus();
   show();
 }
-
 
 void ChessWindow::createMenus() {
   // Menu
@@ -41,8 +39,6 @@ void ChessWindow::createMenus() {
   visualizeMenu->addAction(visualizeThreatenedEnemyAction);
 
 }
-
-
 
 void ChessWindow::createActions() {
   // *File*

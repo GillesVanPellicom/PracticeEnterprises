@@ -12,10 +12,36 @@
 
 ChessScene::ChessScene(QObject* parent) : QGraphicsScene(parent) {
   // Measurements in px
-  cellWidth = 45;
+  cellWidth = 50;
   boardMargin = 0;
 
   // Hard-coded defaults in case of config I/O error
   whiteSquareColor = Qt::white;
   blackSquareColor = Qt::black;
+  drawBoard();
 }
+
+void ChessScene::drawTile(int x, int y) {
+  auto* rect = new QGraphicsRectItem(y * cellWidth, x * cellWidth, cellWidth, cellWidth);
+
+  if (x % 2 == y % 2) {
+    rect->setBrush(QBrush(whiteSquareColor, Qt::SolidPattern));
+
+  } else {
+    rect->setBrush(QBrush(blackSquareColor, Qt::SolidPattern));
+
+  }
+
+  rect->setCacheMode(QGraphicsItem::NoCache);
+  addItem(rect);
+}
+
+void ChessScene::drawBoard() {
+  for (int x = 0; x < 8; ++x) {
+    for (int y = 0; y < 8; ++y) {
+      drawTile(x, y);
+    }
+  }
+}
+
+
