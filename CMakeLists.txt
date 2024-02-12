@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(PracticeEnterprises)
+project(chess)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -20,11 +20,11 @@ set(SOURCE_FILES main.cpp
         Game.cpp
         Game.h
 )
-add_executable(PracticeEnterprises ${SOURCE_FILES}
+add_executable(chess ${SOURCE_FILES}
         lib/mini/ini.h)
 
 # More Qt stuff
-target_link_libraries(PracticeEnterprises
+target_link_libraries(chess
         Qt::Core
         Qt6::Widgets
 )

@@ -117,37 +117,37 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named PracticeEnterprises
+# Target rules for targets named chess
 
 # Build rule for target.
-PracticeEnterprises: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PracticeEnterprises
-.PHONY : PracticeEnterprises
+chess: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 chess
+.PHONY : chess
 
 # fast build rule for target.
-PracticeEnterprises/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/build
-.PHONY : PracticeEnterprises/fast
+chess/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/build
+.PHONY : chess/fast
 
 #=============================================================================
-# Target rules for targets named PracticeEnterprises_autogen
+# Target rules for targets named chess_autogen
 
 # Build rule for target.
-PracticeEnterprises_autogen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PracticeEnterprises_autogen
-.PHONY : PracticeEnterprises_autogen
+chess_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 chess_autogen
+.PHONY : chess_autogen
 
 # fast build rule for target.
-PracticeEnterprises_autogen/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises_autogen.dir/build.make CMakeFiles/PracticeEnterprises_autogen.dir/build
-.PHONY : PracticeEnterprises_autogen/fast
+chess_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess_autogen.dir/build.make CMakeFiles/chess_autogen.dir/build
+.PHONY : chess_autogen/fast
 
 Game.o: Game.cpp.o
 .PHONY : Game.o
 
 # target to build an object file
 Game.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/Game.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/Game.cpp.o
 .PHONY : Game.cpp.o
 
 Game.i: Game.cpp.i
@@ -155,7 +155,7 @@ Game.i: Game.cpp.i
 
 # target to preprocess a source file
 Game.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/Game.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/Game.cpp.i
 .PHONY : Game.cpp.i
 
 Game.s: Game.cpp.s
@@ -163,39 +163,39 @@ Game.s: Game.cpp.s
 
 # target to generate assembly for a file
 Game.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/Game.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/Game.cpp.s
 .PHONY : Game.cpp.s
 
-PracticeEnterprises_autogen/mocs_compilation.o: PracticeEnterprises_autogen/mocs_compilation.cpp.o
-.PHONY : PracticeEnterprises_autogen/mocs_compilation.o
+chess_autogen/mocs_compilation.o: chess_autogen/mocs_compilation.cpp.o
+.PHONY : chess_autogen/mocs_compilation.o
 
 # target to build an object file
-PracticeEnterprises_autogen/mocs_compilation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/PracticeEnterprises_autogen/mocs_compilation.cpp.o
-.PHONY : PracticeEnterprises_autogen/mocs_compilation.cpp.o
+chess_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/chess_autogen/mocs_compilation.cpp.o
+.PHONY : chess_autogen/mocs_compilation.cpp.o
 
-PracticeEnterprises_autogen/mocs_compilation.i: PracticeEnterprises_autogen/mocs_compilation.cpp.i
-.PHONY : PracticeEnterprises_autogen/mocs_compilation.i
+chess_autogen/mocs_compilation.i: chess_autogen/mocs_compilation.cpp.i
+.PHONY : chess_autogen/mocs_compilation.i
 
 # target to preprocess a source file
-PracticeEnterprises_autogen/mocs_compilation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/PracticeEnterprises_autogen/mocs_compilation.cpp.i
-.PHONY : PracticeEnterprises_autogen/mocs_compilation.cpp.i
+chess_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/chess_autogen/mocs_compilation.cpp.i
+.PHONY : chess_autogen/mocs_compilation.cpp.i
 
-PracticeEnterprises_autogen/mocs_compilation.s: PracticeEnterprises_autogen/mocs_compilation.cpp.s
-.PHONY : PracticeEnterprises_autogen/mocs_compilation.s
+chess_autogen/mocs_compilation.s: chess_autogen/mocs_compilation.cpp.s
+.PHONY : chess_autogen/mocs_compilation.s
 
 # target to generate assembly for a file
-PracticeEnterprises_autogen/mocs_compilation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/PracticeEnterprises_autogen/mocs_compilation.cpp.s
-.PHONY : PracticeEnterprises_autogen/mocs_compilation.cpp.s
+chess_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/chess_autogen/mocs_compilation.cpp.s
+.PHONY : chess_autogen/mocs_compilation.cpp.s
 
 gui/ChessScene.o: gui/ChessScene.cpp.o
 .PHONY : gui/ChessScene.o
 
 # target to build an object file
 gui/ChessScene.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/gui/ChessScene.cpp.o
 .PHONY : gui/ChessScene.cpp.o
 
 gui/ChessScene.i: gui/ChessScene.cpp.i
@@ -203,7 +203,7 @@ gui/ChessScene.i: gui/ChessScene.cpp.i
 
 # target to preprocess a source file
 gui/ChessScene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/gui/ChessScene.cpp.i
 .PHONY : gui/ChessScene.cpp.i
 
 gui/ChessScene.s: gui/ChessScene.cpp.s
@@ -211,7 +211,7 @@ gui/ChessScene.s: gui/ChessScene.cpp.s
 
 # target to generate assembly for a file
 gui/ChessScene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/gui/ChessScene.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/gui/ChessScene.cpp.s
 .PHONY : gui/ChessScene.cpp.s
 
 gui/ChessWindow.o: gui/ChessWindow.cpp.o
@@ -219,7 +219,7 @@ gui/ChessWindow.o: gui/ChessWindow.cpp.o
 
 # target to build an object file
 gui/ChessWindow.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/gui/ChessWindow.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/gui/ChessWindow.cpp.o
 .PHONY : gui/ChessWindow.cpp.o
 
 gui/ChessWindow.i: gui/ChessWindow.cpp.i
@@ -227,7 +227,7 @@ gui/ChessWindow.i: gui/ChessWindow.cpp.i
 
 # target to preprocess a source file
 gui/ChessWindow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/gui/ChessWindow.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/gui/ChessWindow.cpp.i
 .PHONY : gui/ChessWindow.cpp.i
 
 gui/ChessWindow.s: gui/ChessWindow.cpp.s
@@ -235,7 +235,7 @@ gui/ChessWindow.s: gui/ChessWindow.cpp.s
 
 # target to generate assembly for a file
 gui/ChessWindow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/gui/ChessWindow.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/gui/ChessWindow.cpp.s
 .PHONY : gui/ChessWindow.cpp.s
 
 main.o: main.cpp.o
@@ -243,7 +243,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -251,7 +251,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -259,7 +259,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PracticeEnterprises.dir/build.make CMakeFiles/PracticeEnterprises.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chess.dir/build.make CMakeFiles/chess.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -270,14 +270,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... PracticeEnterprises_autogen"
-	@echo "... PracticeEnterprises"
+	@echo "... chess_autogen"
+	@echo "... chess"
 	@echo "... Game.o"
 	@echo "... Game.i"
 	@echo "... Game.s"
-	@echo "... PracticeEnterprises_autogen/mocs_compilation.o"
-	@echo "... PracticeEnterprises_autogen/mocs_compilation.i"
-	@echo "... PracticeEnterprises_autogen/mocs_compilation.s"
+	@echo "... chess_autogen/mocs_compilation.o"
+	@echo "... chess_autogen/mocs_compilation.i"
+	@echo "... chess_autogen/mocs_compilation.s"
 	@echo "... gui/ChessScene.o"
 	@echo "... gui/ChessScene.i"
 	@echo "... gui/ChessScene.s"

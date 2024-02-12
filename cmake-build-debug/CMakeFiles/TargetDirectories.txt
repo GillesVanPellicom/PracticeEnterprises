@@ -1,4 +1,4 @@
-/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/PracticeEnterprises.dir
+/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/chess.dir
 /Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/edit_cache.dir
 /Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/PracticeEnterprises_autogen.dir
+/Users/gvp/CLionProjects/PracticeEnterprises/cmake-build-debug/CMakeFiles/chess_autogen.dir
