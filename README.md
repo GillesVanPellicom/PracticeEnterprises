@@ -14,7 +14,9 @@ cmake --build ./build --config Debug --target all -j256
 ```
 
 ### Run project
-Run the project: `./cmake-build-debug/chess`
+```bash
+./cmake-build-debug/chess
+```
 
 ### Generate documentation
 **Run this from inside the `doc` directory**
