@@ -5,7 +5,7 @@ Made by placeholder & Gilles Van pellicom
 ## Build requirements
 - Linux environement
 - Qt 6
-- CMake
+- CMake 3.27 or higher
 
 ### Compile project
 ```bash
