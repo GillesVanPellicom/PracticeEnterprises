@@ -29,8 +29,7 @@ class Game : public ChessWindow {
   void onVisualizeMoves() override;
   void onVisualizeThreatenedEnemy() override;
   void onVisualizeThreatenedPlayer() override;
-
-  void clicked(int x, int y) override;
+  void onClick(int x, int y) override;
 
 };
 

@@ -16,6 +16,12 @@ ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
   setCentralWidget(view);
   createActions();
   createMenus();
+
+  scene->setClickCallback([this](int x, int y) {
+    onClick(x, y);
+  });
+
+
   show();
 }
 
@@ -97,6 +103,8 @@ void ChessWindow::createActions() {
   connect(visualizeThreatenedPlayerAction, &QAction::triggered, this, &ChessWindow::onVisualizeThreatenedPlayer);
 
 }
+
+
 
 
 

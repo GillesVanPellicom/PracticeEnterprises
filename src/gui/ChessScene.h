@@ -20,37 +20,41 @@
 
 #include "../lib/mini/ini.h"
 
-class Click {
- public:
-  qreal x, y;
-};
-
 class ChessScene : public QGraphicsScene {
  Q_OBJECT
+
  public:
   explicit ChessScene(QObject* parent = nullptr);
+  void setClickCallback(std::function<void(int, int)> callback);
 
  protected:
+  void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
  private:
+  // Color palette
+  // White
   QColor whiteSquareColor;
   QColor whiteSquareSelectedColor;
   QColor whiteSquareDangerColor;
   QColor whiteSquarePossibleColor;
-
+  //Black
   QColor blackSquareColor;
   QColor blackSquareSelectedColor;
   QColor blackSquareDangerColor;
   QColor blackSquarePossibleColor;
 
-  qint8 focusRow, focusCol;
+  // Currently focussed cell
+  int focusX, focusY;
 
   quint8 rowFromPoint(int y) const { return y / cellWidth; }
   quint8 colFromPoint(int x) const { return x / cellWidth; }
 
+  // Measurements
   int cellWidth;
   int boardMargin;
 
+  // Callback for click event
+  std::function<void(int, int)> clickCallback;
 
   /**
    * Reads out colorscheme.ini and populates variables.

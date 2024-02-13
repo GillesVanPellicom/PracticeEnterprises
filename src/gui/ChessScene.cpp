@@ -9,6 +9,8 @@
 
 #include "ChessScene.h"
 
+#include <utility>
+
 ChessScene::ChessScene(QObject* parent) : QGraphicsScene(parent) {
   // Measurements in px
   cellWidth = 50;
@@ -97,6 +99,30 @@ QColor ChessScene::hexstrToQColor(std::string& hex) {
 
   // Avoid implementation defined annoyances
   return {static_cast<int>(r), static_cast<int>(g), static_cast<int>(b)};
+}
+
+void ChessScene::setClickCallback(std::function<void(int, int)> callback) {
+  clickCallback = std::move(callback);
+}
+
+void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+  // If button pressed is left button
+  if (event->button() == Qt::LeftButton) {
+    // Transform Qt scene coordinates to board coordinates [0; 7]
+    int cellX = ((int) ceil(event->scenePos().x() / cellWidth)) - 1;
+    // flip y coordinate to conform to chess standards
+    int cellY = (9 - (int) ceil(event->scenePos().y() / cellWidth)) - 1;
+
+    focusX = cellX;
+    focusY = cellY;
+
+    // If callback valid
+    if (clickCallback) {
+      // Callback to ChessWindow
+      clickCallback(cellX, cellY);
+    }
+  }
+  QGraphicsScene::mousePressEvent(event);
 }
 
 
