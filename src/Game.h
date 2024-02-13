@@ -10,8 +10,12 @@
 #ifndef PRACTICEENTERPRISES_GAME_H_
 #define PRACTICEENTERPRISES_GAME_H_
 
-#include "gui/ChessWindow.h"
+// std
 #include <iostream>
+
+// local
+#include "gui/ChessWindow.h"
+
 
 class Game : public ChessWindow {
  Q_OBJECT
@@ -26,9 +30,17 @@ class Game : public ChessWindow {
   void onGameRedo() override;
   void onVisualizeMoves() override;
   void onVisualizeThreatenedEnemy() override;
-  void onVisualizeThreatenedPlayer() override;
+  void onVisualizeThreatenedFriendly() override;
   // Mouse click handler
   void onClick(int x, int y) override;
+  // Cell marking functions
+  void markCellAs(int x, int y, ChessType::BoardMarkingType type) override;
+  void removeAllMarkingsType(ChessType::BoardMarkingType type) override;
+
+  // Booleans for menuBar checkboxes
+  bool doVisualizeMoves = false;
+  bool doVisualizeThreatenedEnemy = false;
+  bool doVisualizeThreatenedFriendly = false;
 
 };
 

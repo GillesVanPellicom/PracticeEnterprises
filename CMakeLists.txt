@@ -20,9 +20,10 @@ set(SOURCE_FILES src/main.cpp
         src/Game.cpp
         src/Game.h
         src/lib/mini/ini.h
+        src/utils/Type.cpp
+        src/utils/Type.h
 )
-add_executable(chess ${SOURCE_FILES}
-        )
+add_executable(chess ${SOURCE_FILES})
 
 # More Qt stuff
 target_link_libraries(chess

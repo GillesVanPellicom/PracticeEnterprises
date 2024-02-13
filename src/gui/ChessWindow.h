@@ -11,16 +11,19 @@
 #ifndef PRACTICEENTERPRISES_GUI_CHESSWINDOW_H_
 #define PRACTICEENTERPRISES_GUI_CHESSWINDOW_H_
 
+// Qt
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
-
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
 #include <QAction>
+
+// std
 #include <iostream>
 
+// local
 #include "ChessScene.h"
 
 class ChessWindow : public QMainWindow {
@@ -31,8 +34,8 @@ class ChessWindow : public QMainWindow {
  public:
   explicit ChessWindow(QWidget* parent = nullptr);
 
-  // Abstract menu bar event handlers
  protected slots:
+  // Abstract menu bar event handlers
   virtual void onFileQuit() = 0;
   virtual void onFileNew() = 0;
   virtual void onFileSave() = 0;
@@ -41,8 +44,13 @@ class ChessWindow : public QMainWindow {
   virtual void onGameRedo() = 0;
   virtual void onVisualizeMoves() = 0;
   virtual void onVisualizeThreatenedEnemy() = 0;
-  virtual void onVisualizeThreatenedPlayer() = 0;
+  virtual void onVisualizeThreatenedFriendly() = 0;
+ protected:
+  // Abstract click event handler
   virtual void onClick(int x, int y) = 0;
+  // Cell marking functions
+  virtual void markCellAs(int x, int y, ChessType::BoardMarkingType type) {scene->setCellMarkedType(x, y, type);}
+  virtual void removeAllMarkingsType(ChessType::BoardMarkingType type) {scene->removeAllMarkingsType(type);}
 
 
  private:
@@ -61,20 +69,20 @@ class ChessWindow : public QMainWindow {
   void createActions();
 
   // Define menus
-  QMenu* fileMenu;
-  QMenu* gameMenu;
-  QMenu* visualizeMenu;
+  QMenu* fileMenu{};
+  QMenu* gameMenu{};
+  QMenu* visualizeMenu{};
 
   // Define menu actions
-  QAction* fileQuitAction;
-  QAction* fileNewAction;
-  QAction* fileSaveAction;
-  QAction* fileLoadAction;
-  QAction* gameUndoAction;
-  QAction* gameRedoAction;
-  QAction* visualizeMovesAction;
-  QAction* visualizeThreatenedPlayerAction;
-  QAction* visualizeThreatenedEnemyAction;
+  QAction* fileQuitAction{};
+  QAction* fileNewAction{};
+  QAction* fileSaveAction{};
+  QAction* fileLoadAction{};
+  QAction* gameUndoAction{};
+  QAction* gameRedoAction{};
+  QAction* visualizeMovesAction{};
+  QAction* visualizeThreatenedPlayerAction{};
+  QAction* visualizeThreatenedEnemyAction{};
 
   // Define the scene and the view
   QGraphicsView* view;

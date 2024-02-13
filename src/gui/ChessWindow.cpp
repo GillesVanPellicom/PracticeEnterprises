@@ -27,6 +27,7 @@ ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
   show();
 }
 
+
 void ChessWindow::createMenus() {
   // Menu
   fileMenu = menuBar()->addMenu(tr("&File"));
@@ -47,6 +48,7 @@ void ChessWindow::createMenus() {
   visualizeMenu->addAction(visualizeThreatenedEnemyAction);
 
 }
+
 
 void ChessWindow::createActions() {
   // *File*
@@ -104,7 +106,7 @@ void ChessWindow::createActions() {
   visualizeThreatenedPlayerAction = new QAction(tr("Vulnerable &friendlies"), this);
   visualizeThreatenedPlayerAction->setStatusTip(tr("Mark all vulnerable friendlies"));
   visualizeThreatenedPlayerAction->setCheckable(true);
-  connect(visualizeThreatenedPlayerAction, &QAction::triggered, this, &ChessWindow::onVisualizeThreatenedPlayer);
+  connect(visualizeThreatenedPlayerAction, &QAction::triggered, this, &ChessWindow::onVisualizeThreatenedFriendly);
 
 }
 

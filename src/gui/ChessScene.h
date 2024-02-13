@@ -10,14 +10,23 @@
 #ifndef PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
 #define PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
 
+// Qt
 #include <QColor>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
+
+// std
 #include <iostream>
 #include <regex>
+#include <utility>
+#include <unordered_map>
 
+// local
+#include "../utils/Type.h"
+
+// third party
 #include "../lib/mini/ini.h"
 
 class ChessScene : public QGraphicsScene {
@@ -28,23 +37,34 @@ class ChessScene : public QGraphicsScene {
   void setClickCallback(std::function<void(int, int)> callback);
 
  protected:
-  void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
   // Color palette
   // White
   QColor whiteSquareColor;
   QColor whiteSquareSelectedColor;
-  QColor whiteSquareDangerColor;
+  QColor blackSquareDangerFriendlyColor;
+  QColor blackSquareDangerEnemyColor;
   QColor whiteSquarePossibleColor;
   //Black
   QColor blackSquareColor;
   QColor blackSquareSelectedColor;
-  QColor blackSquareDangerColor;
+  QColor whiteSquareDangerFriendlyColor;
+  QColor whiteSquareDangerEnemyColor;
   QColor blackSquarePossibleColor;
 
   // Currently focussed cell
-  int focusX, focusY;
+  int focusX, focusY = -1;
+
+  // All markings as enum, associated with a coordinate pair (x, y)
+  // Implicitly define hash function because std is being screwy.
+  std::unordered_map<ChessType::Coords, ChessType::BoardMarkingType, ChessType::Coords::Hash> markings;
+
+  bool isInactiveMarkingUsed = false;
+  std::pair<ChessType::Coords, ChessType::BoardMarkingType> inactiveMarking;
+
+
 
   // Dimensions
   int cellWidth;
@@ -52,6 +72,13 @@ class ChessScene : public QGraphicsScene {
 
   // Callback for click event
   std::function<void(int, int)> clickCallback;
+
+  /**
+   * Initializes the markings datastructure to begin state.
+   *
+   * Only to be called once in constructor.
+   */
+  void initializeMarkingsMap();
 
   /**
    * Reads out colorscheme.ini and populates variables.
@@ -73,11 +100,59 @@ class ChessScene : public QGraphicsScene {
    */
   void drawTile(int x, int y);
 
-  /**
+/**
    *  Draws the entire bord
    *  Utilizes drawTile()
    */
   void drawBoard();
+
+  /**
+   * Marks a specified cell as selected
+   *
+   * Only one cell can be selected at one time.
+   * Old cells will automatically be unselected.
+   * Selecting an already marked cell will unmark that cell.
+   * @param x x-coordinate of the cell
+   * @param y y-coordinate of the cell
+   */
+  void setCellMarkedSelected(int x, int y);
+
+ public:
+  /**
+   * Refreshes the graphics of the entire board.
+   *
+   * This includes tile color, markings, images.
+   */
+  void refreshBoard();
+
+
+
+  /**
+   * Removes all markings of a specified type
+   * @param type Type to be specified
+   */
+  void removeAllMarkingsType(ChessType::BoardMarkingType type);
+
+  /**
+   * Marks a specified cell as a specified type
+   *
+   * When type is SELECTED:
+   * Only one cell can be selected at one time.
+   * Old selected cells will be automatically deselected.
+   * Selecting an already selected cell will deselect that cell.
+   * If the cell to be deselected already had a marking before selection,
+   * that marking will be restored.
+   *
+   * When type is anything else:
+   * Override the current type for that cell.
+   * Overriding a cell marked as SELECTED is not allowed,
+   * but this behavior is not enforced.
+   * However, doing so will cause visual bugs.
+   * @param x x-coordinate of the cell
+   * @param y y-coordinate of the cell
+   */
+  void setCellMarkedType(int x, int y, ChessType::BoardMarkingType type);
+
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
