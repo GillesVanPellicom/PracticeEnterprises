@@ -46,10 +46,7 @@ class ChessScene : public QGraphicsScene {
   // Currently focussed cell
   int focusX, focusY;
 
-  quint8 rowFromPoint(int y) const { return y / cellWidth; }
-  quint8 colFromPoint(int x) const { return x / cellWidth; }
-
-  // Measurements
+  // Dimensions
   int cellWidth;
   int boardMargin;
 
@@ -66,7 +63,7 @@ class ChessScene : public QGraphicsScene {
    * @param hex input string
    * @return QColor object
    */
-  QColor hexstrToQColor(std::string& hex);
+  static QColor hexstrToQColor(std::string& hex);
 
   /**
    * Draws a specific tile.

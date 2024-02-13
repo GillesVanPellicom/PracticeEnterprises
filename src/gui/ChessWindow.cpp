@@ -14,13 +14,15 @@ ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
   scene = new ChessScene(this);
   view = new QGraphicsView(scene);
   setCentralWidget(view);
+
+  // Setup menubar
   createActions();
   createMenus();
 
+  // Initialize click callback
   scene->setClickCallback([this](int x, int y) {
     onClick(x, y);
   });
-
 
   show();
 }
@@ -92,11 +94,13 @@ void ChessWindow::createActions() {
   visualizeMovesAction->setCheckable(true);
   connect(visualizeMovesAction, &QAction::triggered, this, &ChessWindow::onVisualizeMoves);
 
+  // Visualize threatened enemy positions
   visualizeThreatenedEnemyAction = new QAction(tr("Vulnerable &enemies"), this);
   visualizeThreatenedEnemyAction->setStatusTip(tr("Mark all vulnerable enemies"));
   visualizeThreatenedEnemyAction->setCheckable(true);
   connect(visualizeThreatenedEnemyAction, &QAction::triggered, this, &ChessWindow::onVisualizeThreatenedEnemy);
 
+  // Visualize threatened friendly positions
   visualizeThreatenedPlayerAction = new QAction(tr("Vulnerable &friendlies"), this);
   visualizeThreatenedPlayerAction->setStatusTip(tr("Mark all vulnerable friendlies"));
   visualizeThreatenedPlayerAction->setCheckable(true);

@@ -8,6 +8,7 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Game.h"
+
 void Game::onFileQuit() {
   std::cout << "Test file/quit" << std::endl;
 }

@@ -46,7 +46,6 @@ class ChessWindow : public QMainWindow {
 
 
  private:
-  ChessScene* scene;
   // Menu bar setup
   /**
    * Creates all menus
@@ -79,6 +78,7 @@ class ChessWindow : public QMainWindow {
 
   // Define the scene and the view
   QGraphicsView* view;
+  ChessScene* scene;
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSWINDOW_H_

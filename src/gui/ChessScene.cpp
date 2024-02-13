@@ -16,6 +16,7 @@ ChessScene::ChessScene(QObject* parent) : QGraphicsScene(parent) {
   cellWidth = 50;
   boardMargin = 0;
 
+  // Read colorscheme.ini and populate variables
   readColorConfig();
 
   drawBoard();
@@ -24,6 +25,7 @@ ChessScene::ChessScene(QObject* parent) : QGraphicsScene(parent) {
 void ChessScene::drawTile(int x, int y) {
   auto* rect = new QGraphicsRectItem(y * cellWidth, x * cellWidth, cellWidth, cellWidth);
 
+  // TODO: implement visualization masks
   if (x % 2 == y % 2) {
     rect->setBrush(QBrush(whiteSquareColor, Qt::SolidPattern));
 
@@ -73,7 +75,7 @@ QColor ChessScene::hexstrToQColor(std::string& hex) {
     // If string isn't hex
     std::cerr << "The provided string \"" << hex
               << "\" is not a valid hex color code. Defaulting to #000000 for this value..." << std::endl;
-    return QColor(0, 0, 0);
+    return {0, 0, 0};
 
   }
 
@@ -113,10 +115,11 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // flip y coordinate to conform to chess standards
     int cellY = (9 - (int) ceil(event->scenePos().y() / cellWidth)) - 1;
 
+    // Set current focus
     focusX = cellX;
     focusY = cellY;
 
-    // If callback valid
+    // If callback is valid
     if (clickCallback) {
       // Callback to ChessWindow
       clickCallback(cellX, cellY);
