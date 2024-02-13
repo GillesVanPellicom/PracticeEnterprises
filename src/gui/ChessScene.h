@@ -13,16 +13,26 @@
 #include <QColor>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QMouseEvent>
+#include <QGraphicsSceneMouseEvent>
 #include <iostream>
 #include <regex>
 
 #include "../lib/mini/ini.h"
 
+class Click {
+ public:
+  qreal x, y;
+};
 
 class ChessScene : public QGraphicsScene {
  Q_OBJECT
  public:
   explicit ChessScene(QObject* parent = nullptr);
+
+ protected:
+  void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+
  private:
   QColor whiteSquareColor;
   QColor whiteSquareSelectedColor;
@@ -34,8 +44,16 @@ class ChessScene : public QGraphicsScene {
   QColor blackSquareDangerColor;
   QColor blackSquarePossibleColor;
 
+  qint8 focusRow, focusCol;
+
+  quint8 rowFromPoint(int y) const { return y / cellWidth; }
+  quint8 colFromPoint(int x) const { return x / cellWidth; }
+
   int cellWidth;
   int boardMargin;
+
+ signals:
+  void clicked(int x,int y);
 
   /**
    * Reads out colorscheme.ini and populates variables.
@@ -65,3 +83,5 @@ class ChessScene : public QGraphicsScene {
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
+
+

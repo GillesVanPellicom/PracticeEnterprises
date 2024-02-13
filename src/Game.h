@@ -1,37 +1,37 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
-// ║ Name         : Game.cpp                                                          ║
-// ║ Description  : Implementation of the chess game logic                            ║
+// ║ Name         : Game.h                                                            ║
+// ║ Description  : Defenitions of the chess game logic                               ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/12                                                        ║                
 // ║ Version      : 1.0                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
-#include "Game.h"
-void Game::onFileQuit() {
+#ifndef PRACTICEENTERPRISES__GAME_H_
+#define PRACTICEENTERPRISES__GAME_H_
 
-}
-void Game::onFileNew() {
-  std::cout << "Yes siree" << std::endl;
-}
-void Game::onFileSave() {
+// Forward declaration
+class ChessWindow;
 
-}
-void Game::onFileLoad() {
+#include "gui/ChessWindow.h"
+#include <iostream>
 
-}
-void Game::onGameUndo() {
+class Game : public ChessWindow {
+ Q_OBJECT
+ private:
+  // GUI event handlers
+  void onFileQuit() override;
+  void onFileNew() override;
+  void onFileSave() override;
+  void onFileLoad() override;
+  void onGameUndo() override;
+  void onGameRedo() override;
+  void onVisualizeMoves() override;
+  void onVisualizeThreatenedEnemy() override;
+  void onVisualizeThreatenedPlayer() override;
 
-}
-void Game::onGameRedo() {
+  void clicked(int x, int y) override;
 
-}
-void Game::onVisualizeMoves() {
+};
 
-}
-void Game::onVisualizeThreatenedEnemy() {
-
-}
-void Game::onVisualizeThreatenedPlayer() {
-
-}
+#endif //PRACTICEENTERPRISES__GAME_H_

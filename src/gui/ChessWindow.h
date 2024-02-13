@@ -30,7 +30,7 @@ class ChessWindow : public QMainWindow {
   explicit ChessWindow(QWidget* parent = nullptr);
 
   // Abstract menu bar event handlers
- protected slots:
+ protected:
   virtual void onFileQuit() = 0;
   virtual void onFileNew() = 0;
   virtual void onFileSave() = 0;
@@ -40,6 +40,8 @@ class ChessWindow : public QMainWindow {
   virtual void onVisualizeMoves() = 0;
   virtual void onVisualizeThreatenedEnemy() = 0;
   virtual void onVisualizeThreatenedPlayer() = 0;
+
+  virtual void clicked(int x, int y) = 0;
 
  private:
   // Menu bar setup
