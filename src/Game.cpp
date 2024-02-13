@@ -45,55 +45,59 @@ void Game::onGameRedo() {
 
 
 void Game::onVisualizeMoves() {
-  if (!doVisualizeMoves) {
-    // TODO: Place code to retrieve and display possible moves here
-
-    // EXAMPLE
-    markCellAs(5, 3, ChessType::POSSIBLE);
-    markCellAs(5, 2, ChessType::POSSIBLE);
-
-
-    doVisualizeMoves = true;
+  if (doVisualizeMoves) {
+    removeAllMarkingsType(ChessType::POSSIBLE);
+    doVisualizeMoves = false;
     return;
   }
-  removeAllMarkingsType(ChessType::POSSIBLE);
-  doVisualizeMoves = false;
+  doVisualizeMoves = true;
+
+  // TODO: Place code to retrieve and display possible moves here
+
+  // EXAMPLE
+  // =========================
+  markCellAs(5, 3, ChessType::POSSIBLE);
+  markCellAs(5, 2, ChessType::POSSIBLE);
+  // =========================
+
+
 }
 
 
 void Game::onVisualizeThreatenedEnemy() {
-  if (!doVisualizeThreatenedEnemy) {
-    // TODO: Place code to retrieve and display threatened enemy pieces here
-
-    // EXAMPLE
-    markCellAs(2, 3, ChessType::THREATENED_ENEMY);
-    markCellAs(2, 2, ChessType::THREATENED_ENEMY);
-
-
-    doVisualizeThreatenedEnemy = true;
+  if (doVisualizeThreatenedEnemy) {
+    removeAllMarkingsType(ChessType::THREATENED_ENEMY);
+    doVisualizeThreatenedEnemy = false;
     return;
   }
-  removeAllMarkingsType(ChessType::THREATENED_ENEMY);
+  doVisualizeThreatenedEnemy = true;
 
-  doVisualizeThreatenedEnemy = false;
+  // TODO: Place code to retrieve and display threatened enemy pieces here
+
+  // EXAMPLE
+  // =========================
+  markCellAs(2, 3, ChessType::THREATENED_ENEMY);
+  markCellAs(2, 2, ChessType::THREATENED_ENEMY);
+  // =========================
 
 }
 
 
 void Game::onVisualizeThreatenedFriendly() {
-  if (!doVisualizeThreatenedFriendly) {
-    // TODO: Place code to retrieve and display threatened friendly pieces here
-
-    // EXAMPLE
-    markCellAs(3, 3, ChessType::THREATENED_FRIENDLY);
-    markCellAs(3, 2, ChessType::THREATENED_FRIENDLY);
-
-
-    doVisualizeThreatenedFriendly = true;
+  if (doVisualizeThreatenedFriendly) {
+    removeAllMarkingsType(ChessType::THREATENED_FRIENDLY);
+    doVisualizeThreatenedFriendly = false;
     return;
   }
-  removeAllMarkingsType(ChessType::THREATENED_FRIENDLY);
-  doVisualizeThreatenedFriendly = false;
+  doVisualizeThreatenedFriendly = true;
+
+  // TODO: Place code to retrieve and display threatened friendly pieces here
+
+  // EXAMPLE
+  // =========================
+  markCellAs(3, 3, ChessType::THREATENED_FRIENDLY);
+  markCellAs(3, 2, ChessType::THREATENED_FRIENDLY);
+  // =========================
 
 }
 
@@ -101,6 +105,7 @@ void Game::onVisualizeThreatenedFriendly() {
 void Game::onClick(int x, int y) {
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
 }
+
 
 // Inherited functions
 void Game::markCellAs(int x, int y, ChessType::BoardMarkingType type) {
