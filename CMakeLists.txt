@@ -3,7 +3,7 @@ project(chess)
 
 set(CMAKE_CXX_STANDARD 23)
 
-# Qt stuff
+# Qt6
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -12,16 +12,17 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 # Source file
-set(SOURCE_FILES main.cpp
-        gui/ChessWindow.cpp
-        gui/ChessWindow.h
-        gui/ChessScene.cpp
-        gui/ChessScene.h
-        Game.cpp
-        Game.h
+set(SOURCE_FILES src/main.cpp
+        src/gui/ChessWindow.cpp
+        src/gui/ChessWindow.h
+        src/gui/ChessScene.cpp
+        src/gui/ChessScene.h
+        src/Game.cpp
+        src/Game.h
+        src/lib/mini/ini.h
 )
 add_executable(chess ${SOURCE_FILES}
-        lib/mini/ini.h)
+        )
 
 # More Qt stuff
 target_link_libraries(chess

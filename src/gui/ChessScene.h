@@ -31,7 +31,6 @@ class ChessScene : public QGraphicsScene {
   explicit ChessScene(QObject* parent = nullptr);
 
  protected:
-  void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
   QColor whiteSquareColor;
@@ -52,8 +51,6 @@ class ChessScene : public QGraphicsScene {
   int cellWidth;
   int boardMargin;
 
- signals:
-  void clicked(int x,int y);
 
   /**
    * Reads out colorscheme.ini and populates variables.

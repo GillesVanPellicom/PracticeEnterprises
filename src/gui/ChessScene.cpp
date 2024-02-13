@@ -99,27 +99,6 @@ QColor ChessScene::hexstrToQColor(std::string& hex) {
   return {static_cast<int>(r), static_cast<int>(g), static_cast<int>(b)};
 }
 
-void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
-  QPointF scenePos = event->scenePos();
-  if( scenePos.x() < 0 || scenePos.y() < 0 || scenePos.x() > 8*cellWidth || scenePos.y() > 8*cellWidth )
-  {
-    focusRow = -1;
-    focusCol = -1;
-    return;
-  }
-
-  focusRow = rowFromPoint( scenePos.y() );
-  focusCol = colFromPoint( scenePos.x() );
-
-  if (focusRow>=0 && focusRow<8 && focusCol>=0 && focusCol<8) {
-    emit(clicked((int) focusRow, (int) focusCol));
-  }
-
-  QGraphicsScene::mousePressEvent(event);
-}
-void ChessScene::clicked(int x, int y) {
-
-}
 
 
 
