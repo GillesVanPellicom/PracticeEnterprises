@@ -54,6 +54,9 @@ class ChessScene : public QGraphicsScene {
   QColor whiteSquareDangerEnemyColor;
   QColor blackSquarePossibleColor;
 
+  // Global
+  bool boardBorders = false;
+
   // Currently focussed cell
   int focusX, focusY = -1;
 
@@ -81,7 +84,7 @@ class ChessScene : public QGraphicsScene {
   void initializeMarkingsMap();
 
   /**
-   * Reads out colorscheme.ini and populates variables.
+   * Reads out basic.ini and populates variables.
    */
   void readColorConfig();
 

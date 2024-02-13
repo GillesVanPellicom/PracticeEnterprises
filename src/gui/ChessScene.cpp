@@ -15,7 +15,7 @@ ChessScene::ChessScene(QObject* parent)
   cellWidth = 50;
   boardMargin = 0;
 
-  // Read colorscheme.ini and populate variables
+  // Read basic.ini and populate variables
   readColorConfig();
 
   // Initialize datatype for board markings.
@@ -29,7 +29,11 @@ ChessScene::ChessScene(QObject* parent)
 
 
 void ChessScene::drawTile(int x, int y) {
-  auto* rect = new QGraphicsRectItem(y * cellWidth, (7 - x) * cellWidth, cellWidth, cellWidth);
+  auto* rect = new QGraphicsRectItem(static_cast<int>(y * cellWidth), static_cast<int>((7 - x) * cellWidth), cellWidth, cellWidth);
+
+  if (!boardBorders) {
+    rect->setPen(Qt::NoPen);
+  }
 
   if (x % 2 == y % 2) {
     // Qt and chess-actual coordinates are flipped.
@@ -112,7 +116,7 @@ void ChessScene::drawBoard() {
 void ChessScene::readColorConfig() {
   try {
     // FIXME: hardcoded link
-    mINI::INIFile file("../config/colorscheme.ini");
+    mINI::INIFile file("../config/colorschemes/chess.com.ini");
     mINI::INIStructure conf;
     file.read(conf);
 
@@ -128,8 +132,12 @@ void ChessScene::readColorConfig() {
     blackSquareDangerEnemyColor = hexstrToQColor(conf["black"]["squareDangerEnemyColor"]);
     blackSquarePossibleColor = hexstrToQColor(conf["black"]["squarePossibleColor"]);
 
+    if (conf["global"]["borders"] == "true") {
+      boardBorders = true;
+    }
+
   } catch (const std::exception& e) {
-    std::cerr << "I/O error: colorscheme.ini was inaccessible. Continuing with default values..." << std::endl;
+    std::cerr << "I/O error: basic.ini was inaccessible. Continuing with default values..." << std::endl;
   }
 }
 
