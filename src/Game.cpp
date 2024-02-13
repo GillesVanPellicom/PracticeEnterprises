@@ -10,35 +10,40 @@
 #include "Game.h"
 
 void Game::onFileQuit() {
-  std::cout << "Test file/quit" << std::endl;
+  // TODO: ask user before quit using modal window
   exit(0);
 }
 
 
 void Game::onFileNew() {
+  // TODO: handle new game request
   std::cout << "Test file/new" << std::endl;
 }
 
 
 void Game::onFileSave() {
+  // TODO: handle file saving
   std::cout << "Test file/save" << std::endl;
 
 }
 
 
 void Game::onFileLoad() {
+  // TODO: handle file loading
   std::cout << "Test file/load" << std::endl;
 
 }
 
 
 void Game::onGameUndo() {
+  // TODO: undo functionality
   std::cout << "Test game/undo" << std::endl;
 
 }
 
 
 void Game::onGameRedo() {
+  // TODO: redo functionality
   std::cout << "Test game/redo" << std::endl;
 
 }
@@ -103,6 +108,7 @@ void Game::onVisualizeThreatenedFriendly() {
 
 
 void Game::onClick(int x, int y) {
+  // TODO: handle mouse clicks
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
 }
 
