@@ -26,6 +26,10 @@
 // local
 #include "ChessScene.h"
 
+/**
+ * @brief Abstract window containing chess GUI\n
+ * @throws std::out_of_range If invalid board coördinates are provided
+ */
 class ChessWindow : public QMainWindow {
  Q_OBJECT
 

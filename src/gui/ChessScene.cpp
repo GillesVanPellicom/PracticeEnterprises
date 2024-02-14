@@ -68,6 +68,7 @@ void ChessScene::drawTile(int x, int y) {
     }
 
   } else {
+    // Qt and chess-actual coordinates are flipped.
     switch (markings[{y, x}]) {
 
       case ChessType::NONE: {
@@ -266,7 +267,7 @@ void ChessScene::removeAllMarkingsType(ChessType::BoardMarkingType type) {
 void ChessScene::setCellMarkedType(int x, int y, ChessType::BoardMarkingType type) {
   // Enforce range
   if (x < 0 || x > 7 || y < 0 || y > 7) {
-    throw std::range_error(
+    throw std::out_of_range(
         "Fatal: setCellMarkedType(): x, y must be [0; 7]. Actual: (" +
             std::to_string(x) + ", " + std::to_string(y) + ")");
   }

@@ -29,6 +29,10 @@
 // third party
 #include "../lib/mini/ini.h"
 
+/**
+ * @brief Implementation of the QGraphicsScene\n
+ * @throws std::out_of_range If invalid board coördinates are provided
+ */
 class ChessScene : public QGraphicsScene {
  Q_OBJECT
 
@@ -57,9 +61,6 @@ class ChessScene : public QGraphicsScene {
   // Global
   bool boardBorders = false;
 
-  // Currently focussed cell
-  int focusX, focusY = -1;
-
   // All markings as enum, associated with a coordinate pair (x, y)
   // Implicitly define hash function because std is being screwy.
   std::unordered_map<ChessType::Coords, ChessType::BoardMarkingType, ChessType::Coords::Hash> markings;
@@ -71,6 +72,7 @@ class ChessScene : public QGraphicsScene {
 
   // Dimensions
   int cellWidth;
+  int boardWidth  = cellWidth*8;
   int boardMargin;
 
   // Callback for click event
@@ -148,9 +150,7 @@ class ChessScene : public QGraphicsScene {
    *
    * When type is anything else:
    * Override the current type for that cell.
-   * Overriding a cell marked as SELECTED is not allowed,
-   * but this behavior is not enforced.
-   * However, doing so will cause visual bugs.
+   * Overriding a cell marked as SELECTED will cause the cell to become that type once a new cell is selected.
    * @param x x-coordinate of the cell
    * @param y y-coordinate of the cell
    */

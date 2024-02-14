@@ -10,6 +10,7 @@
 
 #include "ChessWindow.h"
 
+
 ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
   scene = new ChessScene(this);
   view = new QGraphicsView(scene);

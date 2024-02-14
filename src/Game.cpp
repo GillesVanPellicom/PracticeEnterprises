@@ -110,6 +110,8 @@ void Game::onVisualizeThreatenedFriendly() {
   // =========================
   markCellAs(3, 3, ChessType::THREATENED_FRIENDLY);
   markCellAs(3, 2, ChessType::THREATENED_FRIENDLY);
+  markCellAs(3, 8, ChessType::THREATENED_FRIENDLY);
+  markCellAs(3, 7, ChessType::THREATENED_FRIENDLY);
   refreshGui();
   // =========================
 

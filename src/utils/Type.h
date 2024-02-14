@@ -12,6 +12,9 @@
 #ifndef CHESS_SRC_UTILS_TYPE_H_
 #define CHESS_SRC_UTILS_TYPE_H_
 
+/**
+ * @brief Collection of datatypes used in the project
+ */
 namespace ChessType {
 enum ChessPieceType {
   KING,
@@ -35,6 +38,12 @@ enum BoardMarkingType {
   POSSIBLE
 };
 
+/**
+ * @brief Coordinate datatype\n
+ * @note Contains a custom hash function for use in hashed datatypes.
+ * @note Overloads the comparison operator to facilitate comparisons.
+ * @throws std::out_of_range If invalid board coördinates are provided
+ */
 class Coords {
  public:
   Coords(int x, int y);

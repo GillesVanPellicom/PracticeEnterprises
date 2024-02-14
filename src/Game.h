@@ -16,7 +16,10 @@
 // local
 #include "gui/ChessWindow.h"
 
-
+/**
+ * @brief Head game logic class\n
+ * @throws std::out_of_range If invalid board coördinates are provided
+ */
 class Game : public ChessWindow {
  Q_OBJECT
  private:
