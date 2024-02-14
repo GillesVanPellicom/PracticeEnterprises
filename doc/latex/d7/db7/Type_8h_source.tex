@@ -1,0 +1,64 @@
+\doxysection{Type.\+h}
+\hypertarget{Type_8h_source}{}\label{Type_8h_source}\index{/Users/gvp/CLionProjects/PracticeEnterprises/src/utils/Type.h@{/Users/gvp/CLionProjects/PracticeEnterprises/src/utils/Type.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ╔══════════════════════════════════════════════════════════════════════════════════╗}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ ║\ Name\ \ \ \ \ \ \ \ \ :\ Type.h\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ ║\ Description\ \ :\ Definitions\ of\ collected\ types\ used\ in\ codebase\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ ║\ Author(s)\ \ \ \ :\ "{}Gilles\ Van\ pellicom"{}\ <r0997008@student.thomasmore.be>\ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ ║\ Date\ \ \ \ \ \ \ \ \ :\ 2024/02/13\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ ║\ Version\ \ \ \ \ \ :\ 1.0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ ║\ License\ \ \ \ \ \ :\ GPL-\/3.0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ╚══════════════════════════════════════════════════════════════════════════════════╝}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ CHESS\_SRC\_UTILS\_TYPE\_H\_}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ CHESS\_SRC\_UTILS\_TYPE\_H\_}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceChessType}{ChessType}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{enum}\ ChessPieceType\ \{}
+\DoxyCodeLine{00020\ \ \ KING,}
+\DoxyCodeLine{00021\ \ \ QUEEN,}
+\DoxyCodeLine{00022\ \ \ ROOK,}
+\DoxyCodeLine{00023\ \ \ BISHOP,}
+\DoxyCodeLine{00024\ \ \ KNIGHT,}
+\DoxyCodeLine{00025\ \ \ PAWN}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{enum}\ ChessPieceColor\ \{}
+\DoxyCodeLine{00029\ \ \ BLACK,}
+\DoxyCodeLine{00030\ \ \ WHITE}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{enum}\ BoardMarkingType\ \{}
+\DoxyCodeLine{00034\ \ \ NONE,}
+\DoxyCodeLine{00035\ \ \ SELECTED,}
+\DoxyCodeLine{00036\ \ \ THREATENED\_ENEMY,}
+\DoxyCodeLine{00037\ \ \ THREATENED\_FRIENDLY,}
+\DoxyCodeLine{00038\ \ \ POSSIBLE}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classChessType_1_1Coords}{Coords}}\ \{}
+\DoxyCodeLine{00048\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{classChessType_1_1Coords}{Coords}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00050\ \ \ \textcolor{comment}{//\ Overload\ comparison\ function\ to\ enable\ comparisons}}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classChessType_1_1Coords}{Coords}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ (x\ ==\ other.x)\ \&\&\ (y\ ==\ other.y);}
+\DoxyCodeLine{00053\ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \textcolor{comment}{//\ Hash\ function\ for\ Coords\ objects}}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structChessType_1_1Coords_1_1Hash}{Hash}}\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ std::size\_t\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classChessType_1_1Coords}{Coords}}\&\ coords)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{comment}{//\ Combine\ hash\ values\ of\ x\ and\ y\ to\ create\ a\ unique\ hash\ value}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<int>()(coords.x)\ \string^\ (std::hash<int>()(coords.y)\ <<\ 1);}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \};}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{int}\ x\ =\ 0;}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{int}\ y\ =\ 0;}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CHESS\_SRC\_UTILS\_TYPE\_H\_}}
+
+\end{DoxyCode}

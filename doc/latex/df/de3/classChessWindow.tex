@@ -1,0 +1,98 @@
+\doxysection{Chess\+Window Class Reference}
+\hypertarget{classChessWindow}{}\label{classChessWindow}\index{ChessWindow@{ChessWindow}}
+
+
+Abstract window containing chess GUI~\newline
+.  
+
+
+
+
+{\ttfamily \#include $<$Chess\+Window.\+h$>$}
+
+
+
+Inheritance diagram for Chess\+Window\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{d8/d3d/classChessWindow__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Chess\+Window\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{d2/df6/classChessWindow__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classChessWindow_a267fbf5afb82fafe0032f2f1d6272207}\label{classChessWindow_a267fbf5afb82fafe0032f2f1d6272207} 
+{\bfseries Chess\+Window} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classChessWindow_ae6c8d64be913ccac3bf5c17ecfaa1364}\label{classChessWindow_ae6c8d64be913ccac3bf5c17ecfaa1364} 
+virtual void {\bfseries on\+File\+Quit} ()=0
+\item 
+\Hypertarget{classChessWindow_a361e4fd934a8fe31a414a979201fdf2b}\label{classChessWindow_a361e4fd934a8fe31a414a979201fdf2b} 
+virtual void {\bfseries on\+File\+New} ()=0
+\item 
+\Hypertarget{classChessWindow_a49d5ec09ac2017ad1a68c3835b132941}\label{classChessWindow_a49d5ec09ac2017ad1a68c3835b132941} 
+virtual void {\bfseries on\+File\+Save} ()=0
+\item 
+\Hypertarget{classChessWindow_a91805e6e0b5c63389730a9c73515d2cd}\label{classChessWindow_a91805e6e0b5c63389730a9c73515d2cd} 
+virtual void {\bfseries on\+File\+Load} ()=0
+\item 
+\Hypertarget{classChessWindow_a0231bade397ef7ea8dafaefad0c31776}\label{classChessWindow_a0231bade397ef7ea8dafaefad0c31776} 
+virtual void {\bfseries on\+Game\+Undo} ()=0
+\item 
+\Hypertarget{classChessWindow_ac2031b1dcc87c4c5a3879b501478b0b0}\label{classChessWindow_ac2031b1dcc87c4c5a3879b501478b0b0} 
+virtual void {\bfseries on\+Game\+Redo} ()=0
+\item 
+\Hypertarget{classChessWindow_a192a995345a727f0c94269e8edc42656}\label{classChessWindow_a192a995345a727f0c94269e8edc42656} 
+virtual void {\bfseries on\+Visualize\+Moves} ()=0
+\item 
+\Hypertarget{classChessWindow_ae16df76a0c249d5166d73f5c16bc5b8e}\label{classChessWindow_ae16df76a0c249d5166d73f5c16bc5b8e} 
+virtual void {\bfseries on\+Visualize\+Threatened\+Enemy} ()=0
+\item 
+\Hypertarget{classChessWindow_a2e693b5e587d37b83aeee0c96eefa3df}\label{classChessWindow_a2e693b5e587d37b83aeee0c96eefa3df} 
+virtual void {\bfseries on\+Visualize\+Threatened\+Friendly} ()=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classChessWindow_af727aa38bdb0bad4f77d44b6a663e866}\label{classChessWindow_af727aa38bdb0bad4f77d44b6a663e866} 
+virtual void {\bfseries on\+Click} (int x, int y)=0
+\item 
+\Hypertarget{classChessWindow_a93267a37e47edd7a4e9592dc24a59d9f}\label{classChessWindow_a93267a37e47edd7a4e9592dc24a59d9f} 
+virtual void {\bfseries mark\+Cell\+As} (int x, int y, Chess\+Type\+::\+Board\+Marking\+Type type)
+\item 
+\Hypertarget{classChessWindow_a570c36d6caee528b4ff25f8ecb584bd9}\label{classChessWindow_a570c36d6caee528b4ff25f8ecb584bd9} 
+virtual void {\bfseries remove\+All\+Markings\+Type} (Chess\+Type\+::\+Board\+Marking\+Type type)
+\item 
+\Hypertarget{classChessWindow_a4ec1b8efe1de8838246b3552fac50d34}\label{classChessWindow_a4ec1b8efe1de8838246b3552fac50d34} 
+virtual void {\bfseries refresh\+Gui} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract window containing chess GUI~\newline
+. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & If invalid board coördinates are provided \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/gvp/\+CLion\+Projects/\+Practice\+Enterprises/src/gui/Chess\+Window.\+h\item 
+/\+Users/gvp/\+CLion\+Projects/\+Practice\+Enterprises/src/gui/Chess\+Window.\+cpp\end{DoxyCompactItemize}

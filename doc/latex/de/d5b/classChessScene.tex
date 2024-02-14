@@ -1,0 +1,107 @@
+\doxysection{Chess\+Scene Class Reference}
+\hypertarget{classChessScene}{}\label{classChessScene}\index{ChessScene@{ChessScene}}
+
+
+Implementation of the QGraphics\+Scene~\newline
+.  
+
+
+
+
+{\ttfamily \#include $<$Chess\+Scene.\+h$>$}
+
+
+
+Inheritance diagram for Chess\+Scene\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=170pt]{da/d50/classChessScene__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Chess\+Scene\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=170pt]{dc/d05/classChessScene__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classChessScene_a2ad381290ecef3143c9d29f143ab7d8f}\label{classChessScene_a2ad381290ecef3143c9d29f143ab7d8f} 
+{\bfseries Chess\+Scene} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+\Hypertarget{classChessScene_a65d4c93093720ca3bfd25e8beab91fc8}\label{classChessScene_a65d4c93093720ca3bfd25e8beab91fc8} 
+void {\bfseries set\+Click\+Callback} (std\+::function$<$ void(int, int)$>$ callback)
+\item 
+void \mbox{\hyperlink{classChessScene_a41c47112c790146ba124ee182453d7d8}{refresh\+Board}} ()
+\item 
+void \mbox{\hyperlink{classChessScene_af08ac8fdde72527e7d25316269bd8a90}{remove\+All\+Markings\+Type}} (Chess\+Type\+::\+Board\+Marking\+Type type)
+\item 
+void \mbox{\hyperlink{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7}{set\+Cell\+Marked\+Type}} (int x, int y, Chess\+Type\+::\+Board\+Marking\+Type type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classChessScene_a41c1d3fc72c3fba6dbf39eaa12d2a2f1}\label{classChessScene_a41c1d3fc72c3fba6dbf39eaa12d2a2f1} 
+void {\bfseries mouse\+Press\+Event} (QGraphics\+Scene\+Mouse\+Event \texorpdfstring{$\ast$}{*}event) override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the QGraphics\+Scene~\newline
+. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & If invalid board coördinates are provided \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classChessScene_a41c47112c790146ba124ee182453d7d8}\label{classChessScene_a41c47112c790146ba124ee182453d7d8} 
+\index{ChessScene@{ChessScene}!refreshBoard@{refreshBoard}}
+\index{refreshBoard@{refreshBoard}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{refreshBoard()}{refreshBoard()}}
+{\footnotesize\ttfamily void Chess\+Scene\+::refresh\+Board (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Refreshes the graphics of the entire board.
+
+This includes tile color, markings, images. \Hypertarget{classChessScene_af08ac8fdde72527e7d25316269bd8a90}\label{classChessScene_af08ac8fdde72527e7d25316269bd8a90} 
+\index{ChessScene@{ChessScene}!removeAllMarkingsType@{removeAllMarkingsType}}
+\index{removeAllMarkingsType@{removeAllMarkingsType}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{removeAllMarkingsType()}{removeAllMarkingsType()}}
+{\footnotesize\ttfamily void Chess\+Scene\+::remove\+All\+Markings\+Type (\begin{DoxyParamCaption}\item[{Chess\+Type\+::\+Board\+Marking\+Type}]{type }\end{DoxyParamCaption})}
+
+Removes all markings of a specified type 
+\begin{DoxyParams}{Parameters}
+{\em type} & Type to be specified \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7}\label{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7} 
+\index{ChessScene@{ChessScene}!setCellMarkedType@{setCellMarkedType}}
+\index{setCellMarkedType@{setCellMarkedType}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{setCellMarkedType()}{setCellMarkedType()}}
+{\footnotesize\ttfamily void Chess\+Scene\+::set\+Cell\+Marked\+Type (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{Chess\+Type\+::\+Board\+Marking\+Type}]{type }\end{DoxyParamCaption})}
+
+Marks a specified cell as a specified type
+
+When type is SELECTED\+: Only one cell can be selected at one time. Old selected cells will be automatically deselected. Selecting an already selected cell will deselect that cell. If the cell to be deselected already had a marking before selection, that marking will be restored.
+
+When type is anything else\+: Override the current type for that cell. Overriding a cell marked as SELECTED will cause the cell to become that type once a new cell is selected. 
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/coordinate of the cell \\
+\hline
+{\em y} & y-\/coordinate of the cell \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/gvp/\+CLion\+Projects/\+Practice\+Enterprises/src/gui/Chess\+Scene.\+h\item 
+/\+Users/gvp/\+CLion\+Projects/\+Practice\+Enterprises/src/gui/Chess\+Scene.\+cpp\end{DoxyCompactItemize}

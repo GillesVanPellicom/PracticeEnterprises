@@ -1,0 +1,90 @@
+\doxysection{Chess\+Window.\+h}
+\hypertarget{ChessWindow_8h_source}{}\label{ChessWindow_8h_source}\index{/Users/gvp/CLionProjects/PracticeEnterprises/src/gui/ChessWindow.h@{/Users/gvp/CLionProjects/PracticeEnterprises/src/gui/ChessWindow.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ╔══════════════════════════════════════════════════════════════════════════════════╗}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ ║\ Name\ \ \ \ \ \ \ \ \ :\ ChessWindow.h\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ ║\ Description\ \ :\ Definition\ of\ the\ ChessWindow\ class.\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ ║\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Handles\ the\ Qt\ scene,\ view\ and\ menubar.\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ ║\ Author(s)\ \ \ \ :\ "{}Gilles\ Van\ pellicom"{}\ <r0997008@student.thomasmore.be>\ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ ║\ Date\ \ \ \ \ \ \ \ \ :\ 2024/02/11\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ ║\ Version\ \ \ \ \ \ :\ 1.1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ║\ License\ \ \ \ \ \ :\ GPL-\/3.0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ║}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ ╚══════════════════════════════════════════════════════════════════════════════════╝}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ PRACTICEENTERPRISES\_GUI\_CHESSWINDOW\_H\_}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ PRACTICEENTERPRISES\_GUI\_CHESSWINDOW\_H\_}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Qt}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QGraphicsScene>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QGraphicsRectItem>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QGraphicsView>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QMenu>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QMenuBar>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QAction>}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ std}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ local}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}ChessScene.h"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classChessWindow}{ChessWindow}}\ :\ \textcolor{keyword}{public}\ QMainWindow\ \{}
+\DoxyCodeLine{00034\ \ Q\_OBJECT}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classChessWindow}{ChessWindow}}(QWidget*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \textcolor{keyword}{protected}\ slots:}
+\DoxyCodeLine{00042\ \ \ \textcolor{comment}{//\ Abstract\ menu\ bar\ event\ handlers}}
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onFileQuit()\ =\ 0;}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onFileNew()\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onFileSave()\ =\ 0;}
+\DoxyCodeLine{00046\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onFileLoad()\ =\ 0;}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onGameUndo()\ =\ 0;}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onGameRedo()\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onVisualizeMoves()\ =\ 0;}
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onVisualizeThreatenedEnemy()\ =\ 0;}
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onVisualizeThreatenedFriendly()\ =\ 0;}
+\DoxyCodeLine{00052\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00053\ \ \ \textcolor{comment}{//\ Abstract\ click\ event\ handler}}
+\DoxyCodeLine{00054\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ onClick(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \textcolor{comment}{//\ Cell\ marking\ functions}}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ markCellAs(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ ChessType::BoardMarkingType\ type)\ \{scene-\/>\mbox{\hyperlink{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7}{setCellMarkedType}}(x,\ y,\ type);\}}
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ removeAllMarkingsType(ChessType::BoardMarkingType\ type)\ \{scene-\/>\mbox{\hyperlink{classChessScene_af08ac8fdde72527e7d25316269bd8a90}{removeAllMarkingsType}}(type);\}}
+\DoxyCodeLine{00058\ \ \ \textcolor{comment}{//\ Global\ GUI\ functions}}
+\DoxyCodeLine{00059\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ refreshGui()\ \{scene-\/>\mbox{\hyperlink{classChessScene_a41c47112c790146ba124ee182453d7d8}{refreshBoard}}();\}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00063\ \ \ \textcolor{comment}{//\ Menu\ bar\ setup}}
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{void}\ createMenus();}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{void}\ createActions();}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{comment}{//\ Define\ menus}}
+\DoxyCodeLine{00078\ \ \ QMenu*\ fileMenu\{\};}
+\DoxyCodeLine{00079\ \ \ QMenu*\ gameMenu\{\};}
+\DoxyCodeLine{00080\ \ \ QMenu*\ visualizeMenu\{\};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \textcolor{comment}{//\ Define\ menu\ actions}}
+\DoxyCodeLine{00083\ \ \ QAction*\ fileQuitAction\{\};}
+\DoxyCodeLine{00084\ \ \ QAction*\ fileNewAction\{\};}
+\DoxyCodeLine{00085\ \ \ QAction*\ fileSaveAction\{\};}
+\DoxyCodeLine{00086\ \ \ QAction*\ fileLoadAction\{\};}
+\DoxyCodeLine{00087\ \ \ QAction*\ gameUndoAction\{\};}
+\DoxyCodeLine{00088\ \ \ QAction*\ gameRedoAction\{\};}
+\DoxyCodeLine{00089\ \ \ QAction*\ visualizeMovesAction\{\};}
+\DoxyCodeLine{00090\ \ \ QAction*\ visualizeThreatenedPlayerAction\{\};}
+\DoxyCodeLine{00091\ \ \ QAction*\ visualizeThreatenedEnemyAction\{\};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \textcolor{comment}{//\ Define\ the\ scene\ and\ the\ view}}
+\DoxyCodeLine{00094\ \ \ QGraphicsView*\ view;}
+\DoxyCodeLine{00095\ \ \ \mbox{\hyperlink{classChessScene}{ChessScene}}*\ scene;}
+\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PRACTICEENTERPRISES\_GUI\_CHESSWINDOW\_H\_}}
+
+\end{DoxyCode}
