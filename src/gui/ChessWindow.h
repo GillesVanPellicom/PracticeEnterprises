@@ -51,6 +51,8 @@ class ChessWindow : public QMainWindow {
   // Cell marking functions
   virtual void markCellAs(int x, int y, ChessType::BoardMarkingType type) {scene->setCellMarkedType(x, y, type);}
   virtual void removeAllMarkingsType(ChessType::BoardMarkingType type) {scene->removeAllMarkingsType(type);}
+  // Global GUI functions
+  virtual void refreshGui() {scene->refreshBoard();}
 
 
  private:

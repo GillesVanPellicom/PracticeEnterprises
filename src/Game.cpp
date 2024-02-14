@@ -51,7 +51,9 @@ void Game::onGameRedo() {
 
 void Game::onVisualizeMoves() {
   if (doVisualizeMoves) {
+    // Turn off markings
     removeAllMarkingsType(ChessType::POSSIBLE);
+    refreshGui();
     doVisualizeMoves = false;
     return;
   }
@@ -61,8 +63,9 @@ void Game::onVisualizeMoves() {
 
   // EXAMPLE
   // =========================
-  markCellAs(5, 3, ChessType::POSSIBLE);
-  markCellAs(5, 2, ChessType::POSSIBLE);
+  markCellAs(6, 3, ChessType::POSSIBLE);
+  markCellAs(6, 2, ChessType::POSSIBLE);
+  refreshGui();
   // =========================
 
 
@@ -71,7 +74,9 @@ void Game::onVisualizeMoves() {
 
 void Game::onVisualizeThreatenedEnemy() {
   if (doVisualizeThreatenedEnemy) {
+    // Turn off markings
     removeAllMarkingsType(ChessType::THREATENED_ENEMY);
+    refreshGui();
     doVisualizeThreatenedEnemy = false;
     return;
   }
@@ -81,8 +86,9 @@ void Game::onVisualizeThreatenedEnemy() {
 
   // EXAMPLE
   // =========================
-  markCellAs(2, 3, ChessType::THREATENED_ENEMY);
-  markCellAs(2, 2, ChessType::THREATENED_ENEMY);
+  markCellAs(1, 3, ChessType::THREATENED_ENEMY);
+  markCellAs(1, 2, ChessType::THREATENED_ENEMY);
+  refreshGui();
   // =========================
 
 }
@@ -90,7 +96,9 @@ void Game::onVisualizeThreatenedEnemy() {
 
 void Game::onVisualizeThreatenedFriendly() {
   if (doVisualizeThreatenedFriendly) {
+    // Turn off markings
     removeAllMarkingsType(ChessType::THREATENED_FRIENDLY);
+    refreshGui();
     doVisualizeThreatenedFriendly = false;
     return;
   }
@@ -102,6 +110,7 @@ void Game::onVisualizeThreatenedFriendly() {
   // =========================
   markCellAs(3, 3, ChessType::THREATENED_FRIENDLY);
   markCellAs(3, 2, ChessType::THREATENED_FRIENDLY);
+  refreshGui();
   // =========================
 
 }
@@ -119,6 +128,9 @@ void Game::markCellAs(int x, int y, ChessType::BoardMarkingType type) {
 }
 void Game::removeAllMarkingsType(ChessType::BoardMarkingType type) {
   ChessWindow::removeAllMarkingsType(type);
+}
+void Game::refreshGui() {
+  ChessWindow::refreshGui();
 }
 
 

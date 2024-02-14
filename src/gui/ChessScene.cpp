@@ -242,6 +242,8 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
   // Mark cell as selected.
   markings[{x, y}] = ChessType::BoardMarkingType::SELECTED;
 
+  // Refresh
+  refreshBoard();
 }
 
 
@@ -258,7 +260,6 @@ void ChessScene::removeAllMarkingsType(ChessType::BoardMarkingType type) {
   if (isInactiveMarkingUsed && inactiveMarking.second == type) {
     isInactiveMarkingUsed = false;
   }
-  refreshBoard();
 }
 
 
@@ -284,8 +285,4 @@ void ChessScene::setCellMarkedType(int x, int y, ChessType::BoardMarkingType typ
       inactiveMarking = {{x, y}, type};
     }
   }
-
-  // Refresh
-  refreshBoard();
-
 }

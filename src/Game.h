@@ -37,6 +37,8 @@ class Game : public ChessWindow {
   void markCellAs(int x, int y, ChessType::BoardMarkingType type) override;
   void removeAllMarkingsType(ChessType::BoardMarkingType type) override;
 
+  void refreshGui() override;
+
   // Booleans for menuBar checkboxes
   bool doVisualizeMoves = false;
   bool doVisualizeThreatenedEnemy = false;
