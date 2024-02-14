@@ -1,6 +1,6 @@
 # Practice enterprises - Chess project
 
-Made by placeholder & Gilles Van pellicom
+Made by Bert Schenkelaars & Gilles Van pellicom
 
 ## Build requirements
 - Linux environement
