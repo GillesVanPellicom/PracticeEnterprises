@@ -18,7 +18,7 @@
 #include "gui/ChessWindow.h"
 
 /**
- * @brief Head game logic class
+ * @brief Head game logic class.
  *
  * @throws std::out_of_range If invalid board coördinates are provided
  */
@@ -29,63 +29,63 @@ class Game : public ChessWindow {
   // Menu bar handlers
 
   /**
-   * Triggered on menubar action file/quit
+   * Triggered on menubar action file/quit.
    * @note Handler function. Not to be called manually.
    */
   void onFileQuit() override;
 
 
   /**
-   * Triggered on menubar action file/new
+   * Triggered on menubar action file/new.
    * @note Handler function. Not to be called manually.
    */
   void onFileNew() override;
 
 
   /**
-   * Triggered on menubar action file/save
+   * Triggered on menubar action file/save.
    * @note Handler function. Not to be called manually.
    */
   void onFileSave() override;
 
 
   /**
-   * Triggered on menubar action file/load
+   * Triggered on menubar action file/load.
    * @note Handler function. Not to be called manually.
    */
   void onFileLoad() override;
 
 
   /**
-   * Triggered on menubar action game/undo
+   * Triggered on menubar action game/undo.
    * @note Handler function. Not to be called manually.
    */
   void onGameUndo() override;
 
 
   /**
-   * Triggered on menubar action game/redo
+   * Triggered on menubar action game/redo.
    * @note Handler function. Not to be called manually.
    */
   void onGameRedo() override;
 
 
   /**
-   * Triggered on menubar action visualize/moves
+   * Triggered on menubar action visualize/moves.
    * @note Handler function. Not to be called manually.
    */
   void onVisualizeMoves() override;
 
 
   /**
-   * Triggered on menubar action visualize/enemy
+   * Triggered on menubar action visualize/enemy.
    * @note Handler function. Not to be called manually.
    */
   void onVisualizeThreatenedEnemy() override;
 
 
   /**
-   * Triggered on menubar action visualize/friendly
+   * Triggered on menubar action visualize/friendly.
    * @note Handler function. Not to be called manually.
    */
   void onVisualizeThreatenedFriendly() override;
@@ -101,6 +101,23 @@ class Game : public ChessWindow {
   void onClick(int x, int y) override;
 
   // Cell marking functions
+  /**
+   * Marks a specified cell as a specified type.
+   *
+   * When type is SELECTED:
+   * Only one cell can be selected at one time.
+   * Old selected cells will be automatically deselected.
+   * Selecting an already selected cell will deselect that cell.
+   * If the cell to be deselected already had a marking before selection,
+   * that marking will be restored.
+   *
+   * When type is anything else:
+   * Override the current type for that cell.
+   * Overriding a cell marked as SELECTED will cause the cell to become that type once a new cell is selected.
+   *
+   * @param x x-coordinate of the cell
+   * @param y y-coordinate of the cell
+   */
   void markCellAs(int x, int y, BoardMarkingType type) override;
   /**
    * Removes all markings of a specified type
@@ -111,7 +128,7 @@ class Game : public ChessWindow {
 
   // Global GUI functions
   /**
-   * Refreshes the graphics of the entire board
+   * Refreshes the graphics of the entire board.
    *
    * This includes tile color, markings and images.
    */
@@ -126,7 +143,7 @@ class Game : public ChessWindow {
 
   // Image manipulation functions
   /**
-   * Sets the image for a specified cell
+   * Sets the image for a specified cell.
    * @param x x-coordinate of the cell
    * @param y y-coordinate of the cell
    * @param type type of the chess piece
@@ -136,7 +153,7 @@ class Game : public ChessWindow {
 
 
   /**
-   * Displays a message box with as options to save, discard, or cancel
+   * Displays a message box with as options to save, discard, or cancel.
    *
    * Example usage:
    * \code{.cpp}
@@ -165,7 +182,7 @@ class Game : public ChessWindow {
 
 
   /**
-   * Displays a message box with passed arguments
+   * Displays a message box with passed arguments.
    * @param title Title of the modal.
    * @param header Header text of the modal.
    * @param subtext Subtext, text under the header of the modal.

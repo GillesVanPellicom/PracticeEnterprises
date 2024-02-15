@@ -447,4 +447,3 @@ void ChessScene::customMsgBox(const std::string& title, const std::string& heade
   // TODO: fix icon
   msgBox.exec();
 }
-
