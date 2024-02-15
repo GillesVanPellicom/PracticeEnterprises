@@ -78,7 +78,7 @@ class ChessScene : public QGraphicsScene {
 
   // Dimensions
   int cellWidth;
-//  int boardWidth  = cellWidth*8;
+  //  int boardWidth  = cellWidth*8;
   int boardMargin;
 
   // Callback for click event
@@ -131,15 +131,36 @@ class ChessScene : public QGraphicsScene {
    */
   void setCellMarkedSelected(int x, int y);
 
+  /**
+ * Refreshes all images on the board
+ *
+ * After one or
+ */
+  void refreshImages();
+
+  /**
+   * Generates svg file link based on type and color enum
+   * @param type type of the svg
+   * @param color color of the svg
+   * @return Relative link to the svg
+   */
+  static QString getImageFileName(ChessPieceType type, ChessPieceColor color);
+
+
  public:
   /**
    * Refreshes the graphics of the entire board.
    *
-   * This includes tile color, markings, images.
+   * This includes tile color, markings and images.
    */
   void refreshBoard();
 
-
+  /**
+   * Refreshes a single piece svg on the board
+   * @param x x coordinate of the svg
+   * @param y y coordinate of the svg
+   */
+  void refreshImage(int x, int y);
 
   /**
    * Removes all markings of a specified type
@@ -165,21 +186,19 @@ class ChessScene : public QGraphicsScene {
    */
   void setCellMarkedType(int x, int y, BoardMarkingType type);
 
-  void setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color);
+  /**
+   * Sets the image for a certain
+   * @param x
+   * @param y
+   * @param type
+   * @param color
+   */
+  void setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color = ChessPieceColor::NO_COLOR);
 
-  void refreshImage(int x, int y);
-
-  void refreshImages();
-
-  static QString getImageFileName(ChessPieceType type, ChessPieceColor color);
-
+  /**
+   * Clears the entire GUI to starting state.
+   */
   void clearGUI();
-
-
-
-
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
-
-
