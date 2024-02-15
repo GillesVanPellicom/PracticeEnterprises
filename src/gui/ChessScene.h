@@ -187,22 +187,22 @@ class ChessScene : public QGraphicsScene {
   void setCellMarkedType(int x, int y, BoardMarkingType type);
 
   /**
-   * Sets the image for a certain
-   * @param x
-   * @param y
-   * @param type
-   * @param color
+   * Sets the image for a certain cell
+   * @param x x-coordinate of the cell
+   * @param y y-coordinate of the cell
+   * @param type type of the chess piece
+   * @param color color of the chess piece
    */
   void setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color = ChessPieceColor::NO_COLOR);
 
   /**
-   * Clears the entire GUI to starting state.
+   * Clears the entire GUI to begin-state
    */
   void clearGUI();
 
 
 /**
- * Displays a message box with as options to save, discard, or cancel.
+ * Displays a message box with as options to save, discard, or cancel
  *
  * Example usage:
  * \code{.cpp}

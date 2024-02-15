@@ -1,9 +1,10 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
 // ║ Name         : Game.cpp                                                          ║
 // ║ Description  : Implementation of the chess game logic                            ║
-// ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
-// ║ Date         : 2024/02/12                                                        ║                
-// ║ Version      : 1.0                                                               ║
+// ║ Author(s)    : "Bert Schenkelaars" <r990071@student.thomasmore.be>               ║
+// ║              : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
+// ║ Date         : 2024/02/12                                                        ║
+// ║ Version      : 1.5                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
@@ -13,7 +14,11 @@
 // ║             Constructors               ║
 // ╚════════════════════════════════════════╝
 
-Game::Game() {}
+Game::Game() {
+  // FIXME: DEMONSTRATION OF GUI
+  guiDemonstration1();
+
+}
 
 
 // ╔════════════════════════════════════════╗
@@ -178,7 +183,97 @@ void Game::onVisualizeThreatenedFriendly() {
 void Game::onClick(int x, int y) {
   // TODO: handle mouse clicks
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
+
+  // FIXME: DEMONSTRATION OF GUI
+  guiDemonstration2();
 }
+
+// EXAMPLES. These can be removed when understood.
+
+void Game::guiDemonstration1() {
+  // This function could be used for filling the board whilst file I/O isn't yet implemented.
+  // Black pieces top row
+  setChessItem(0, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+  setChessItem(1, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
+  setChessItem(2, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
+  setChessItem(3, 7, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
+  setChessItem(4, 7, ChessPieceType::KING, ChessPieceColor::BLACK);
+  setChessItem(5, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
+  setChessItem(6, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
+  setChessItem(7, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+
+  // Black pawn row
+  setChessItem(0, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(1, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(2, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(3, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(4, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(5, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(6, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(7, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+
+  // White pawn row
+  setChessItem(0, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(1, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(2, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(3, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(4, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(5, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(6, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(7, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+
+  // White pieces bottom row
+  setChessItem(0, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
+  setChessItem(1, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
+  setChessItem(2, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
+  setChessItem(3, 0, ChessPieceType::QUEEN, ChessPieceColor::WHITE);
+  setChessItem(4, 0, ChessPieceType::KING, ChessPieceColor::WHITE);
+  setChessItem(5, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
+  setChessItem(6, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
+  setChessItem(7, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
+
+  refreshGui();
+}
+void Game::guiDemonstration2() {
+  // Clear initial board setup demonstration
+  clearGUI();
+
+  // Place piece images on board
+  setChessItem(1, 1, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(0, 3, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
+  setChessItem(0, 4, ChessPieceType::KING, ChessPieceColor::WHITE);
+  setChessItem(2, 4, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(3, 3, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  setChessItem(2, 7, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
+  setChessItem(5, 3, ChessPieceType::KING, ChessPieceColor::WHITE);
+  setChessItem(7, 2, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+
+  // Mark threatened friendly pieces
+  markCellAs(3, 3, THREATENED_FRIENDLY);
+  markCellAs(0, 4, THREATENED_FRIENDLY);
+
+  // Mark threatened enemy pieces based on what piece is selected
+  markCellAs(7, 2, THREATENED_ENEMY);
+
+
+  // Mark the currently selected piece
+  markCellAs(2, 7, SELECTED);
+
+  // Mark all possible moves for the selected piece
+  markCellAs(1, 6, POSSIBLE);
+  markCellAs(0, 5, POSSIBLE);
+  markCellAs(3, 6, POSSIBLE);
+  markCellAs(4, 5, POSSIBLE);
+  markCellAs(5, 4, POSSIBLE);
+  markCellAs(6, 3, POSSIBLE);
+
+  refreshGui();
+
+  customMsgBox("Demonstration",
+               "It's black's turn",
+               "The bishop is selected. Possible moves are shown. Possible takes are highlighted and possible threats to one's own pieces are also shown.");
+}
+
 
 
 // ╔════════════════════════════════════════╗
@@ -206,5 +301,8 @@ QMessageBox::StandardButton Game::saveQuitMsgBox() {
 void Game::customMsgBox(const std::string& title, const std::string& header, const std::string& subtext) {
   ChessWindow::customMsgBox(title, header, subtext);
 }
-
-
+QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
+                                              const std::string& header,
+                                              const std::string& subtext) {
+  return ChessWindow::yesNoMsgBox(title, header, subtext);
+}

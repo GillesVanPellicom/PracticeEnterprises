@@ -218,10 +218,6 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // flip y coordinate to conform to chess standards
     int y = (9 - (int) ceil(event->scenePos().y() / cellWidth)) - 1;
 
-    // FIXME: remove following two lines for production
-    setCellMarkedType(x, y, SELECTED);
-    refreshBoard();
-
     // If callback is valid
     if (clickCallback) {
       // Callback to ChessWindow
@@ -315,9 +311,6 @@ void ChessScene::refreshImage(int x, int y) {
 
   quint32 xQt = cellWidth * (x);
   quint32 yQt = cellWidth * (7 - y);
-
-  std::cout << xQt << " " << yQt << " " << x << " " << (7 - y) << std::endl;
-
 
   auto* item = new QGraphicsPixmapItem(QPixmap(filename));
 

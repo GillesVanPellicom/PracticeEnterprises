@@ -1,9 +1,10 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
 // ║ Name         : Game.h                                                            ║
 // ║ Description  : Definitions of the chess game logic                               ║
-// ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
+// ║ Author(s)    : "Bert Schenkelaars" <r990071@student.thomasmore.be>               ║
+// ║              : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/12                                                        ║                
-// ║ Version      : 1.0                                                               ║
+// ║ Version      : 1.5                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
@@ -17,7 +18,8 @@
 #include "gui/ChessWindow.h"
 
 /**
- * @brief Head game logic class\n
+ * @brief Head game logic class
+ *
  * @throws std::out_of_range If invalid board coördinates are provided
  */
 class Game : public ChessWindow {
@@ -25,35 +27,184 @@ class Game : public ChessWindow {
  private:
   // GUI event handlers
   // Menu bar handlers
+
+  /**
+   * Triggered on menubar action file/quit
+   * @note Handler function. Not to be called manually.
+   */
   void onFileQuit() override;
+
+
+  /**
+   * Triggered on menubar action file/new
+   * @note Handler function. Not to be called manually.
+   */
   void onFileNew() override;
+
+
+  /**
+   * Triggered on menubar action file/save
+   * @note Handler function. Not to be called manually.
+   */
   void onFileSave() override;
+
+
+  /**
+   * Triggered on menubar action file/load
+   * @note Handler function. Not to be called manually.
+   */
   void onFileLoad() override;
+
+
+  /**
+   * Triggered on menubar action game/undo
+   * @note Handler function. Not to be called manually.
+   */
   void onGameUndo() override;
+
+
+  /**
+   * Triggered on menubar action game/redo
+   * @note Handler function. Not to be called manually.
+   */
   void onGameRedo() override;
+
+
+  /**
+   * Triggered on menubar action visualize/moves
+   * @note Handler function. Not to be called manually.
+   */
   void onVisualizeMoves() override;
+
+
+  /**
+   * Triggered on menubar action visualize/enemy
+   * @note Handler function. Not to be called manually.
+   */
   void onVisualizeThreatenedEnemy() override;
+
+
+  /**
+   * Triggered on menubar action visualize/friendly
+   * @note Handler function. Not to be called manually.
+   */
   void onVisualizeThreatenedFriendly() override;
 
+
   // Mouse click handler
+  /**
+   * Triggered on mouse click. Passes click board coördinates.
+   * @note Handler function. Not to be called manually.
+   * @param x x-coordinate of the click
+   * @param y y-coordinate of the click
+   */
   void onClick(int x, int y) override;
 
   // Cell marking functions
   void markCellAs(int x, int y, BoardMarkingType type) override;
+  /**
+   * Removes all markings of a specified type
+   * @param type Type to be specified
+   */
   void removeAllMarkingsType(BoardMarkingType type) override;
 
+
   // Global GUI functions
+  /**
+   * Refreshes the graphics of the entire board
+   *
+   * This includes tile color, markings and images.
+   */
   void refreshGui() override;
+
+
+  /**
+   * Clears the entire GUI to begin-state
+   */
   void clearGUI() override;
 
+
   // Image manipulation functions
+  /**
+   * Sets the image for a specified cell
+   * @param x x-coordinate of the cell
+   * @param y y-coordinate of the cell
+   * @param type type of the chess piece
+   * @param color color of the chess piece
+   */
   void setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) override;
 
+
+  /**
+   * Displays a message box with as options to save, discard, or cancel
+   *
+   * Example usage:
+   * \code{.cpp}
+   * QMessageBox::StandardButton returnValue = saveQuitMsgBox();
+   *
+   * if (returnValue == QMessageBox::Save) {
+   *      // User clicked Save
+   *      std::cout << "Save clicked" << std::endl;
+   *
+   * } else if (returnValue == QMessageBox::Discard) {
+   *      // User clicked Discard
+   *      std::cout << "Discard clicked" << std::endl;
+   *
+   * } else if (returnValue == QMessageBox::Cancel) {
+   *      // User clicked Cancel
+   *      std::cout << "Cancel clicked" << std::endl;
+   *
+   * } else {
+   *      // User closed the message box without clicking any button
+   *      std::cout << "Message box closed without selection" << std::endl;
+   *
+   * }
+   * \endcode
+   */
   QMessageBox::StandardButton saveQuitMsgBox() override;
 
+
+  /**
+   * Displays a message box with passed arguments
+   * @param title Title of the modal.
+   * @param header Header text of the modal.
+   * @param subtext Subtext, text under the header of the modal.
+   */
   void customMsgBox(const std::string& title,
                     const std::string& header,
                     const std::string& subtext) override;
+
+
+  /**
+   * Displays a message box with passed arguments and yes/no buttons.
+   *
+   * Example usage:
+   * \code{.cpp}
+   * QMessageBox::StandardButton returnValue = yesNoMsgBox();
+   *
+   * if (returnValue == QMessageBox::Ok) {
+   *      // User clicked Ok
+   *      std::cout << "Ok" << std::endl;
+   *
+   * } else if (returnValue == QMessageBox::Cancel) {
+   *      // User clicked Cancel
+   *      std::cout << "Cancel clicked" << std::endl;
+   *
+   * } else {
+   *      // User closed the message box without clicking any button
+   *      std::cout << "Message box closed without selection" << std::endl;
+   *
+   * }
+   * \endcode
+   */
+  QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
+                                          const std::string& header,
+                                          const std::string& subtext) override;
+
+
+  // DEMONSTRATION
+  void guiDemonstration1();
+  void guiDemonstration2();
 
  public:
   Game();
