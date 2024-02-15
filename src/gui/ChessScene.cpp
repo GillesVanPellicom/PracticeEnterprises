@@ -228,8 +228,6 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
       clickCallback(x, y);
     }
   }
-
-
   QGraphicsScene::mousePressEvent(event);
 }
 
@@ -406,6 +404,7 @@ QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color)
 
 void ChessScene::clearGUI() {
 
+  // Clear all variables
   for (int i = 0; i < 8; ++i) {
     for (int j = 0; j < 8; ++j) {
       markings[{i, j}] = BoardMarkingType::NONE;
@@ -414,11 +413,45 @@ void ChessScene::clearGUI() {
   }
 
   isInactiveMarkingUsed = false;
+
+  // Refresh
   refreshBoard();
 }
 
 
+QMessageBox::StandardButton ChessScene::saveQuitMsgBox() {
+  QMessageBox msgBox;
+  msgBox.setWindowTitle("Save");
+  msgBox.setText("Do you want to save your changes?");
+  msgBox.setInformativeText("Any unsaved changes will be lost.");
+  msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::Save);
+  int result = msgBox.exec();
+
+  return static_cast<QMessageBox::StandardButton>(result);
+}
+
+QMessageBox::StandardButton ChessScene::yesNoMsgBox(const std::string& title,
+                                                    const std::string& header,
+                                                    const std::string& subtext) {
+  QMessageBox msgBox;
+  msgBox.setWindowTitle(QString::fromStdString(title));
+  msgBox.setText(QString::fromStdString(header));
+  msgBox.setInformativeText(QString::fromStdString(subtext));
+  msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::Cancel);
+  int result = msgBox.exec();
+
+  return static_cast<QMessageBox::StandardButton>(result);
+}
 
 
-
+void ChessScene::customMsgBox(const std::string& title, const std::string& header, const std::string& subtext) {
+  QMessageBox msgBox;
+  msgBox.setWindowTitle(QString::fromStdString(title));
+  msgBox.setText(QString::fromStdString(header));
+  msgBox.setInformativeText(QString::fromStdString(subtext));
+  // TODO: fix icon
+  msgBox.exec();
+}
 

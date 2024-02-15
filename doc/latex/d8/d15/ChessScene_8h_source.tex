@@ -15,94 +15,112 @@
 \DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ PRACTICEENTERPRISES\_GUI\_CHESSSCENE\_H\_}}
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{comment}{//\ Qt}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QColor>}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QGraphicsScene>}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QGraphicsRectItem>}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QMouseEvent>}}
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QGraphicsSceneMouseEvent>}}
-\DoxyCodeLine{00019\ }
-\DoxyCodeLine{00020\ \textcolor{comment}{//\ std}}
-\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <iostream>}}
-\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <regex>}}
-\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <utility>}}
-\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \textcolor{comment}{//\ local}}
-\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}../utils/Type.h"{}}}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \textcolor{comment}{//\ third\ party}}
-\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ "{}../lib/mini/ini.h"{}}}
-\DoxyCodeLine{00031\ }
-\DoxyCodeLine{00036\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classChessScene}{ChessScene}}\ :\ \textcolor{keyword}{public}\ QGraphicsScene\ \{}
-\DoxyCodeLine{00037\ \ Q\_OBJECT}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classChessScene}{ChessScene}}(QObject*\ parent\ =\ \textcolor{keyword}{nullptr});}
-\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{void}\ setClickCallback(std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int})>\ callback);}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QGraphicsColorizeEffect>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QMessageBox>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QGuiApplication>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QStyleHints>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QColor>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QGraphicsScene>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QGraphicsRectItem>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QMouseEvent>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <QGraphicsSceneMouseEvent>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ std}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <regex>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ local}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}../utils/Type.h"{}}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ third\ party}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}../lib/mini/ini.h"{}}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classChessScene}{ChessScene}}\ :\ \textcolor{keyword}{public}\ QGraphicsScene\ \{}
+\DoxyCodeLine{00041\ \ Q\_OBJECT}
 \DoxyCodeLine{00042\ }
-\DoxyCodeLine{00043\ \ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{void}\ mousePressEvent(QGraphicsSceneMouseEvent*\ event)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00047\ \ \ \textcolor{comment}{//\ Color\ palette}}
-\DoxyCodeLine{00048\ \ \ \textcolor{comment}{//\ White}}
-\DoxyCodeLine{00049\ \ \ QColor\ whiteSquareColor;}
-\DoxyCodeLine{00050\ \ \ QColor\ whiteSquareSelectedColor;}
-\DoxyCodeLine{00051\ \ \ QColor\ blackSquareDangerFriendlyColor;}
-\DoxyCodeLine{00052\ \ \ QColor\ blackSquareDangerEnemyColor;}
-\DoxyCodeLine{00053\ \ \ QColor\ whiteSquarePossibleColor;}
-\DoxyCodeLine{00054\ \ \ \textcolor{comment}{//Black}}
-\DoxyCodeLine{00055\ \ \ QColor\ blackSquareColor;}
-\DoxyCodeLine{00056\ \ \ QColor\ blackSquareSelectedColor;}
-\DoxyCodeLine{00057\ \ \ QColor\ whiteSquareDangerFriendlyColor;}
-\DoxyCodeLine{00058\ \ \ QColor\ whiteSquareDangerEnemyColor;}
-\DoxyCodeLine{00059\ \ \ QColor\ blackSquarePossibleColor;}
-\DoxyCodeLine{00060\ }
-\DoxyCodeLine{00061\ \ \ \textcolor{comment}{//\ Global}}
-\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{bool}\ boardBorders\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ \ \ \textcolor{comment}{//\ All\ markings\ as\ enum,\ associated\ with\ a\ coordinate\ pair\ (x,\ y)}}
-\DoxyCodeLine{00065\ \ \ \textcolor{comment}{//\ Implicitly\ define\ hash\ function\ because\ std\ is\ being\ screwy.}}
-\DoxyCodeLine{00066\ \ \ std::unordered\_map<ChessType::Coords,\ ChessType::BoardMarkingType,\ ChessType::Coords::Hash>\ markings;}
+\DoxyCodeLine{00043\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classChessScene}{ChessScene}}(QObject*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{void}\ setClickCallback(std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int})>\ callback);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{void}\ mousePressEvent(QGraphicsSceneMouseEvent*\ event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00051\ \ \ \textcolor{comment}{//\ Color\ palette}}
+\DoxyCodeLine{00052\ \ \ \textcolor{comment}{//\ White}}
+\DoxyCodeLine{00053\ \ \ QColor\ whiteSquareColor;}
+\DoxyCodeLine{00054\ \ \ QColor\ whiteSquareSelectedColor;}
+\DoxyCodeLine{00055\ \ \ QColor\ blackSquareDangerFriendlyColor;}
+\DoxyCodeLine{00056\ \ \ QColor\ blackSquareDangerEnemyColor;}
+\DoxyCodeLine{00057\ \ \ QColor\ whiteSquarePossibleColor;}
+\DoxyCodeLine{00058\ \ \ \textcolor{comment}{//Black}}
+\DoxyCodeLine{00059\ \ \ QColor\ blackSquareColor;}
+\DoxyCodeLine{00060\ \ \ QColor\ blackSquareSelectedColor;}
+\DoxyCodeLine{00061\ \ \ QColor\ whiteSquareDangerFriendlyColor;}
+\DoxyCodeLine{00062\ \ \ QColor\ whiteSquareDangerEnemyColor;}
+\DoxyCodeLine{00063\ \ \ QColor\ blackSquarePossibleColor;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{comment}{//\ Global}}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{bool}\ boardBorders\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00067\ }
-\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{bool}\ isInactiveMarkingUsed\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00069\ \ \ std::pair<ChessType::Coords,\ ChessType::BoardMarkingType>\ inactiveMarking;}
-\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00068\ \ \ \textcolor{comment}{//\ All\ markings\ as\ enum,\ associated\ with\ a\ coordinate\ pair\ (x,\ y)}}
+\DoxyCodeLine{00069\ \ \ \textcolor{comment}{//\ Implicitly\ define\ hash\ function\ because\ std\ is\ being\ screwy.}}
+\DoxyCodeLine{00070\ \ \ std::unordered\_map<Coords,\ BoardMarkingType,\ Coords::Hash>\ markings;}
 \DoxyCodeLine{00071\ }
-\DoxyCodeLine{00072\ }
-\DoxyCodeLine{00073\ \ \ \textcolor{comment}{//\ Dimensions}}
-\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{int}\ cellWidth;}
-\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{int}\ boardWidth\ \ =\ cellWidth*8;}
-\DoxyCodeLine{00076\ \ \ \textcolor{keywordtype}{int}\ boardMargin;}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{bool}\ isInactiveMarkingUsed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00073\ \ \ std::pair<Coords,\ BoardMarkingType>\ inactiveMarking;}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ std::unordered\_map<Coords,\ std::pair<ChessPieceType,\ ChessPieceColor>,\ \mbox{\hyperlink{structCoords_1_1Hash}{Coords::Hash}}>\ images;}
+\DoxyCodeLine{00076\ }
 \DoxyCodeLine{00077\ }
-\DoxyCodeLine{00078\ \ \ \textcolor{comment}{//\ Callback\ for\ click\ event}}
-\DoxyCodeLine{00079\ \ \ std::function<void(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int})>\ clickCallback;}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00086\ \ \ \textcolor{keywordtype}{void}\ initializeMarkingsMap();}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{void}\ readColorConfig();}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{static}\ QColor\ hexstrToQColor(std::string\&\ hex);}
-\DoxyCodeLine{00099\ }
-\DoxyCodeLine{00106\ \ \ \textcolor{keywordtype}{void}\ drawTile(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{void}\ drawBoard();}
-\DoxyCodeLine{00113\ }
-\DoxyCodeLine{00123\ \ \ \textcolor{keywordtype}{void}\ setCellMarkedSelected(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
-\DoxyCodeLine{00124\ }
-\DoxyCodeLine{00125\ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00131\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_a41c47112c790146ba124ee182453d7d8}{refreshBoard}}();}
-\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{comment}{//\ Dimensions}}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordtype}{int}\ cellWidth;}
+\DoxyCodeLine{00081\ \ \ \textcolor{comment}{//\ \ int\ boardWidth\ \ =\ cellWidth*8;}}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{int}\ boardMargin;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \textcolor{comment}{//\ Callback\ for\ click\ event}}
+\DoxyCodeLine{00085\ \ \ std::function<void(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int})>\ clickCallback;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordtype}{void}\ initializeMarkingsMap();}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \textcolor{keywordtype}{void}\ initializeImagesMap();}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordtype}{void}\ readColorConfig();}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{static}\ QColor\ hexstrToQColor(std::string\&\ hex);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{void}\ drawTile(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00121\ \ \ \textcolor{keywordtype}{void}\ drawBoard();}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00132\ \ \ \textcolor{keywordtype}{void}\ setCellMarkedSelected(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
 \DoxyCodeLine{00133\ }
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00139\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_af08ac8fdde72527e7d25316269bd8a90}{removeAllMarkingsType}}(ChessType::BoardMarkingType\ type);}
+\DoxyCodeLine{00139\ \ \ \textcolor{keywordtype}{void}\ refreshImages();}
 \DoxyCodeLine{00140\ }
-\DoxyCodeLine{00157\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7}{setCellMarkedType}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ ChessType::BoardMarkingType\ type);}
-\DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \};}
-\DoxyCodeLine{00160\ }
-\DoxyCodeLine{00161\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PRACTICEENTERPRISES\_GUI\_CHESSSCENE\_H\_}}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00147\ \ \ \textcolor{keyword}{static}\ QString\ getImageFileName(ChessPieceType\ type,\ ChessPieceColor\ color);}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_a41c47112c790146ba124ee182453d7d8}{refreshBoard}}();}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00163\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_aee38e374d38c3e3f688136ab4daeb868}{refreshImage}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00169\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_aff4861b01cb7a7690245f1a81708bbcb}{removeAllMarkingsType}}(BoardMarkingType\ type);}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00187\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_a19e0631e094e91037ab38a11bd3be224}{setCellMarkedType}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ BoardMarkingType\ type);}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00196\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_adba26d9165fd13fc6c0d516991f85396}{setCellPieceType}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ ChessPieceType\ type,\ ChessPieceColor\ color\ =\ ChessPieceColor::NO\_COLOR);}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00201\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classChessScene_ae49ce90730ebd613d0e7a452704c7cd5}{clearGUI}}();}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00225\ \ \ \textcolor{keyword}{static}\ QMessageBox::StandardButton\ \mbox{\hyperlink{classChessScene_a86147e8cf3eeb8de0ca06bf7cdf5463f}{saveQuitMsgBox}}();}
+\DoxyCodeLine{00226\ \};}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PRACTICEENTERPRISES\_GUI\_CHESSSCENE\_H\_}}
 
 \end{DoxyCode}

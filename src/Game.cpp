@@ -23,18 +23,53 @@ Game::Game() {}
 // MenuBar
 
 void Game::onFileQuit() {
-  // TODO: ask user before quit using modal window
-  exit(0);
+  // TODO: Handle all option branches
+  QMessageBox::StandardButton returnValue = saveQuitMsgBox();
+
+  if (returnValue == QMessageBox::Save) {
+    // User clicked Save
+    std::cout << "Save clicked" << std::endl;
+
+  } else if (returnValue == QMessageBox::Discard) {
+    // User clicked Discard
+    std::cout << "Discard clicked" << std::endl;
+    exit(0);
+
+  } else if (returnValue == QMessageBox::Cancel) {
+    // User clicked Cancel
+    std::cout << "Cancel clicked" << std::endl;
+
+  } else {
+    // User closed the message box without clicking any button
+    std::cout << "Message box closed without selection" << std::endl;
+  }
 }
 
 
 void Game::onFileNew() {
   // TODO: handle new game request
-  // Set all game variables back to default
-  doVisualizeMoves = false;
-  doVisualizeThreatenedEnemy = false;
-  doVisualizeThreatenedFriendly = false;
-  clearGUI();
+
+  QMessageBox::StandardButton returnValue = yesNoMsgBox(
+      "New game",
+      "Do you want to start a new game?",
+      "All changes will be lost.");
+
+  if (returnValue == QMessageBox::Ok) {
+    // User clicked Ok
+    // Set all game variables back to default
+    doVisualizeMoves = false;
+    doVisualizeThreatenedEnemy = false;
+    doVisualizeThreatenedFriendly = false;
+    clearGUI();
+
+  } else if (returnValue == QMessageBox::Cancel) {
+    // User clicked Cancel
+    std::cout << "Cancel clicked" << std::endl;
+
+  } else {
+    // User closed the message box without clicking any button
+    std::cout << "Message box closed without selection" << std::endl;
+  }
 }
 
 
@@ -164,6 +199,12 @@ void Game::setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color
 }
 void Game::clearGUI() {
   ChessWindow::clearGUI();
+}
+QMessageBox::StandardButton Game::saveQuitMsgBox() {
+  return ChessWindow::saveQuitMsgBox();
+}
+void Game::customMsgBox(const std::string& title, const std::string& header, const std::string& subtext) {
+  ChessWindow::customMsgBox(title, header, subtext);
 }
 
 

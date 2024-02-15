@@ -73,6 +73,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="../../d4/d2b/classChessScene-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ChessScene Class Reference</div></div>
@@ -115,10 +116,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setClickCallback</b> 
 <tr class="separator:a65d4c93093720ca3bfd25e8beab91fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41c47112c790146ba124ee182453d7d8" id="r_a41c47112c790146ba124ee182453d7d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41c47112c790146ba124ee182453d7d8">refreshBoard</a> ()</td></tr>
 <tr class="separator:a41c47112c790146ba124ee182453d7d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af08ac8fdde72527e7d25316269bd8a90" id="r_af08ac8fdde72527e7d25316269bd8a90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af08ac8fdde72527e7d25316269bd8a90">removeAllMarkingsType</a> (ChessType::BoardMarkingType type)</td></tr>
-<tr class="separator:af08ac8fdde72527e7d25316269bd8a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedf2a03cb9bf53a2dba087f09b831ae7" id="r_aedf2a03cb9bf53a2dba087f09b831ae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedf2a03cb9bf53a2dba087f09b831ae7">setCellMarkedType</a> (int x, int y, ChessType::BoardMarkingType type)</td></tr>
-<tr class="separator:aedf2a03cb9bf53a2dba087f09b831ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee38e374d38c3e3f688136ab4daeb868" id="r_aee38e374d38c3e3f688136ab4daeb868"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee38e374d38c3e3f688136ab4daeb868">refreshImage</a> (int x, int y)</td></tr>
+<tr class="separator:aee38e374d38c3e3f688136ab4daeb868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff4861b01cb7a7690245f1a81708bbcb" id="r_aff4861b01cb7a7690245f1a81708bbcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff4861b01cb7a7690245f1a81708bbcb">removeAllMarkingsType</a> (BoardMarkingType type)</td></tr>
+<tr class="separator:aff4861b01cb7a7690245f1a81708bbcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19e0631e094e91037ab38a11bd3be224" id="r_a19e0631e094e91037ab38a11bd3be224"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19e0631e094e91037ab38a11bd3be224">setCellMarkedType</a> (int x, int y, BoardMarkingType type)</td></tr>
+<tr class="separator:a19e0631e094e91037ab38a11bd3be224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adba26d9165fd13fc6c0d516991f85396" id="r_adba26d9165fd13fc6c0d516991f85396"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adba26d9165fd13fc6c0d516991f85396">setCellPieceType</a> (int x, int y, ChessPieceType type, ChessPieceColor color=ChessPieceColor::NO_COLOR)</td></tr>
+<tr class="separator:adba26d9165fd13fc6c0d516991f85396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae49ce90730ebd613d0e7a452704c7cd5" id="r_ae49ce90730ebd613d0e7a452704c7cd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae49ce90730ebd613d0e7a452704c7cd5">clearGUI</a> ()</td></tr>
+<tr class="separator:ae49ce90730ebd613d0e7a452704c7cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a86147e8cf3eeb8de0ca06bf7cdf5463f" id="r_a86147e8cf3eeb8de0ca06bf7cdf5463f"><td class="memItemLeft" align="right" valign="top">static QMessageBox::StandardButton&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86147e8cf3eeb8de0ca06bf7cdf5463f">saveQuitMsgBox</a> ()</td></tr>
+<tr class="separator:a86147e8cf3eeb8de0ca06bf7cdf5463f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -136,6 +148,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae49ce90730ebd613d0e7a452704c7cd5" name="ae49ce90730ebd613d0e7a452704c7cd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae49ce90730ebd613d0e7a452704c7cd5">&#9670;&#160;</a></span>clearGUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessScene::clearGUI </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears the entire GUI to starting state. </p>
+
+</div>
+</div>
 <a id="a41c47112c790146ba124ee182453d7d8" name="a41c47112c790146ba124ee182453d7d8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a41c47112c790146ba124ee182453d7d8">&#9670;&#160;</a></span>refreshBoard()</h2>
 
@@ -151,12 +181,40 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (
       </table>
 </div><div class="memdoc">
 <p>Refreshes the graphics of the entire board.</p>
-<p>This includes tile color, markings, images. </p>
+<p>This includes tile color, markings and images. </p>
 
 </div>
 </div>
-<a id="af08ac8fdde72527e7d25316269bd8a90" name="af08ac8fdde72527e7d25316269bd8a90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af08ac8fdde72527e7d25316269bd8a90">&#9670;&#160;</a></span>removeAllMarkingsType()</h2>
+<a id="aee38e374d38c3e3f688136ab4daeb868" name="aee38e374d38c3e3f688136ab4daeb868"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee38e374d38c3e3f688136ab4daeb868">&#9670;&#160;</a></span>refreshImage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessScene::refreshImage </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>x</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Refreshes a single piece svg on the board </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>x coordinate of the svg </td></tr>
+    <tr><td class="paramname">y</td><td>y coordinate of the svg </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aff4861b01cb7a7690245f1a81708bbcb" name="aff4861b01cb7a7690245f1a81708bbcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4861b01cb7a7690245f1a81708bbcb">&#9670;&#160;</a></span>removeAllMarkingsType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,7 +222,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (
         <tr>
           <td class="memname">void ChessScene::removeAllMarkingsType </td>
           <td>(</td>
-          <td class="paramtype">ChessType::BoardMarkingType</td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td class="paramtype">BoardMarkingType</td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -178,8 +236,49 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (
 
 </div>
 </div>
-<a id="aedf2a03cb9bf53a2dba087f09b831ae7" name="aedf2a03cb9bf53a2dba087f09b831ae7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedf2a03cb9bf53a2dba087f09b831ae7">&#9670;&#160;</a></span>setCellMarkedType()</h2>
+<a id="a86147e8cf3eeb8de0ca06bf7cdf5463f" name="a86147e8cf3eeb8de0ca06bf7cdf5463f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86147e8cf3eeb8de0ca06bf7cdf5463f">&#9670;&#160;</a></span>saveQuitMsgBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QMessageBox::StandardButton ChessScene::saveQuitMsgBox </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Displays a message box with as options to save, discard, or cancel.</p>
+<p>Example usage: </p><div class="fragment"><div class="line">QMessageBox::StandardButton = <a class="code hl_function" href="#a86147e8cf3eeb8de0ca06bf7cdf5463f">saveQuitMsgBox</a>();</div>
+<div class="line"><span class="keywordflow">if</span> (returnValue == QMessageBox::Save) {</div>
+<div class="line">     <span class="comment">// User clicked Save</span></div>
+<div class="line">     std::cout &lt;&lt; <span class="stringliteral">&quot;Save clicked&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (returnValue == QMessageBox::Discard) {</div>
+<div class="line">     <span class="comment">// User clicked Discard</span></div>
+<div class="line">     std::cout &lt;&lt; <span class="stringliteral">&quot;Discard clicked&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (returnValue == QMessageBox::Cancel) {</div>
+<div class="line">     <span class="comment">// User clicked Cancel</span></div>
+<div class="line">     std::cout &lt;&lt; <span class="stringliteral">&quot;Cancel clicked&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">     <span class="comment">// User closed the message box without clicking any button</span></div>
+<div class="line">     std::cout &lt;&lt; <span class="stringliteral">&quot;Message box closed without selection&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassChessScene_html_a86147e8cf3eeb8de0ca06bf7cdf5463f"><div class="ttname"><a href="#a86147e8cf3eeb8de0ca06bf7cdf5463f">ChessScene::saveQuitMsgBox</a></div><div class="ttdeci">static QMessageBox::StandardButton saveQuitMsgBox()</div><div class="ttdef"><b>Definition</b> ChessScene.cpp:425</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a19e0631e094e91037ab38a11bd3be224" name="a19e0631e094e91037ab38a11bd3be224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19e0631e094e91037ab38a11bd3be224">&#9670;&#160;</a></span>setCellMarkedType()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -197,7 +296,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ChessType::BoardMarkingType</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+          <td class="paramtype">BoardMarkingType</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -207,6 +306,46 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mousePressEvent</b> (
   <table class="params">
     <tr><td class="paramname">x</td><td>x-coordinate of the cell </td></tr>
     <tr><td class="paramname">y</td><td>y-coordinate of the cell </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adba26d9165fd13fc6c0d516991f85396" name="adba26d9165fd13fc6c0d516991f85396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adba26d9165fd13fc6c0d516991f85396">&#9670;&#160;</a></span>setCellPieceType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ChessScene::setCellPieceType </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>x</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>y</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ChessPieceType</td>          <td class="paramname"><span class="paramname"><em>type</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ChessPieceColor</td>          <td class="paramname"><span class="paramname"><em>color</em><span class="paramdefsep"> = </span><span class="paramdefval">ChessPieceColor::NO_COLOR</span></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the image for a certain </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td></td></tr>
+    <tr><td class="paramname">y</td><td></td></tr>
+    <tr><td class="paramname">type</td><td></td></tr>
+    <tr><td class="paramname">color</td><td></td></tr>
   </table>
   </dd>
 </dl>

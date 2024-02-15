@@ -34,7 +34,6 @@ class ChessWindow : public QMainWindow {
  Q_OBJECT
 
 
-
  public:
   explicit ChessWindow(QWidget* parent = nullptr);
 
@@ -53,14 +52,27 @@ class ChessWindow : public QMainWindow {
   // Abstract click event handler
   virtual void onClick(int x, int y) = 0;
   // Cell marking functions
-  virtual void markCellAs(int x, int y, BoardMarkingType type) {scene->setCellMarkedType(x, y, type);}
-  virtual void removeAllMarkingsType(BoardMarkingType type) {scene->removeAllMarkingsType(type);}
+  virtual void markCellAs(int x, int y, BoardMarkingType type) { scene->setCellMarkedType(x, y, type); }
+  virtual void removeAllMarkingsType(BoardMarkingType type) { scene->removeAllMarkingsType(type); }
   // Global GUI functions
-  virtual void refreshGui() {scene->refreshBoard();}
+  virtual void refreshGui() { scene->refreshBoard(); }
 
   virtual void setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) {
     scene->setCellPieceType(x, y, type, color);
   }
+
+  virtual QMessageBox::StandardButton saveQuitMsgBox() { return scene->saveQuitMsgBox(); }
+
+  virtual void customMsgBox(const std::string& title,
+                            const std::string& header,
+                            const std::string& subtext) { scene->customMsgBox(title, header, subtext); }
+
+  virtual QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
+                                                  const std::string& header,
+                                                  const std::string& subtext) {
+    return scene->yesNoMsgBox(title, header, subtext);
+  }
+
 
   virtual void clearGUI() {
     scene->clearGUI();

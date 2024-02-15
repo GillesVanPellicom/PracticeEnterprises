@@ -199,6 +199,70 @@ class ChessScene : public QGraphicsScene {
    * Clears the entire GUI to starting state.
    */
   void clearGUI();
+
+
+/**
+ * Displays a message box with as options to save, discard, or cancel.
+ *
+ * Example usage:
+ * \code{.cpp}
+ * QMessageBox::StandardButton returnValue = saveQuitMsgBox();
+ *
+ * if (returnValue == QMessageBox::Save) {
+ *      // User clicked Save
+ *      std::cout << "Save clicked" << std::endl;
+ *
+ * } else if (returnValue == QMessageBox::Discard) {
+ *      // User clicked Discard
+ *      std::cout << "Discard clicked" << std::endl;
+ *
+ * } else if (returnValue == QMessageBox::Cancel) {
+ *      // User clicked Cancel
+ *      std::cout << "Cancel clicked" << std::endl;
+ *
+ * } else {
+ *      // User closed the message box without clicking any button
+ *      std::cout << "Message box closed without selection" << std::endl;
+ *
+ * }
+ * \endcode
+ */
+  QMessageBox::StandardButton saveQuitMsgBox();
+
+  /**
+   * Displays a message box with passed arguments
+   * @param title Title of the modal.
+   * @param header Header text of the modal.
+   * @param subtext Subtext, text under the header of the modal.
+   */
+  void customMsgBox(const std::string& title, const std::string& header, const std::string& subtext);
+
+  /**
+ * Displays a message box with passed arguments and yes/no buttons.
+ *
+ * Example usage:
+ * \code{.cpp}
+ * QMessageBox::StandardButton returnValue = yesNoMsgBox();
+ *
+ * if (returnValue == QMessageBox::Ok) {
+ *      // User clicked Ok
+ *      std::cout << "Ok" << std::endl;
+   *
+ * } else if (returnValue == QMessageBox::Cancel) {
+ *      // User clicked Cancel
+ *      std::cout << "Cancel clicked" << std::endl;
+   *
+ * } else {
+ *      // User closed the message box without clicking any button
+ *      std::cout << "Message box closed without selection" << std::endl;
+   *
+ * }
+ * \endcode
+ */
+  QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
+                                          const std::string& header,
+                                          const std::string& subtext);
+
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_

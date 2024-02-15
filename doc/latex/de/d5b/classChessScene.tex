@@ -12,7 +12,8 @@ Implementation of the QGraphics\+Scene~\newline
 
 
 
-Inheritance diagram for Chess\+Scene\+:\nopagebreak
+Inheritance diagram for Chess\+Scene\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,7 +22,8 @@ Inheritance diagram for Chess\+Scene\+:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for Chess\+Scene\+:\nopagebreak
+Collaboration diagram for Chess\+Scene\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -39,9 +41,20 @@ void {\bfseries set\+Click\+Callback} (std\+::function$<$ void(int, int)$>$ call
 \item 
 void \mbox{\hyperlink{classChessScene_a41c47112c790146ba124ee182453d7d8}{refresh\+Board}} ()
 \item 
-void \mbox{\hyperlink{classChessScene_af08ac8fdde72527e7d25316269bd8a90}{remove\+All\+Markings\+Type}} (Chess\+Type\+::\+Board\+Marking\+Type type)
+void \mbox{\hyperlink{classChessScene_aee38e374d38c3e3f688136ab4daeb868}{refresh\+Image}} (int x, int y)
 \item 
-void \mbox{\hyperlink{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7}{set\+Cell\+Marked\+Type}} (int x, int y, Chess\+Type\+::\+Board\+Marking\+Type type)
+void \mbox{\hyperlink{classChessScene_aff4861b01cb7a7690245f1a81708bbcb}{remove\+All\+Markings\+Type}} (Board\+Marking\+Type type)
+\item 
+void \mbox{\hyperlink{classChessScene_a19e0631e094e91037ab38a11bd3be224}{set\+Cell\+Marked\+Type}} (int x, int y, Board\+Marking\+Type type)
+\item 
+void \mbox{\hyperlink{classChessScene_adba26d9165fd13fc6c0d516991f85396}{set\+Cell\+Piece\+Type}} (int x, int y, Chess\+Piece\+Type type, Chess\+Piece\+Color color=Chess\+Piece\+Color\+::\+NO\+\_\+\+COLOR)
+\item 
+void \mbox{\hyperlink{classChessScene_ae49ce90730ebd613d0e7a452704c7cd5}{clear\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static QMessage\+Box\+::\+Standard\+Button \mbox{\hyperlink{classChessScene_a86147e8cf3eeb8de0ca06bf7cdf5463f}{save\+Quit\+Msg\+Box}} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -63,7 +76,13 @@ Implementation of the QGraphics\+Scene~\newline
 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{classChessScene_a41c47112c790146ba124ee182453d7d8}\label{classChessScene_a41c47112c790146ba124ee182453d7d8} 
+\Hypertarget{classChessScene_ae49ce90730ebd613d0e7a452704c7cd5}\label{classChessScene_ae49ce90730ebd613d0e7a452704c7cd5} 
+\index{ChessScene@{ChessScene}!clearGUI@{clearGUI}}
+\index{clearGUI@{clearGUI}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{clearGUI()}{clearGUI()}}
+{\footnotesize\ttfamily void Chess\+Scene\+::clear\+GUI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Clears the entire GUI to starting state. \Hypertarget{classChessScene_a41c47112c790146ba124ee182453d7d8}\label{classChessScene_a41c47112c790146ba124ee182453d7d8} 
 \index{ChessScene@{ChessScene}!refreshBoard@{refreshBoard}}
 \index{refreshBoard@{refreshBoard}!ChessScene@{ChessScene}}
 \doxysubsubsection{\texorpdfstring{refreshBoard()}{refreshBoard()}}
@@ -71,22 +90,61 @@ Implementation of the QGraphics\+Scene~\newline
 
 Refreshes the graphics of the entire board.
 
-This includes tile color, markings, images. \Hypertarget{classChessScene_af08ac8fdde72527e7d25316269bd8a90}\label{classChessScene_af08ac8fdde72527e7d25316269bd8a90} 
+This includes tile color, markings and images. \Hypertarget{classChessScene_aee38e374d38c3e3f688136ab4daeb868}\label{classChessScene_aee38e374d38c3e3f688136ab4daeb868} 
+\index{ChessScene@{ChessScene}!refreshImage@{refreshImage}}
+\index{refreshImage@{refreshImage}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{refreshImage()}{refreshImage()}}
+{\footnotesize\ttfamily void Chess\+Scene\+::refresh\+Image (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+Refreshes a single piece svg on the board 
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordinate of the svg \\
+\hline
+{\em y} & y coordinate of the svg \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classChessScene_aff4861b01cb7a7690245f1a81708bbcb}\label{classChessScene_aff4861b01cb7a7690245f1a81708bbcb} 
 \index{ChessScene@{ChessScene}!removeAllMarkingsType@{removeAllMarkingsType}}
 \index{removeAllMarkingsType@{removeAllMarkingsType}!ChessScene@{ChessScene}}
 \doxysubsubsection{\texorpdfstring{removeAllMarkingsType()}{removeAllMarkingsType()}}
-{\footnotesize\ttfamily void Chess\+Scene\+::remove\+All\+Markings\+Type (\begin{DoxyParamCaption}\item[{Chess\+Type\+::\+Board\+Marking\+Type}]{type }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Chess\+Scene\+::remove\+All\+Markings\+Type (\begin{DoxyParamCaption}\item[{Board\+Marking\+Type}]{type }\end{DoxyParamCaption})}
 
 Removes all markings of a specified type 
 \begin{DoxyParams}{Parameters}
 {\em type} & Type to be specified \\
 \hline
 \end{DoxyParams}
-\Hypertarget{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7}\label{classChessScene_aedf2a03cb9bf53a2dba087f09b831ae7} 
+\Hypertarget{classChessScene_a86147e8cf3eeb8de0ca06bf7cdf5463f}\label{classChessScene_a86147e8cf3eeb8de0ca06bf7cdf5463f} 
+\index{ChessScene@{ChessScene}!saveQuitMsgBox@{saveQuitMsgBox}}
+\index{saveQuitMsgBox@{saveQuitMsgBox}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{saveQuitMsgBox()}{saveQuitMsgBox()}}
+{\footnotesize\ttfamily QMessage\+Box\+::\+Standard\+Button Chess\+Scene\+::save\+Quit\+Msg\+Box (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Displays a message box with as options to save, discard, or cancel.
+
+Example usage\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{QMessageBox::StandardButton\ =\ \mbox{\hyperlink{classChessScene_a86147e8cf3eeb8de0ca06bf7cdf5463f}{saveQuitMsgBox}}();}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (returnValue\ ==\ QMessageBox::Save)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ User\ clicked\ Save}}
+\DoxyCodeLine{\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Save\ clicked"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (returnValue\ ==\ QMessageBox::Discard)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ User\ clicked\ Discard}}
+\DoxyCodeLine{\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Discard\ clicked"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (returnValue\ ==\ QMessageBox::Cancel)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ User\ clicked\ Cancel}}
+\DoxyCodeLine{\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Cancel\ clicked"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ User\ closed\ the\ message\ box\ without\ clicking\ any\ button}}
+\DoxyCodeLine{\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Message\ box\ closed\ without\ selection"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ \Hypertarget{classChessScene_a19e0631e094e91037ab38a11bd3be224}\label{classChessScene_a19e0631e094e91037ab38a11bd3be224} 
 \index{ChessScene@{ChessScene}!setCellMarkedType@{setCellMarkedType}}
 \index{setCellMarkedType@{setCellMarkedType}!ChessScene@{ChessScene}}
 \doxysubsubsection{\texorpdfstring{setCellMarkedType()}{setCellMarkedType()}}
-{\footnotesize\ttfamily void Chess\+Scene\+::set\+Cell\+Marked\+Type (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{Chess\+Type\+::\+Board\+Marking\+Type}]{type }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Chess\+Scene\+::set\+Cell\+Marked\+Type (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{Board\+Marking\+Type}]{type }\end{DoxyParamCaption})}
 
 Marks a specified cell as a specified type
 
@@ -97,6 +155,23 @@ When type is anything else\+: Override the current type for that cell. Overridin
 {\em x} & x-\/coordinate of the cell \\
 \hline
 {\em y} & y-\/coordinate of the cell \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classChessScene_adba26d9165fd13fc6c0d516991f85396}\label{classChessScene_adba26d9165fd13fc6c0d516991f85396} 
+\index{ChessScene@{ChessScene}!setCellPieceType@{setCellPieceType}}
+\index{setCellPieceType@{setCellPieceType}!ChessScene@{ChessScene}}
+\doxysubsubsection{\texorpdfstring{setCellPieceType()}{setCellPieceType()}}
+{\footnotesize\ttfamily void Chess\+Scene\+::set\+Cell\+Piece\+Type (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{Chess\+Piece\+Type}]{type,  }\item[{Chess\+Piece\+Color}]{color = {\ttfamily ChessPieceColor\+:\+:NO\+\_\+COLOR} }\end{DoxyParamCaption})}
+
+Sets the image for a certain 
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+{\em y} & \\
+\hline
+{\em type} & \\
+\hline
+{\em color} & \\
 \hline
 \end{DoxyParams}
 

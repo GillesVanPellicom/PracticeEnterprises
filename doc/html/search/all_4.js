@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['setcellmarkedtype_0',['setCellMarkedType',['../de/d5b/classChessScene.html#aedf2a03cb9bf53a2dba087f09b831ae7',1,'ChessScene']]]
+  ['savequitmsgbox_0',['saveQuitMsgBox',['../de/d5b/classChessScene.html#a86147e8cf3eeb8de0ca06bf7cdf5463f',1,'ChessScene']]],
+  ['setcellmarkedtype_1',['setCellMarkedType',['../de/d5b/classChessScene.html#a19e0631e094e91037ab38a11bd3be224',1,'ChessScene']]],
+  ['setcellpiecetype_2',['setCellPieceType',['../de/d5b/classChessScene.html#adba26d9165fd13fc6c0d516991f85396',1,'ChessScene']]]
 ];

@@ -37,18 +37,27 @@
 \DoxyCodeLine{00037\ \ \ \textcolor{comment}{//\ Mouse\ click\ handler}}
 \DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{void}\ onClick(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00039\ \ \ \textcolor{comment}{//\ Cell\ marking\ functions}}
-\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{void}\ markCellAs(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ ChessType::BoardMarkingType\ type)\ \textcolor{keyword}{override};}
-\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{void}\ removeAllMarkingsType(ChessType::BoardMarkingType\ type)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{void}\ markCellAs(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ BoardMarkingType\ type)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00041\ \ \ \textcolor{keywordtype}{void}\ removeAllMarkingsType(BoardMarkingType\ type)\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00042\ }
 \DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{void}\ refreshGui()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00044\ }
-\DoxyCodeLine{00045\ \ \ \textcolor{comment}{//\ Booleans\ for\ menuBar\ checkboxes}}
-\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{bool}\ doVisualizeMoves\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{bool}\ doVisualizeThreatenedEnemy\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{bool}\ doVisualizeThreatenedFriendly\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{void}\ setChessItem(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ ChessPieceType\ type,\ ChessPieceColor\ color)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{void}\ clearGUI()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00048\ }
 \DoxyCodeLine{00049\ }
-\DoxyCodeLine{00050\ \};}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PRACTICEENTERPRISES\_GAME\_H\_}}
+\DoxyCodeLine{00050\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00051\ \ \ \mbox{\hyperlink{classGame}{Game}}();}
+\DoxyCodeLine{00052\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \textcolor{comment}{//\ Booleans\ for\ menuBar\ checkboxes}}
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordtype}{bool}\ doVisualizeMoves\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordtype}{bool}\ doVisualizeThreatenedEnemy\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{bool}\ doVisualizeThreatenedFriendly\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PRACTICEENTERPRISES\_GAME\_H\_}}
 
 \end{DoxyCode}

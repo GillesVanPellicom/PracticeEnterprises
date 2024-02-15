@@ -34,18 +34,26 @@ class Game : public ChessWindow {
   void onVisualizeMoves() override;
   void onVisualizeThreatenedEnemy() override;
   void onVisualizeThreatenedFriendly() override;
+
   // Mouse click handler
   void onClick(int x, int y) override;
+
   // Cell marking functions
   void markCellAs(int x, int y, BoardMarkingType type) override;
   void removeAllMarkingsType(BoardMarkingType type) override;
 
+  // Global GUI functions
   void refreshGui() override;
-
-  void setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) override;
-
   void clearGUI() override;
 
+  // Image manipulation functions
+  void setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) override;
+
+  QMessageBox::StandardButton saveQuitMsgBox() override;
+
+  void customMsgBox(const std::string& title,
+                    const std::string& header,
+                    const std::string& subtext) override;
 
  public:
   Game();
