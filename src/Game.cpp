@@ -66,6 +66,7 @@ void Game::onFileNew() {
     doVisualizeThreatenedEnemy = false;
     doVisualizeThreatenedFriendly = false;
     clearGUI();
+    guiDemonstration1();
 
   } else if (returnValue == QMessageBox::Cancel) {
     // User clicked Cancel
