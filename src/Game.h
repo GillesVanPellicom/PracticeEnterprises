@@ -37,10 +37,19 @@ class Game : public ChessWindow {
   // Mouse click handler
   void onClick(int x, int y) override;
   // Cell marking functions
-  void markCellAs(int x, int y, ChessType::BoardMarkingType type) override;
-  void removeAllMarkingsType(ChessType::BoardMarkingType type) override;
+  void markCellAs(int x, int y, BoardMarkingType type) override;
+  void removeAllMarkingsType(BoardMarkingType type) override;
 
   void refreshGui() override;
+
+  void setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) override;
+
+  void clearGUI() override;
+
+
+ public:
+  Game();
+ private:
 
   // Booleans for menuBar checkboxes
   bool doVisualizeMoves = false;

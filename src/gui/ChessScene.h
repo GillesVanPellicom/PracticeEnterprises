@@ -11,6 +11,10 @@
 #define PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
 
 // Qt
+#include <QGraphicsColorizeEffect>
+#include <QMessageBox>
+#include <QGuiApplication>
+#include <QStyleHints>
 #include <QColor>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
@@ -63,27 +67,32 @@ class ChessScene : public QGraphicsScene {
 
   // All markings as enum, associated with a coordinate pair (x, y)
   // Implicitly define hash function because std is being screwy.
-  std::unordered_map<ChessType::Coords, ChessType::BoardMarkingType, ChessType::Coords::Hash> markings;
+  std::unordered_map<Coords, BoardMarkingType, Coords::Hash> markings;
 
   bool isInactiveMarkingUsed = false;
-  std::pair<ChessType::Coords, ChessType::BoardMarkingType> inactiveMarking;
+  std::pair<Coords, BoardMarkingType> inactiveMarking;
+
+  std::unordered_map<Coords, std::pair<ChessPieceType, ChessPieceColor>, Coords::Hash> images;
 
 
 
   // Dimensions
   int cellWidth;
-  int boardWidth  = cellWidth*8;
+//  int boardWidth  = cellWidth*8;
   int boardMargin;
 
   // Callback for click event
   std::function<void(int, int)> clickCallback;
 
   /**
-   * Initializes the markings datastructure to begin state.
+   * Initializes the markings data structure to begin state.
    *
    * Only to be called once in constructor.
    */
   void initializeMarkingsMap();
+
+  void initializeImagesMap();
+
 
   /**
    * Reads out basic.ini and populates variables.
@@ -136,7 +145,7 @@ class ChessScene : public QGraphicsScene {
    * Removes all markings of a specified type
    * @param type Type to be specified
    */
-  void removeAllMarkingsType(ChessType::BoardMarkingType type);
+  void removeAllMarkingsType(BoardMarkingType type);
 
   /**
    * Marks a specified cell as a specified type
@@ -154,7 +163,20 @@ class ChessScene : public QGraphicsScene {
    * @param x x-coordinate of the cell
    * @param y y-coordinate of the cell
    */
-  void setCellMarkedType(int x, int y, ChessType::BoardMarkingType type);
+  void setCellMarkedType(int x, int y, BoardMarkingType type);
+
+  void setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color);
+
+  void refreshImage(int x, int y);
+
+  void refreshImages();
+
+  static QString getImageFileName(ChessPieceType type, ChessPieceColor color);
+
+  void clearGUI();
+
+
+
 
 };
 

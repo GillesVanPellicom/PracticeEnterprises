@@ -7,12 +7,13 @@
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
+
 #include "ChessScene.h"
 
 ChessScene::ChessScene(QObject* parent)
-    : QGraphicsScene(parent), inactiveMarking({ChessType::Coords(-1, -1), ChessType::BoardMarkingType::NONE}) {
+    : QGraphicsScene(parent), inactiveMarking({Coords(-1, -1), BoardMarkingType::NONE}) {
   // Measurements in px
-  cellWidth = 50;
+  cellWidth = 45;
   boardMargin = 0;
 
   // Read basic.ini and populate variables
@@ -21,15 +22,20 @@ ChessScene::ChessScene(QObject* parent)
   // Initialize datatype for board markings.
   initializeMarkingsMap();
 
+  // Initialize datatype for board pieces.
+  initializeImagesMap();
+
   // This should be the last function
   drawBoard();
 
 
 }
 
-
 void ChessScene::drawTile(int x, int y) {
-  auto* rect = new QGraphicsRectItem(static_cast<int>(y * cellWidth), static_cast<int>((7 - x) * cellWidth), cellWidth, cellWidth);
+  auto* rect = new QGraphicsRectItem(static_cast<int>(y * cellWidth),
+                                     static_cast<int>((7 - x) * cellWidth),
+                                     cellWidth,
+                                     cellWidth);
 
   if (!boardBorders) {
     rect->setPen(Qt::NoPen);
@@ -39,28 +45,28 @@ void ChessScene::drawTile(int x, int y) {
     // Qt and chess-actual coordinates are flipped.
     switch (markings[{y, x}]) {
 
-      case ChessType::NONE: {
+      case NONE: {
         rect->setBrush(QBrush(whiteSquareColor, Qt::SolidPattern));
         break;
       }
 
-      case ChessType::SELECTED: {
+      case SELECTED: {
         rect->setBrush(QBrush(whiteSquareSelectedColor, Qt::SolidPattern));
         break;
       }
 
-      case ChessType::POSSIBLE: {
+      case POSSIBLE: {
         rect->setBrush(QBrush(whiteSquarePossibleColor, Qt::SolidPattern));
 
         break;
       }
 
-      case ChessType::THREATENED_FRIENDLY: {
+      case THREATENED_FRIENDLY: {
         rect->setBrush(QBrush(whiteSquareDangerFriendlyColor, Qt::SolidPattern));
 
         break;
       }
-      case ChessType::THREATENED_ENEMY: {
+      case THREATENED_ENEMY: {
         rect->setBrush(QBrush(whiteSquareDangerEnemyColor, Qt::SolidPattern));
 
         break;
@@ -71,28 +77,28 @@ void ChessScene::drawTile(int x, int y) {
     // Qt and chess-actual coordinates are flipped.
     switch (markings[{y, x}]) {
 
-      case ChessType::NONE: {
+      case NONE: {
         rect->setBrush(QBrush(blackSquareColor, Qt::SolidPattern));
         break;
       }
 
-      case ChessType::SELECTED: {
+      case SELECTED: {
         rect->setBrush(QBrush(blackSquareSelectedColor, Qt::SolidPattern));
         break;
       }
 
-      case ChessType::POSSIBLE: {
+      case POSSIBLE: {
         rect->setBrush(QBrush(blackSquarePossibleColor, Qt::SolidPattern));
 
         break;
       }
 
-      case ChessType::THREATENED_FRIENDLY: {
+      case THREATENED_FRIENDLY: {
         rect->setBrush(QBrush(blackSquareDangerFriendlyColor, Qt::SolidPattern));
 
         break;
       }
-      case ChessType::THREATENED_ENEMY: {
+      case THREATENED_ENEMY: {
         rect->setBrush(QBrush(blackSquareDangerEnemyColor, Qt::SolidPattern));
 
         break;
@@ -183,7 +189,17 @@ void ChessScene::initializeMarkingsMap() {
   for (int i = 0; i < 8; ++i) {
     for (int j = 0; j < 8; ++j) {
       markings.insert({
-                          ChessType::Coords(i, j), ChessType::BoardMarkingType::NONE});
+                          Coords(i, j), BoardMarkingType::NONE});
+    }
+  }
+}
+
+void ChessScene::initializeImagesMap() {
+  for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+      images.insert({
+                        Coords(i, j),
+                        {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR}});
     }
   }
 }
@@ -202,8 +218,9 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // flip y coordinate to conform to chess standards
     int y = (9 - (int) ceil(event->scenePos().y() / cellWidth)) - 1;
 
-    // Set current focus
-    setCellMarkedType(x, y, ChessType::SELECTED);
+    // FIXME: remove following two lines for production
+    setCellMarkedType(x, y, SELECTED);
+    refreshBoard();
 
     // If callback is valid
     if (clickCallback) {
@@ -211,48 +228,41 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
       clickCallback(x, y);
     }
   }
+
+
   QGraphicsScene::mousePressEvent(event);
-}
-
-
-void ChessScene::refreshBoard() {
-  qDeleteAll(items());
-  drawBoard();
 }
 
 
 void ChessScene::setCellMarkedSelected(int x, int y) {
 
-  removeAllMarkingsType(ChessType::SELECTED);
+  removeAllMarkingsType(SELECTED);
 
   // If another marking was overridden, restore it
   if (isInactiveMarkingUsed) {
     isInactiveMarkingUsed = false;
-    ChessType::Coords c = inactiveMarking.first;
+    Coords c = inactiveMarking.first;
     markings[{c.x, c.y}] = inactiveMarking.second;
 
   }
 
   // Check if this operation will override a marking of lower precedence.
-  if (markings[{x, y}] != ChessType::BoardMarkingType::NONE) {
+  if (markings[{x, y}] != BoardMarkingType::NONE) {
     // Remember the marking to be overwritten
     inactiveMarking = {{x, y}, markings[{x, y}]};
     isInactiveMarkingUsed = true;
   }
 
   // Mark cell as selected.
-  markings[{x, y}] = ChessType::BoardMarkingType::SELECTED;
-
-  // Refresh
-  refreshBoard();
+  markings[{x, y}] = BoardMarkingType::SELECTED;
 }
 
 
-void ChessScene::removeAllMarkingsType(ChessType::BoardMarkingType type) {
+void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
   for (int i = 0; i < 8; ++i) {
     for (int j = 0; j < 8; ++j) {
       if (markings[{i, j}] == type) {
-        markings[{i, j}] = ChessType::BoardMarkingType::NONE;
+        markings[{i, j}] = BoardMarkingType::NONE;
       }
     }
   }
@@ -264,7 +274,7 @@ void ChessScene::removeAllMarkingsType(ChessType::BoardMarkingType type) {
 }
 
 
-void ChessScene::setCellMarkedType(int x, int y, ChessType::BoardMarkingType type) {
+void ChessScene::setCellMarkedType(int x, int y, BoardMarkingType type) {
   // Enforce range
   if (x < 0 || x > 7 || y < 0 || y > 7) {
     throw std::out_of_range(
@@ -273,13 +283,13 @@ void ChessScene::setCellMarkedType(int x, int y, ChessType::BoardMarkingType typ
   }
 
   // If type is SELECTED, handle in specific function
-  if (type == ChessType::SELECTED) {
+  if (type == SELECTED) {
     setCellMarkedSelected(x, y);
 
   } else {
     // If not, add type to markings.
     // SELECTED already marked has priority.
-    if (markings[{x, y}] != ChessType::SELECTED) {
+    if (markings[{x, y}] != SELECTED) {
       markings[{x, y}] = type;
     } else {
       isInactiveMarkingUsed = true;
@@ -287,3 +297,128 @@ void ChessScene::setCellMarkedType(int x, int y, ChessType::BoardMarkingType typ
     }
   }
 }
+
+
+void ChessScene::setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color) {
+  images[{x, y}] = {type, color};
+}
+
+
+void ChessScene::refreshImage(int x, int y) {
+
+  if (images[{x, y}].first == ChessPieceType::EMPTY ||
+      images[{x, y}].second == ChessPieceColor::NO_COLOR) {
+    return;
+  }
+
+  QString filename = getImageFileName(images[{x, y}].first, images[{x, y}].second);
+  if (filename.isEmpty())
+    return;
+
+  quint32 xQt = cellWidth * (x);
+  quint32 yQt = cellWidth * (7 - y);
+
+  std::cout << xQt << " " << yQt << " " << x << " " << (7 - y) << std::endl;
+
+
+  auto* item = new QGraphicsPixmapItem(QPixmap(filename));
+
+  item->setPos(xQt, yQt);
+
+  addItem(item);
+}
+
+void ChessScene::refreshBoard() {
+  qDeleteAll(items());
+  drawBoard();
+  refreshImages();
+}
+
+void ChessScene::refreshImages() {
+  for (int x = 0; x < 8; ++x) {
+    for (int y = 0; y < 8; ++y) {
+      refreshImage(x, y);
+    }
+  }
+}
+
+
+QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color) {
+  // Start
+  QString link = "../resources/";
+
+  // Add color
+  switch (color) {
+
+    case BLACK: {
+      link += "black";
+      break;
+    }
+    case WHITE: {
+      link += "white";
+
+      break;
+    }
+    case ::NO_COLOR: {
+      return "-1";
+    }
+  }
+
+  // Connector
+  link += "-";
+
+  // Add type
+  switch (type) {
+
+    case ::KING: {
+      link += "king";
+      break;
+    }
+    case ::QUEEN: {
+      link += "queen";
+      break;
+    }
+    case ::ROOK: {
+      link += "rook";
+      break;
+    }
+    case ::BISHOP: {
+      link += "bishop";
+      break;
+    }
+    case ::KNIGHT: {
+      link += "knight";
+      break;
+    }
+    case ::PAWN: {
+      link += "pawn";
+      break;
+    }
+    case ::EMPTY: {
+      return "-1";
+    }
+  }
+
+  // Add extension and return
+  return link += ".svg";
+}
+
+
+void ChessScene::clearGUI() {
+
+  for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+      markings[{i, j}] = BoardMarkingType::NONE;
+      images[{i, j}] = {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR};
+    }
+  }
+
+  isInactiveMarkingUsed = false;
+  refreshBoard();
+}
+
+
+
+
+
+

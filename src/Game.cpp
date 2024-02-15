@@ -9,6 +9,19 @@
 
 #include "Game.h"
 
+// ╔════════════════════════════════════════╗
+// ║             Constructors               ║
+// ╚════════════════════════════════════════╝
+
+Game::Game() {}
+
+
+// ╔════════════════════════════════════════╗
+// ║             Event handlers             ║
+// ╚════════════════════════════════════════╝
+
+// MenuBar
+
 void Game::onFileQuit() {
   // TODO: ask user before quit using modal window
   exit(0);
@@ -17,7 +30,11 @@ void Game::onFileQuit() {
 
 void Game::onFileNew() {
   // TODO: handle new game request
-  std::cout << "Test file/new" << std::endl;
+  // Set all game variables back to default
+  doVisualizeMoves = false;
+  doVisualizeThreatenedEnemy = false;
+  doVisualizeThreatenedFriendly = false;
+  clearGUI();
 }
 
 
@@ -52,7 +69,7 @@ void Game::onGameRedo() {
 void Game::onVisualizeMoves() {
   if (doVisualizeMoves) {
     // Turn off markings
-    removeAllMarkingsType(ChessType::POSSIBLE);
+    removeAllMarkingsType(POSSIBLE);
     refreshGui();
     doVisualizeMoves = false;
     return;
@@ -63,8 +80,9 @@ void Game::onVisualizeMoves() {
 
   // EXAMPLE
   // =========================
-  markCellAs(6, 3, ChessType::POSSIBLE);
-  markCellAs(6, 2, ChessType::POSSIBLE);
+  markCellAs(6, 3, POSSIBLE);
+  markCellAs(6, 2, POSSIBLE);
+  setChessItem(4, 4, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
   refreshGui();
   // =========================
 
@@ -75,7 +93,7 @@ void Game::onVisualizeMoves() {
 void Game::onVisualizeThreatenedEnemy() {
   if (doVisualizeThreatenedEnemy) {
     // Turn off markings
-    removeAllMarkingsType(ChessType::THREATENED_ENEMY);
+    removeAllMarkingsType(THREATENED_ENEMY);
     refreshGui();
     doVisualizeThreatenedEnemy = false;
     return;
@@ -86,8 +104,11 @@ void Game::onVisualizeThreatenedEnemy() {
 
   // EXAMPLE
   // =========================
-  markCellAs(1, 3, ChessType::THREATENED_ENEMY);
-  markCellAs(1, 2, ChessType::THREATENED_ENEMY);
+  markCellAs(1, 3, THREATENED_ENEMY);
+  markCellAs(1, 2, THREATENED_ENEMY);
+  setChessItem(4, 4, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
+  setChessItem(0, 0, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+
   refreshGui();
   // =========================
 
@@ -97,7 +118,7 @@ void Game::onVisualizeThreatenedEnemy() {
 void Game::onVisualizeThreatenedFriendly() {
   if (doVisualizeThreatenedFriendly) {
     // Turn off markings
-    removeAllMarkingsType(ChessType::THREATENED_FRIENDLY);
+    removeAllMarkingsType(THREATENED_FRIENDLY);
     refreshGui();
     doVisualizeThreatenedFriendly = false;
     return;
@@ -108,15 +129,16 @@ void Game::onVisualizeThreatenedFriendly() {
 
   // EXAMPLE
   // =========================
-  markCellAs(3, 3, ChessType::THREATENED_FRIENDLY);
-  markCellAs(3, 2, ChessType::THREATENED_FRIENDLY);
-  markCellAs(3, 8, ChessType::THREATENED_FRIENDLY);
-  markCellAs(3, 7, ChessType::THREATENED_FRIENDLY);
+  markCellAs(3, 3, THREATENED_FRIENDLY);
+  markCellAs(3, 2, THREATENED_FRIENDLY);
+  markCellAs(3, 7, THREATENED_FRIENDLY);
+  markCellAs(3, 6, THREATENED_FRIENDLY);
   refreshGui();
   // =========================
 
 }
 
+// MouseClickEvent Handler
 
 void Game::onClick(int x, int y) {
   // TODO: handle mouse clicks
@@ -124,15 +146,24 @@ void Game::onClick(int x, int y) {
 }
 
 
-// Inherited functions
-void Game::markCellAs(int x, int y, ChessType::BoardMarkingType type) {
+// ╔════════════════════════════════════════╗
+// ║          Inherited Functions           ║
+// ╚════════════════════════════════════════╝
+
+void Game::markCellAs(int x, int y, BoardMarkingType type) {
   ChessWindow::markCellAs(x, y, type);
 }
-void Game::removeAllMarkingsType(ChessType::BoardMarkingType type) {
+void Game::removeAllMarkingsType(BoardMarkingType type) {
   ChessWindow::removeAllMarkingsType(type);
 }
 void Game::refreshGui() {
   ChessWindow::refreshGui();
+}
+void Game::setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) {
+  ChessWindow::setChessItem(x, y, type, color);
+}
+void Game::clearGUI() {
+  ChessWindow::clearGUI();
 }
 
 

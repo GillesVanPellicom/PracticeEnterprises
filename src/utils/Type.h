@@ -15,19 +15,21 @@
 /**
  * @brief Collection of datatypes used in the project
  */
-namespace ChessType {
+
 enum ChessPieceType {
   KING,
   QUEEN,
   ROOK,
   BISHOP,
   KNIGHT,
-  PAWN
+  PAWN,
+  EMPTY
 };
 
 enum ChessPieceColor {
   BLACK,
-  WHITE
+  WHITE,
+  NO_COLOR
 };
 
 enum BoardMarkingType {
@@ -62,6 +64,6 @@ class Coords {
   int x = 0;
   int y = 0;
 };
-}
+
 
 #endif //CHESS_SRC_UTILS_TYPE_H_
