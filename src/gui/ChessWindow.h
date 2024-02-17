@@ -61,16 +61,16 @@ class ChessWindow : public QMainWindow {
     scene->setCellPieceType(x, y, type, color);
   }
 
-  virtual QMessageBox::StandardButton saveQuitMsgBox() { return scene->saveQuitMsgBox(); }
+  virtual QMessageBox::StandardButton saveQuitMsgBox() { return ChessScene::saveQuitMsgBox(); }
 
   virtual void customMsgBox(const std::string& title,
                             const std::string& header,
-                            const std::string& subtext) { scene->customMsgBox(title, header, subtext); }
+                            const std::string& subtext) { ChessScene::customMsgBox(title, header, subtext); }
 
   virtual QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
                                                   const std::string& header,
                                                   const std::string& subtext) {
-    return scene->yesNoMsgBox(title, header, subtext);
+    return ChessScene::yesNoMsgBox(title, header, subtext);
   }
 
 

@@ -10,6 +10,8 @@
 #ifndef PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
 #define PRACTICEENTERPRISES_GUI_CHESSSCENE_H_
 
+#define BOARDSIZE 8
+
 // Qt
 #include <QGraphicsColorizeEffect>
 #include <QMessageBox>
@@ -65,16 +67,14 @@ class ChessScene : public QGraphicsScene {
   // Global
   bool boardBorders = false;
 
-  // All markings as enum, associated with a coordinate pair (x, y)
-  // Implicitly define hash function because std is being screwy.
-  std::unordered_map<Coords, BoardMarkingType, Coords::Hash> markings;
+  // All markings as 2d-array of enumerations
+  BoardMarkingType markings[BOARDSIZE][BOARDSIZE];
 
   bool isInactiveMarkingUsed = false;
   std::pair<Coords, BoardMarkingType> inactiveMarking;
 
-  std::unordered_map<Coords, std::pair<ChessPieceType, ChessPieceColor>, Coords::Hash> images;
-
-
+  // All image locations as 2d-array of pairs of enumerations
+  std::pair<ChessPieceType, ChessPieceColor> images[BOARDSIZE][BOARDSIZE];
 
   // Dimensions
   int cellWidth;
@@ -227,7 +227,7 @@ class ChessScene : public QGraphicsScene {
  * }
  * \endcode
  */
-  QMessageBox::StandardButton saveQuitMsgBox();
+  static QMessageBox::StandardButton saveQuitMsgBox();
 
   /**
    * Displays a message box with passed arguments
@@ -235,7 +235,7 @@ class ChessScene : public QGraphicsScene {
    * @param header Header text of the modal.
    * @param subtext Subtext, text under the header of the modal.
    */
-  void customMsgBox(const std::string& title, const std::string& header, const std::string& subtext);
+  static void customMsgBox(const std::string& title, const std::string& header, const std::string& subtext);
 
   /**
  * Displays a message box with passed arguments and yes/no buttons.
@@ -259,7 +259,7 @@ class ChessScene : public QGraphicsScene {
  * }
  * \endcode
  */
-  QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
+  static QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
                                           const std::string& header,
                                           const std::string& subtext);
 

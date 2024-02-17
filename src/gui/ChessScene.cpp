@@ -43,7 +43,7 @@ void ChessScene::drawTile(int x, int y) {
 
   if (x % 2 == y % 2) {
     // Qt and chess-actual coordinates are flipped.
-    switch (markings[{y, x}]) {
+    switch (markings[y][x]) {
 
       case NONE: {
         rect->setBrush(QBrush(whiteSquareColor, Qt::SolidPattern));
@@ -75,7 +75,7 @@ void ChessScene::drawTile(int x, int y) {
 
   } else {
     // Qt and chess-actual coordinates are flipped.
-    switch (markings[{y, x}]) {
+    switch (markings[y][x]) {
 
       case NONE: {
         rect->setBrush(QBrush(blackSquareColor, Qt::SolidPattern));
@@ -112,8 +112,8 @@ void ChessScene::drawTile(int x, int y) {
 
 
 void ChessScene::drawBoard() {
-  for (int x = 0; x < 8; ++x) {
-    for (int y = 0; y < 8; ++y) {
+  for (int x = 0; x < BOARDSIZE; ++x) {
+    for (int y = 0; y < BOARDSIZE; ++y) {
       drawTile(x, y);
     }
   }
@@ -186,21 +186,18 @@ QColor ChessScene::hexstrToQColor(std::string& hex) {
 
 
 void ChessScene::initializeMarkingsMap() {
-  for (int i = 0; i < 8; ++i) {
-    for (int j = 0; j < 8; ++j) {
-      markings.insert({
-                          Coords(i, j), BoardMarkingType::NONE});
+  for (auto& markingRow : markings) {
+    for (auto& marking : markingRow) {
+      marking = BoardMarkingType::NONE;
     }
   }
 }
 
 
 void ChessScene::initializeImagesMap() {
-  for (int i = 0; i < 8; ++i) {
-    for (int j = 0; j < 8; ++j) {
-      images.insert({
-                        Coords(i, j),
-                        {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR}});
+  for (auto& imageRow : images) {
+    for (auto& image : imageRow) {
+      image = {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR};
     }
   }
 }
@@ -237,27 +234,27 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
   if (isInactiveMarkingUsed) {
     isInactiveMarkingUsed = false;
     Coords c = inactiveMarking.first;
-    markings[{c.x, c.y}] = inactiveMarking.second;
+    markings[c.x][c.y] = inactiveMarking.second;
 
   }
 
   // Check if this operation will override a marking of lower precedence.
-  if (markings[{x, y}] != BoardMarkingType::NONE) {
+  if (markings[x][y] != BoardMarkingType::NONE) {
     // Remember the marking to be overwritten
-    inactiveMarking = {{x, y}, markings[{x, y}]};
+    inactiveMarking = {{x, y}, markings[x][y]};
     isInactiveMarkingUsed = true;
   }
 
   // Mark cell as selected.
-  markings[{x, y}] = BoardMarkingType::SELECTED;
+  markings[x][y] = BoardMarkingType::SELECTED;
 }
 
 
 void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
-  for (int i = 0; i < 8; ++i) {
-    for (int j = 0; j < 8; ++j) {
-      if (markings[{i, j}] == type) {
-        markings[{i, j}] = BoardMarkingType::NONE;
+  for (auto & markingRow : markings) {
+    for (auto & marking : markingRow) {
+      if (marking == type) {
+        marking = BoardMarkingType::NONE;
       }
     }
   }
@@ -284,8 +281,8 @@ void ChessScene::setCellMarkedType(int x, int y, BoardMarkingType type) {
   } else {
     // If not, add type to markings.
     // SELECTED already marked has priority.
-    if (markings[{x, y}] != SELECTED) {
-      markings[{x, y}] = type;
+    if (markings[x][y] != SELECTED) {
+      markings[x][y] = type;
     } else {
       isInactiveMarkingUsed = true;
       inactiveMarking = {{x, y}, type};
@@ -295,18 +292,18 @@ void ChessScene::setCellMarkedType(int x, int y, BoardMarkingType type) {
 
 
 void ChessScene::setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color) {
-  images[{x, y}] = {type, color};
+  images[x][y] = {type, color};
 }
 
 
 void ChessScene::refreshImage(int x, int y) {
 
-  if (images[{x, y}].first == ChessPieceType::EMPTY ||
-      images[{x, y}].second == ChessPieceColor::NO_COLOR) {
+  if (images[x][y].first == ChessPieceType::EMPTY ||
+      images[x][y].second == ChessPieceColor::NO_COLOR) {
     return;
   }
 
-  QString filename = getImageFileName(images[{x, y}].first, images[{x, y}].second);
+  QString filename = getImageFileName(images[x][y].first, images[x][y].second);
   if (filename.isEmpty())
     return;
 
@@ -327,8 +324,8 @@ void ChessScene::refreshBoard() {
 }
 
 void ChessScene::refreshImages() {
-  for (int x = 0; x < 8; ++x) {
-    for (int y = 0; y < 8; ++y) {
+  for (int x = 0; x < BOARDSIZE; ++x) {
+    for (int y = 0; y < BOARDSIZE; ++y) {
       refreshImage(x, y);
     }
   }
@@ -399,10 +396,10 @@ QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color)
 void ChessScene::clearGUI() {
 
   // Clear all variables
-  for (int i = 0; i < 8; ++i) {
-    for (int j = 0; j < 8; ++j) {
-      markings[{i, j}] = BoardMarkingType::NONE;
-      images[{i, j}] = {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR};
+  for (int i = 0; i < BOARDSIZE; ++i) {
+    for (int j = 0; j < BOARDSIZE; ++j) {
+      markings[i][j] = BoardMarkingType::NONE;
+      images[i][j] = {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR};
     }
   }
 
