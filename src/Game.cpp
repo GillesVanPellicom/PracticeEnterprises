@@ -33,7 +33,7 @@ void Game::onFileQuit() {
 
   if (returnValue == QMessageBox::Save) {
     // User clicked Save
-    std::cout << "Save clicked" << std::endl;
+    std::cout << "Save clicked" << std::endl; 
 
   } else if (returnValue == QMessageBox::Discard) {
     // User clicked Discard

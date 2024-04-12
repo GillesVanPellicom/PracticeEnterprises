@@ -68,10 +68,10 @@ class ChessScene : public QGraphicsScene {
   bool boardBorders = false;
 
   // All markings as 2d-array of enumerations
-  BoardMarkingType markings[BOARDSIZE][BOARDSIZE];
+  BoardMarkingType markings[BOARDSIZE][BOARDSIZE]{};
 
   bool isInactiveMarkingUsed = false;
-  std::pair<Coords, BoardMarkingType> inactiveMarking;
+  std::pair<Coords, BoardMarkingType> inactiveMarking = {{0, 0}, NONE};
 
   // All image locations as 2d-array of pairs of enumerations
   std::pair<ChessPieceType, ChessPieceColor> images[BOARDSIZE][BOARDSIZE];

@@ -12,11 +12,12 @@
 
 
 ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
+//  scene = new ChessScene(this);
   scene = new ChessScene(this);
   view = new QGraphicsView(scene);
   setCentralWidget(view);
 
-  // Setup menubar
+  // Setup menubarî
   createActions();
   createMenus();
 

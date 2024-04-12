@@ -11,22 +11,22 @@
 #include "ChessScene.h"
 
 ChessScene::ChessScene(QObject* parent)
-    : QGraphicsScene(parent), inactiveMarking({Coords(-1, -1), BoardMarkingType::NONE}) {
-  // Measurements in px
-  cellWidth = 45;
-  boardMargin = 0;
+: QGraphicsScene(parent) {
+    // Measurements in px
+    cellWidth = 45;
+    boardMargin = 0;
 
-  // Read basic.ini and populate variables
-  readColorConfig();
+    // Read basic.ini and populate variables
+    readColorConfig();
 
-  // Initialize datatype for board markings.
-  initializeMarkingsMap();
+    // Initialize datatype for board markings.
+    initializeMarkingsMap();
 
-  // Initialize datatype for board pieces.
-  initializeImagesMap();
+    // Initialize datatype for board pieces.
+    initializeImagesMap();
 
-  // This should be the last function
-  drawBoard();
+    // This should be the last function
+    drawBoard();
 
 
 }
@@ -209,6 +209,7 @@ void ChessScene::setClickCallback(std::function<void(int, int)> callback) {
 
 
 void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+  QGraphicsScene::mousePressEvent(event);
   // If button pressed is left button
   if (event->button() == Qt::LeftButton) {
     // Transform Qt scene coordinates to board coordinates [0; 7]
@@ -222,7 +223,6 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
       clickCallback(x, y);
     }
   }
-  QGraphicsScene::mousePressEvent(event);
 }
 
 
@@ -330,7 +330,6 @@ void ChessScene::refreshImages() {
     }
   }
 }
-
 
 QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color) {
   // Start

@@ -22,8 +22,6 @@ set(SOURCE_FILES src/main.cpp
         src/lib/mini/ini.h
         src/utils/Type.cpp
         src/utils/Type.h
-        src/gui/ChessMenu.cpp
-        src/gui/ChessMenu.h
 )
 add_executable(chess ${SOURCE_FILES})
 

@@ -12,6 +12,8 @@
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
+  qSetMessagePattern("%{if-warning}%{endif}");
+
   Game g;
 
   return QApplication::exec();
