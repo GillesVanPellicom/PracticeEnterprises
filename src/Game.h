@@ -16,6 +16,13 @@
 
 // local
 #include "gui/ChessWindow.h"
+#include "chessPiece/ChessPiece.h"
+#include "chessPiece/king/King.h"
+#include "chessPiece/queen/Queen.h"
+#include "chessPiece/rook/Rook.h"
+#include "chessPiece/bishop/Bishop.h"
+#include "chessPiece/knight/Knight.h"
+#include "chessPiece/pawn/Pawn.h"
 
 /**
  * @brief Head game logic class.
@@ -219,13 +226,24 @@ class Game : public ChessWindow {
                                           const std::string& subtext) override;
 
 
-  // DEMONSTRATION
-  void guiDemonstration1();
-  void guiDemonstration2();
+  void initializeGame();
+
+  bool generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color);
+
+  bool movePiece(int x1, int y1, int x2, int y2);
+
+  void setSelected(int x, int y, bool isSelected);
 
  public:
   Game();
  private:
+
+  ChessPiece* board[8][8];
+
+  bool isSelected = false;
+  Coords selected = {-1, -1};
+
+  bool isWhiteTurn = true;
 
   // Booleans for menuBar checkboxes
   bool doVisualizeMoves = false;

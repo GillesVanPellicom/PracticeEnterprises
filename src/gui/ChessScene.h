@@ -3,7 +3,7 @@
 // ║ Description  : Definitions of the QGraphicsScene                                 ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/11                                                        ║
-// ║ Version      : 1.0                                                               ║
+// ║ Version      : 2.0                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
@@ -71,7 +71,10 @@ class ChessScene : public QGraphicsScene {
   BoardMarkingType markings[BOARDSIZE][BOARDSIZE]{};
 
   bool isInactiveMarkingUsed = false;
-  std::pair<Coords, BoardMarkingType> inactiveMarking = {{0, 0}, NONE};
+  std::pair<Coords, BoardMarkingType> inactiveMarking = {{-1, -1}, NONE};
+
+  bool isSelected = false;
+  Coords selected = {0, 0};
 
   // All image locations as 2d-array of pairs of enumerations
   std::pair<ChessPieceType, ChessPieceColor> images[BOARDSIZE][BOARDSIZE];

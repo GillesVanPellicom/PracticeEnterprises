@@ -22,6 +22,20 @@ set(SOURCE_FILES src/main.cpp
         src/lib/mini/ini.h
         src/utils/Type.cpp
         src/utils/Type.h
+        src/chessPiece/ChessPiece.cpp
+        src/chessPiece/ChessPiece.h
+        src/chessPiece/bishop/Bishop.cpp
+        src/chessPiece/bishop/Bishop.h
+        src/chessPiece/king/King.cpp
+        src/chessPiece/king/King.h
+        src/chessPiece/knight/Knight.cpp
+        src/chessPiece/knight/Knight.h
+        src/chessPiece/pawn/Pawn.cpp
+        src/chessPiece/pawn/Pawn.h
+        src/chessPiece/queen/Queen.cpp
+        src/chessPiece/queen/Queen.h
+        src/chessPiece/rook/Rook.cpp
+        src/chessPiece/rook/Rook.h
 )
 add_executable(chess ${SOURCE_FILES})
 

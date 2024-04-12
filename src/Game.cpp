@@ -16,7 +16,7 @@
 
 Game::Game() {
   // FIXME: DEMONSTRATION OF GUI
-  guiDemonstration1();
+  initializeGame();
 
 }
 
@@ -33,7 +33,7 @@ void Game::onFileQuit() {
 
   if (returnValue == QMessageBox::Save) {
     // User clicked Save
-    std::cout << "Save clicked" << std::endl; 
+    std::cout << "Save clicked" << std::endl;
 
   } else if (returnValue == QMessageBox::Discard) {
     // User clicked Discard
@@ -66,7 +66,6 @@ void Game::onFileNew() {
     doVisualizeThreatenedEnemy = false;
     doVisualizeThreatenedFriendly = false;
     clearGUI();
-    guiDemonstration1();
 
   } else if (returnValue == QMessageBox::Cancel) {
     // User clicked Cancel
@@ -184,97 +183,180 @@ void Game::onVisualizeThreatenedFriendly() {
 void Game::onClick(int x, int y) {
   // TODO: handle mouse clicks
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
+  markCellAs(x, y, BoardMarkingType::SELECTED);
 
-  // FIXME: DEMONSTRATION OF GUI
-  guiDemonstration2();
+  // If selected cell is the same as the new cell
+  if (isSelected && selected.x == x && selected.y == y) {
+    std::cout << "Unmarked" << std::endl;
+    // Unmark
+    setSelected(x, y, false);
+    refreshGui();
+    return;
+  }
+
+  // If a cell was previously selected and that cell contains a chesspiece, and the new cell is empty
+  if (isSelected && board[selected.x][selected.y] != nullptr && board[x][y] == nullptr) {
+    std::cout << "move" << std::endl;
+    // A possible move could be made.
+    // FIXME: Check move validity
+    // Temp: just move piece
+    movePiece(selected.x, selected.y, x, y);
+    setSelected(x, y, false);
+    // Unmark when move is compelte
+    markCellAs(x, y, BoardMarkingType::SELECTED);
+    refreshGui();
+    return;
+  }
+
+  // If no special handling is required, deselect old cell and select new cell.
+  std::cout << "select" << std::endl;
+  // Select cel
+  setSelected(x, y, true);
+
+  refreshGui();
 }
 
-// EXAMPLES. These can be removed when understood.
+void Game::initializeGame() {
 
-void Game::guiDemonstration1() {
-  // This function could be used for filling the board whilst file I/O isn't yet implemented.
+  isSelected = false;
+  isWhiteTurn = true;
+
+  // Initialize board as nullptr
+  // Skipping this step leads to undefined cross-platform behavior
+  for (int i = 0; i < std::size(board); ++i) {
+    for (int j = 0; j < std::size(board[0]); ++j) {
+      board[i][j] = nullptr;
+    }
+  }
+
   // Black pieces top row
-  setChessItem(0, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
-  setChessItem(1, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
-  setChessItem(2, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
-  setChessItem(3, 7, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
-  setChessItem(4, 7, ChessPieceType::KING, ChessPieceColor::BLACK);
-  setChessItem(5, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
-  setChessItem(6, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
-  setChessItem(7, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+  generatePiece(0, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+  generatePiece(1, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
+  generatePiece(2, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
+  generatePiece(3, 7, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
+  generatePiece(4, 7, ChessPieceType::KING, ChessPieceColor::BLACK);
+  generatePiece(5, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
+  generatePiece(6, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
+  generatePiece(7, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
 
   // Black pawn row
-  setChessItem(0, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(1, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(2, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(3, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(4, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(5, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(6, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(7, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(0, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(1, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(2, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(3, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(4, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(5, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(6, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  generatePiece(7, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
 
   // White pawn row
-  setChessItem(0, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(1, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(2, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(3, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(4, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(5, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(6, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(7, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(0, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(1, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(2, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(3, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(4, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(5, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(6, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  generatePiece(7, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
 
   // White pieces bottom row
-  setChessItem(0, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
-  setChessItem(1, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
-  setChessItem(2, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
-  setChessItem(3, 0, ChessPieceType::QUEEN, ChessPieceColor::WHITE);
-  setChessItem(4, 0, ChessPieceType::KING, ChessPieceColor::WHITE);
-  setChessItem(5, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
-  setChessItem(6, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
-  setChessItem(7, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
+  generatePiece(0, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
+  generatePiece(1, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
+  generatePiece(2, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
+  generatePiece(3, 0, ChessPieceType::QUEEN, ChessPieceColor::WHITE);
+  generatePiece(4, 0, ChessPieceType::KING, ChessPieceColor::WHITE);
+  generatePiece(5, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
+  generatePiece(6, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
+  generatePiece(7, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
+
+  markCellAs(0, 0, BoardMarkingType::THREATENED_FRIENDLY);
 
   refreshGui();
 }
-void Game::guiDemonstration2() {
-  // Clear initial board setup demonstration
-  clearGUI();
 
-  // Place piece images on board
-  setChessItem(1, 1, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(0, 3, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
-  setChessItem(0, 4, ChessPieceType::KING, ChessPieceColor::WHITE);
-  setChessItem(2, 4, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  setChessItem(3, 3, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  setChessItem(2, 7, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
-  setChessItem(5, 3, ChessPieceType::KING, ChessPieceColor::WHITE);
-  setChessItem(7, 2, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color) {
+  // If position occupied, fail.
+  if (board[x][y] != nullptr) {
+    return false;
+  }
 
-  // Mark threatened friendly pieces
-  markCellAs(3, 3, THREATENED_FRIENDLY);
-  markCellAs(0, 4, THREATENED_FRIENDLY);
+  // Instantiate appropriate object for type
+  switch (type) {
 
-  // Mark threatened enemy pieces based on what piece is selected
-  markCellAs(7, 2, THREATENED_ENEMY);
+    case KING: {
+      board[x][y] = new King(type, color, this, x, y);
+      break;
+    }
 
+    case QUEEN: {
+      board[x][y] = new Queen(type, color, this, x, y);
+      break;
+    }
 
-  // Mark the currently selected piece
-  markCellAs(2, 7, SELECTED);
+    case ROOK: {
+      board[x][y] = new Rook(type, color, this, x, y);
+      break;
+    }
 
-  // Mark all possible moves for the selected piece
-  markCellAs(1, 6, POSSIBLE);
-  markCellAs(0, 5, POSSIBLE);
-  markCellAs(3, 6, POSSIBLE);
-  markCellAs(4, 5, POSSIBLE);
-  markCellAs(5, 4, POSSIBLE);
-  markCellAs(6, 3, POSSIBLE);
+    case BISHOP: {
+      board[x][y] = new Bishop(type, color, this, x, y);
+      break;
+    }
 
-  refreshGui();
+    case KNIGHT: {
+      board[x][y] = new Knight(type, color, this, x, y);
+      break;
+    }
 
-  customMsgBox("Demonstration",
-               "It's black's turn",
-               "The bishop is selected. Possible moves are shown. Possible takes are highlighted and possible threats to one's own pieces are also shown.");
+    case PAWN: {
+      board[x][y] = new Pawn(type, color, this, x, y);
+      break;
+    }
+    case EMPTY: {
+      // If empty, fail.
+      return false;
+    }
+  }
+
+  setChessItem(x, y, type, color);
+
+  return true;
 }
 
+bool Game::movePiece(int x1, int y1, int x2, int y2) {
+
+  if (board[x2][y2] != nullptr) {
+    return false;
+  }
+
+  ChessPiece* current = board[x1][y1];
+
+  // Move piece
+  board[x2][y2] = current;
+  board[x1][y1] = nullptr;
+
+  // Make piece aware of it's own position
+  current->setX(x2);
+  current->setY(y2);
+
+  setChessItem(x1, y1, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
+  setChessItem(x2, y2, current->getType(), current->getColor());
+
+  return true;
+}
+
+void Game::setSelected(int x, int y, bool isSelected) {
+  if (isSelected) {
+    this->isSelected = true;
+    selected.x = x;
+    selected.y = y;
+  } else {
+
+    this->isSelected = false;
+    selected.x = -1;
+    selected.y = -1;
+  }
+}
 
 
 // ╔════════════════════════════════════════╗
@@ -307,3 +389,5 @@ QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
                                               const std::string& subtext) {
   return ChessWindow::yesNoMsgBox(title, header, subtext);
 }
+
+

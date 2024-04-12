@@ -3,7 +3,7 @@
 // ║ Description  : Implementation of the game rendering                              ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/11                                                        ║
-// ║ Version      : 1.0                                                               ║
+// ║ Version      : 2.0                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
@@ -228,6 +228,9 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
 void ChessScene::setCellMarkedSelected(int x, int y) {
 
+  // Remove selected marking
+
+
   removeAllMarkingsType(SELECTED);
 
   // If another marking was overridden, restore it
@@ -235,19 +238,29 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
     isInactiveMarkingUsed = false;
     Coords c = inactiveMarking.first;
     markings[c.x][c.y] = inactiveMarking.second;
-
   }
 
-  // Check if this operation will override a marking of lower precedence.
-  if (markings[x][y] != BoardMarkingType::NONE) {
-    // Remember the marking to be overwritten
-    inactiveMarking = {{x, y}, markings[x][y]};
-    isInactiveMarkingUsed = true;
+  if (!(selected.x == x && selected.y == y)) {
+    // Check if this operation will override a marking of lower precedence.
+    if (markings[x][y] != BoardMarkingType::NONE) {
+      // Remember the marking to be overwritten
+      inactiveMarking = {{x, y}, markings[x][y]};
+      isInactiveMarkingUsed = true;
+    }
+
+    // Mark cell as selected.
+    selected.x = x;
+    selected.y = y;
+    markings[x][y] = BoardMarkingType::SELECTED;
+  } else {
+    selected.x = -1;
+    selected.y = -1;
+    }
   }
 
-  // Mark cell as selected.
-  markings[x][y] = BoardMarkingType::SELECTED;
-}
+
+
+
 
 
 void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
