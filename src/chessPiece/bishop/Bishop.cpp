@@ -11,5 +11,18 @@
 Bishop::Bishop(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> Bishop::getValidMoves() {
-  return {};
+  std::vector<Coords> moves;
+  // Pseudo-valid
+
+  int currentX = this->getX();
+  int currentY = this->getY();
+
+  for (int i = -7; i <= 7; ++i) {
+    if (currentX + i >= 0 && currentX + i < 8 && currentY + i >= 0 && currentY + i < 8 && i != 0) {
+      moves.emplace_back(currentX + i, currentY + i);
+      moves.emplace_back(currentX - i, currentY + i);
+    }
+  }
+
+  return moves;
 }

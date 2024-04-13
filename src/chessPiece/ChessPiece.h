@@ -23,9 +23,9 @@ class ChessPiece {
   int x;
   int y;
 
-  virtual std::vector<Coords> getValidMoves() = 0;
 
  public:
+  virtual std::vector<Coords> getValidMoves() = 0;
   int getY() const;
   void setY(int y);
   int getX() const;

@@ -114,19 +114,14 @@ void Game::onVisualizeMoves() {
     doVisualizeMoves = false;
     return;
   }
+
   doVisualizeMoves = true;
 
-  // TODO: Place code to retrieve and display possible moves here
-
-  // EXAMPLE
-  // =========================
-  markCellAs(6, 3, POSSIBLE);
-  markCellAs(6, 2, POSSIBLE);
-  setChessItem(4, 4, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
-  refreshGui();
-  // =========================
-
-
+  // In case piece was already selected
+  if (isSelected) {
+    showVisualizeMoves(board[selected.x][selected.y]);
+    refreshGui();
+  }
 }
 
 
@@ -182,13 +177,21 @@ void Game::onVisualizeThreatenedFriendly() {
 
 void Game::onClick(int x, int y) {
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
+  // Remove all markings from previous iteration
+  removeAllMarkingsType(BoardMarkingType::POSSIBLE);
+  removeAllMarkingsType(BoardMarkingType::THREATENED_ENEMY);
+  removeAllMarkingsType(BoardMarkingType::THREATENED_FRIENDLY);
+  // Due to the working of SELECTED, pre select
   markCellAs(x, y, BoardMarkingType::SELECTED);
+
+  ChessPiece* piece = board[x][y];
 
   // If selected cell is the same as the new cell
   if (isSelected && selected.x == x && selected.y == y) {
     std::cout << "Unmarked" << std::endl;
     // Unmark
     setSelected(x, y, false);
+    currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
     refreshGui();
     return;
   }
@@ -207,20 +210,46 @@ void Game::onClick(int x, int y) {
     return;
   }
 
+
   // If the clicked cell contains a piece and that piece is the same color as the current turn
-  if (board[x][y] != nullptr && board[x][y]->getColor() == currentTurn) {
-    // Select cell
+  if (piece != nullptr && piece->getColor() == currentTurn) {
     std::cout << "select" << std::endl;
 
-    // Switch turns
-    currentTurn = (board[x][y]->getColor() == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
-
+    // Select cell
     setSelected(x, y, true);
+
+
+    // Switch turns
+    currentTurn = (piece->getColor() == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+
+    // FIXME maybe unneeded.
+    // If nothing has to be visualised
+    if (!doVisualizeMoves && !doVisualizeThreatenedEnemy && !doVisualizeThreatenedFriendly) {
+      // Stop
+      refreshGui();
+      return;
+    }
+    
+    // Something has to be visualised
+
+    
+    if (doVisualizeMoves) {
+      showVisualizeMoves(piece);
+    }
+
     refreshGui();
     return;
   }
 
   std::cout << "Invalid" << std::endl;
+}
+
+
+void Game::showVisualizeMoves(ChessPiece* piece) {
+  std::vector<Coords> moves = piece->getValidMoves();
+  for (auto & move : moves) {
+    markCellAs(move.x, move.y, BoardMarkingType::POSSIBLE);
+  }
 }
 
 
@@ -277,7 +306,6 @@ void Game::initializeGame() {
   generatePiece(6, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
   generatePiece(7, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
 
-  markCellAs(0, 0, BoardMarkingType::THREATENED_FRIENDLY);
 
   refreshGui();
 }
@@ -401,5 +429,6 @@ QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
                                               const std::string& subtext) {
   return ChessWindow::yesNoMsgBox(title, header, subtext);
 }
+
 
 

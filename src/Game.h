@@ -234,6 +234,8 @@ class Game : public ChessWindow {
 
   void setSelected(int x, int y, bool isSelected);
 
+  void showVisualizeMoves(ChessPiece* piece);
+
  public:
   Game();
  private:
