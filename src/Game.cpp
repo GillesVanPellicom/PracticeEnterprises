@@ -277,24 +277,14 @@ void Game::initializeGame() {
   generatePiece(7, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
 
   // Black pawn row
-  generatePiece(0, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(1, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(2, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(3, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(4, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(5, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(6, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
-  generatePiece(7, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  for (int i = 0; i < 8; ++i) {
+    generatePiece(i, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  }
 
   // White pawn row
-  generatePiece(0, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(1, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(2, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(3, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(4, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(5, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(6, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
-  generatePiece(7, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  for (int i = 0; i < 8; ++i) {
+    generatePiece(i, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+  }
 
   // White pieces bottom row
   generatePiece(0, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
