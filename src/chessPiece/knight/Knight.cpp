@@ -12,11 +12,11 @@ Knight::Knight(ChessPieceType type, ChessPieceColor color, Game* instance, int x
 
 std::vector<Coords> Knight::getValidMoves() {
   std::vector<Coords> moves;
-  // Pseudo-valid
 
   int _x = this->getX();
   int _y = this->getY();
 
+  // Pseudo-valid
   int deltaX[] = {1, 1, 2, 2, -1, -1, -2, -2};
   int deltaY[] = {2, -2, 1, -1, 2, -2, 1, -1};
 

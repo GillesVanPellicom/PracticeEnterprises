@@ -13,6 +13,8 @@
 #include "../ChessPiece.h"
 
 class Pawn : public ChessPiece {
+
+  bool isFirstMove = true;
  public:
   Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
