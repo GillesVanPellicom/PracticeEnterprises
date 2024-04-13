@@ -8,20 +8,35 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Bishop.h"
-Bishop::Bishop(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type, color, instance, x, y) {}
+Bishop::Bishop(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type,
+                                                                                                      color,
+                                                                                                      instance,
+                                                                                                      x,
+                                                                                                      y) {}
 
 std::vector<Coords> Bishop::getValidMoves() {
   std::vector<Coords> moves;
+
+  int _x = this->getX();
+  int _y = this->getY();
+
   // Pseudo-valid
+  for (int i = 1; i < 8; ++i) {
+    // Right & up (x+, y+)
+    if (_x + i < 8 && _y + i < 8)
+      moves.emplace_back(_x + i, _y + i);
 
-  int currentX = this->getX();
-  int currentY = this->getY();
+    // Right & down (x+, y-)
+    if (_x + i < 8 && _y - i >= 0)
+      moves.emplace_back(_x + i, _y - i);
 
-  for (int i = -7; i <= 7; ++i) {
-    if (currentX + i >= 0 && currentX + i < 8 && currentY + i >= 0 && currentY + i < 8 && i != 0) {
-      moves.emplace_back(currentX + i, currentY + i);
-      moves.emplace_back(currentX - i, currentY + i);
-    }
+    // Left & up (x-, y+)
+    if (_x - i >= 0 && _y + i < 8)
+      moves.emplace_back(_x - i, _y + i);
+
+    // Left & down (x-, y-)
+    if (_x - i >= 0 && _y - i >= 0)
+      moves.emplace_back(_x - i, _y - i);
   }
 
   return moves;
