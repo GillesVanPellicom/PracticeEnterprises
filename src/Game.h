@@ -243,7 +243,7 @@ class Game : public ChessWindow {
   bool isSelected = false;
   Coords selected = {-1, -1};
 
-  bool isWhiteTurn = true;
+  ChessPieceColor currentTurn = ChessPieceColor::WHITE;
 
   // Booleans for menuBar checkboxes
   bool doVisualizeMoves = false;

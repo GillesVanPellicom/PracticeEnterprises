@@ -181,7 +181,6 @@ void Game::onVisualizeThreatenedFriendly() {
 // MouseClickEvent Handler
 
 void Game::onClick(int x, int y) {
-  // TODO: handle mouse clicks
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
   markCellAs(x, y, BoardMarkingType::SELECTED);
 
@@ -194,7 +193,7 @@ void Game::onClick(int x, int y) {
     return;
   }
 
-  // If a cell was previously selected and that cell contains a chesspiece, and the new cell is empty
+  // If a cell was previously selected and that cell contains a chess piece and the new cell is empty
   if (isSelected && board[selected.x][selected.y] != nullptr && board[x][y] == nullptr) {
     std::cout << "move" << std::endl;
     // A possible move could be made.
@@ -202,24 +201,33 @@ void Game::onClick(int x, int y) {
     // Temp: just move piece
     movePiece(selected.x, selected.y, x, y);
     setSelected(x, y, false);
-    // Unmark when move is compelte
+    // Unmark when move is complete
     markCellAs(x, y, BoardMarkingType::SELECTED);
     refreshGui();
     return;
   }
 
-  // If no special handling is required, deselect old cell and select new cell.
-  std::cout << "select" << std::endl;
-  // Select cel
-  setSelected(x, y, true);
+  // If the clicked cell contains a piece and that piece is the same color as the current turn
+  if (board[x][y] != nullptr && board[x][y]->getColor() == currentTurn) {
+    // Select cell
+    std::cout << "select" << std::endl;
 
-  refreshGui();
+    // Switch turns
+    currentTurn = (board[x][y]->getColor() == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+
+    setSelected(x, y, true);
+    refreshGui();
+    return;
+  }
+
+  std::cout << "Invalid" << std::endl;
 }
+
 
 void Game::initializeGame() {
 
   isSelected = false;
-  isWhiteTurn = true;
+  currentTurn == ChessPieceColor::WHITE;
 
   // Initialize board as nullptr
   // Skipping this step leads to undefined cross-platform behavior
@@ -274,6 +282,7 @@ void Game::initializeGame() {
   refreshGui();
 }
 
+
 bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color) {
   // If position occupied, fail.
   if (board[x][y] != nullptr) {
@@ -323,6 +332,7 @@ bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor colo
   return true;
 }
 
+
 bool Game::movePiece(int x1, int y1, int x2, int y2) {
 
   if (board[x2][y2] != nullptr) {
@@ -339,11 +349,13 @@ bool Game::movePiece(int x1, int y1, int x2, int y2) {
   current->setX(x2);
   current->setY(y2);
 
+  // Make GUI reflect changes
   setChessItem(x1, y1, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
   setChessItem(x2, y2, current->getType(), current->getColor());
 
   return true;
 }
+
 
 void Game::setSelected(int x, int y, bool isSelected) {
   if (isSelected) {
