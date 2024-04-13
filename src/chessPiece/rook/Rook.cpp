@@ -12,14 +12,17 @@ Rook::Rook(ChessPieceType type, ChessPieceColor color, Game* instance, int x, in
 
 std::vector<Coords> Rook::getValidMoves() {
   std::vector<Coords> moves;
-  // Pseudo-valid
 
+  int _x = this->getX();
+  int _y = this->getY();
+
+  // Pseudo-valid
   for (int i = 0; i < 8; ++i) {
-    if (i != this->getX()) {
-      moves.emplace_back(i, this->getY());
+    if (i != _x) {
+      moves.emplace_back(i, _y);
     }
-    if (i != this->getY()) {
-      moves.emplace_back(this->getX(), i);
+    if (i != _y) {
+      moves.emplace_back(_x, i);
     }
   }
   return moves;
