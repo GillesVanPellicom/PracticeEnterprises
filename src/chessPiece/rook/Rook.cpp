@@ -10,20 +10,41 @@
 #include "Rook.h"
 Rook::Rook(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type, color, instance, x, y) {}
 
-std::vector<Coords> Rook::getValidMoves() {
+std::vector<Coords> Rook::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
-
   int _x = this->getX();
   int _y = this->getY();
+  ChessPieceColor color = this->getColor();
 
-  // Pseudo-valid
-  for (int i = 0; i < 8; ++i) {
-    if (i != _x) {
-      moves.emplace_back(i, _y);
-    }
-    if (i != _y) {
-      moves.emplace_back(_x, i);
-    }
+  // Define helper function to check if a square is valid to move to
+  auto isValidMove = [&](int x, int y) {
+    return x >= 0 && x < 8 && y >= 0 && y < 8 &&
+        (board[x][y] == nullptr || board[x][y]->getColor() != color);
+  };
+
+  // Check horizontal moves to the right
+  for (int x = _x + 1; isValidMove(x, _y); ++x) {
+    moves.emplace_back(x, _y);
+    if (board[x][_y] != nullptr) break;
   }
+
+  // Check horizontal moves to the left
+  for (int x = _x - 1; isValidMove(x, _y); --x) {
+    moves.emplace_back(x, _y);
+    if (board[x][_y] != nullptr) break;
+  }
+
+  // Check vertical moves upwards
+  for (int y = _y + 1; isValidMove(_x, y); ++y) {
+    moves.emplace_back(_x, y);
+    if (board[_x][y] != nullptr) break;
+  }
+
+  // Check vertical moves downwards
+  for (int y = _y - 1; isValidMove(_x, y); --y) {
+    moves.emplace_back(_x, y);
+    if (board[_x][y] != nullptr) break;
+  }
+
   return moves;
 }

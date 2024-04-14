@@ -12,11 +12,12 @@
 
 #include "../ChessPiece.h"
 
+
 class Rook : public ChessPiece {
  public:
   Rook(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
-  std::vector<Coords> getValidMoves() override;
+  std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
 
 };
 

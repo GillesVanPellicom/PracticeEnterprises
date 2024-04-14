@@ -12,7 +12,7 @@
 ChessPiece::ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y)
     : type(type), color(color), instance(instance), x(x), y(y) {}
 
-std::vector<Coords> ChessPiece::getValidMoves() {
+std::vector<Coords> ChessPiece::getValidMoves(ChessPiece* board[8][8]) {
   return {};
 }
 int ChessPiece::getY() const {
@@ -32,5 +32,8 @@ ChessPieceType ChessPiece::getType() const {
 }
 ChessPieceColor ChessPiece::getColor() const {
   return color;
+}
+Game* ChessPiece::getInstance() const {
+  return instance;
 }
 

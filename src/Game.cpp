@@ -236,7 +236,7 @@ void Game::onClick(int x, int y) {
 
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
-  std::vector<Coords> moves = piece->getValidMoves();
+  std::vector<Coords> moves = piece->getValidMoves(board);
   for (auto & move : moves) {
     markCellAs(move.x, move.y, BoardMarkingType::POSSIBLE);
   }
@@ -409,6 +409,7 @@ QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
                                               const std::string& subtext) {
   return ChessWindow::yesNoMsgBox(title, header, subtext);
 }
+
 
 
 

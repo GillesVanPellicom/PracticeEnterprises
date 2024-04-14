@@ -11,7 +11,7 @@
 Pawn::Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) :
 ChessPiece(type, color, instance, x, y) {}
 
-std::vector<Coords> Pawn::getValidMoves() {
+std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
 
   int _x = this->getX();

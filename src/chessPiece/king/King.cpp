@@ -10,7 +10,7 @@
 #include "King.h"
 King::King(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type, color, instance, x, y) {}
 
-std::vector<Coords> King::getValidMoves() {
+std::vector<Coords> King::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
 
   int _x = this->getX();

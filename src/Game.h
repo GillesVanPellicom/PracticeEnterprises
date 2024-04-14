@@ -236,6 +236,7 @@ class Game : public ChessWindow {
 
   void showVisualizeMoves(ChessPiece* piece);
 
+
  public:
   Game();
  private:
