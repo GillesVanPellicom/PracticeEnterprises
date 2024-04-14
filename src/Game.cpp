@@ -191,7 +191,7 @@ void Game::onClick(int x, int y) {
     std::cout << "Unmarked" << std::endl;
     // Unmark
     setSelected(x, y, false);
-    currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+    //currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
     refreshGui();
     return;
   }
@@ -204,8 +204,13 @@ void Game::onClick(int x, int y) {
     // Temp: just move piece
     movePiece(selected.x, selected.y, x, y);
     setSelected(x, y, false);
+
     // Unmark when move is complete
     markCellAs(x, y, BoardMarkingType::SELECTED);
+
+    // Switch turns
+    currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+
     refreshGui();
     return;
   }
@@ -219,9 +224,6 @@ void Game::onClick(int x, int y) {
     setSelected(x, y, true);
 
 
-    // Switch turns
-    currentTurn = (piece->getColor() == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
-
     // FIXME maybe unneeded.
     // If nothing has to be visualised
     if (!doVisualizeMoves && !doVisualizeThreatenedEnemy && !doVisualizeThreatenedFriendly) {
@@ -232,7 +234,6 @@ void Game::onClick(int x, int y) {
     
     // Something has to be visualised
 
-    
     if (doVisualizeMoves) {
       showVisualizeMoves(piece);
     }
@@ -256,7 +257,7 @@ void Game::showVisualizeMoves(ChessPiece* piece) {
 void Game::initializeGame() {
 
   isSelected = false;
-  currentTurn == ChessPieceColor::WHITE;
+  currentTurn = ChessPieceColor::WHITE;
 
   // Initialize board as nullptr
   // Skipping this step leads to undefined cross-platform behavior
