@@ -24,6 +24,11 @@ std::vector<Coords> King::getValidMoves(ChessPiece* board[8][8]) {
     int newX = _x + deltaX[i];
     int newY = _y + deltaY[i];
     if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+      // If move cell contains a piece and that piece is the same color as the current piece
+      if (board[newX][newY] != nullptr && board[newX][newY]->getColor() == this->getColor()) {
+        // Friendly
+        continue;
+      }
       moves.emplace_back(newX, newY);
     }
   }
