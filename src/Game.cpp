@@ -15,9 +15,7 @@
 // ╚════════════════════════════════════════╝
 
 Game::Game() {
-  // FIXME: DEMONSTRATION OF GUI
   initializeGame();
-
 }
 
 
@@ -292,7 +290,7 @@ void Game::initializeGame() {
 
 
 bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color) {
-  // If position occupied, fail.
+  // Position occupied, fail.
   if (board[x][y] != nullptr) {
     return false;
   }
@@ -353,7 +351,7 @@ bool Game::movePiece(int x1, int y1, int x2, int y2) {
   board[x2][y2] = current;
   board[x1][y1] = nullptr;
 
-  // Make piece aware of it's own position
+  // Make piece aware of its own position
   current->setX(x2);
   current->setY(y2);
 
@@ -365,8 +363,8 @@ bool Game::movePiece(int x1, int y1, int x2, int y2) {
 }
 
 
-void Game::setSelected(int x, int y, bool isSelected) {
-  if (isSelected) {
+void Game::setSelected(int x, int y, bool _isSelected) {
+  if (_isSelected) {
     this->isSelected = true;
     selected.x = x;
     selected.y = y;

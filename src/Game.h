@@ -32,6 +32,9 @@
 class Game : public ChessWindow {
  Q_OBJECT
  private:
+  // ╔════════════════════════════════════════╗
+  // ║          Inherited Functions           ║
+  // ╚════════════════════════════════════════╝
   // GUI event handlers
   // Menu bar handlers
 
@@ -226,26 +229,61 @@ class Game : public ChessWindow {
                                           const std::string& subtext) override;
 
 
+  // ╔════════════════════════════════════════╗
+  // ║              Chess Logic               ║
+  // ╚════════════════════════════════════════╝
+
+  /**
+   * Sets the game to a begin-state.
+   * (re)sets the GUI and all game variables.
+   * Does not reset GUI preferences such as visualizations.
+   */
   void initializeGame();
 
+  /**
+   * Generates a ChessPiece of a specified type at a specified location on the board.
+   * @param x x-coordinate of location
+   * @param y y-coordinate of location
+   * @param type Type of the new ChessPiece
+   * @param color Color of the new ChessPiece
+   * @return false when position invalid or type = EMPTY
+   */
   bool generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color);
 
+  /**
+   * Move piece from pos_1 to pos_2
+   * FIXME: Unfinished function. Write docs
+   * @param x1
+   * @param y1
+   * @param x2
+   * @param y2
+   * @return
+   */
   bool movePiece(int x1, int y1, int x2, int y2);
 
-  void setSelected(int x, int y, bool isSelected);
+  /**
+   * Sets the currently selected piece.
+   * Only used to handle game variables. Doesn't alter GUI.
+   * @param x x-coordinate of the select
+   * @param y y-coordinate of the select
+   * @param _isSelected true if something is selected. Global, not only for these coordinates.
+   */
+  void setSelected(int x, int y, bool _isSelected);
 
+  /**
+   * Shows all valid moves for a specific piece.
+   * @param piece
+   */
   void showVisualizeMoves(ChessPiece* piece);
 
-
- public:
-  Game();
- private:
-
+  // Board variable
   ChessPiece* board[8][8];
 
+  // Current selected cell variables
   bool isSelected = false;
   Coords selected = {-1, -1};
 
+  // Current turn
   ChessPieceColor currentTurn = ChessPieceColor::WHITE;
 
   // Booleans for menuBar checkboxes
@@ -253,6 +291,8 @@ class Game : public ChessWindow {
   bool doVisualizeThreatenedEnemy = false;
   bool doVisualizeThreatenedFriendly = false;
 
+ public:
+  Game();
 };
 
 #endif //PRACTICEENTERPRISES_GAME_H_
