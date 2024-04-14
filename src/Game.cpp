@@ -62,10 +62,8 @@ void Game::onFileNew() {
   if (returnValue == QMessageBox::Ok) {
     // User clicked Ok
     // Set all game variables back to default
-    doVisualizeMoves = false;
-    doVisualizeThreatenedEnemy = false;
-    doVisualizeThreatenedFriendly = false;
     clearGUI();
+    initializeGame();
 
   } else if (returnValue == QMessageBox::Cancel) {
     // User clicked Cancel
@@ -181,7 +179,8 @@ void Game::onClick(int x, int y) {
   removeAllMarkingsType(BoardMarkingType::POSSIBLE);
   removeAllMarkingsType(BoardMarkingType::THREATENED_ENEMY);
   removeAllMarkingsType(BoardMarkingType::THREATENED_FRIENDLY);
-  // Due to the working of SELECTED, pre select
+
+  // Due to the working of SELECTED, pre-select
   markCellAs(x, y, BoardMarkingType::SELECTED);
 
   ChessPiece* piece = board[x][y];
@@ -191,7 +190,6 @@ void Game::onClick(int x, int y) {
     std::cout << "Unmarked" << std::endl;
     // Unmark
     setSelected(x, y, false);
-    //currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
     refreshGui();
     return;
   }
@@ -222,15 +220,6 @@ void Game::onClick(int x, int y) {
 
     // Select cell
     setSelected(x, y, true);
-
-
-    // FIXME maybe unneeded.
-    // If nothing has to be visualised
-    if (!doVisualizeMoves && !doVisualizeThreatenedEnemy && !doVisualizeThreatenedFriendly) {
-      // Stop
-      refreshGui();
-      return;
-    }
     
     // Something has to be visualised
 
