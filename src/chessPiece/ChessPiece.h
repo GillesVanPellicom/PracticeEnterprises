@@ -25,14 +25,14 @@ class ChessPiece {
 
 
  public:
-  Game* getInstance() const;
+  [[nodiscard]] Game* getInstance() const;
   virtual std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) = 0;
-  int getY() const;
+  [[nodiscard]] int getY() const;
   void setY(int y);
-  int getX() const;
+  [[nodiscard]] int getX() const;
   void setX(int x);
-  ChessPieceType getType() const;
-  ChessPieceColor getColor() const;
+  [[nodiscard]] ChessPieceType getType() const;
+  [[nodiscard]] ChessPieceColor getColor() const;
   ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
   virtual ~ChessPiece();
 

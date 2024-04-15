@@ -39,7 +39,7 @@
  * @brief Implementation of the QGraphicsScene\n
  * @throws std::out_of_range If invalid board coördinates are provided
  */
-class ChessScene : public QGraphicsScene {
+class ChessScene final : public QGraphicsScene {
  Q_OBJECT
 
  public:
@@ -107,7 +107,7 @@ class ChessScene : public QGraphicsScene {
    * @param hex input string
    * @return QColor object
    */
-  static QColor hexstrToQColor(std::string& hex);
+  static QColor hexstrToQColor(const std::string& hex);
 
   /**
    * Draws a specific tile.
@@ -186,6 +186,8 @@ class ChessScene : public QGraphicsScene {
    * Overriding a cell marked as SELECTED will cause the cell to become that type once a new cell is selected.
    * @param x x-coordinate of the cell
    * @param y y-coordinate of the cell
+   * @param type Type of what the cell should be marked as
+
    */
   void setCellMarkedType(int x, int y, BoardMarkingType type);
 

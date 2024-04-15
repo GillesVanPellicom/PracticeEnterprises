@@ -11,29 +11,27 @@
 #include "ChessScene.h"
 
 ChessScene::ChessScene(QObject* parent)
-: QGraphicsScene(parent) {
-    // Measurements in px
-    cellWidth = 45;
-    boardMargin = 0;
+  : QGraphicsScene(parent) {
+  // Measurements in px
+  cellWidth = 45;
+  boardMargin = 0;
 
-    // Read basic.ini and populate variables
-    readColorConfig();
+  // Read basic.ini and populate variables
+  readColorConfig();
 
-    // Initialize datatype for board markings.
-    initializeMarkingsMap();
+  // Initialize datatype for board markings.
+  initializeMarkingsMap();
 
-    // Initialize datatype for board pieces.
-    initializeImagesMap();
+  // Initialize datatype for board pieces.
+  initializeImagesMap();
 
-    // This should be the last function
-    drawBoard();
-
-
+  // This should be the last function
+  drawBoard();
 }
 
-void ChessScene::drawTile(int x, int y) {
-  auto* rect = new QGraphicsRectItem(static_cast<int>(y * cellWidth),
-                                     static_cast<int>((7 - x) * cellWidth),
+void ChessScene::drawTile(const int x, const int y) {
+  auto* rect = new QGraphicsRectItem(y * cellWidth,
+                                     (7 - x) * cellWidth,
                                      cellWidth,
                                      cellWidth);
 
@@ -44,7 +42,6 @@ void ChessScene::drawTile(int x, int y) {
   if (x % 2 == y % 2) {
     // Qt and chess-actual coordinates are flipped.
     switch (markings[y][x]) {
-
       case NONE: {
         rect->setBrush(QBrush(whiteSquareColor, Qt::SolidPattern));
         break;
@@ -72,11 +69,9 @@ void ChessScene::drawTile(int x, int y) {
         break;
       }
     }
-
   } else {
     // Qt and chess-actual coordinates are flipped.
     switch (markings[y][x]) {
-
       case NONE: {
         rect->setBrush(QBrush(blackSquareColor, Qt::SolidPattern));
         break;
@@ -123,7 +118,7 @@ void ChessScene::drawBoard() {
 void ChessScene::readColorConfig() {
   try {
     // FIXME: hardcoded link
-    mINI::INIFile file("../config/colorschemes/chess.com.ini");
+    const mINI::INIFile file("../config/colorschemes/chess.com.ini");
     mINI::INIStructure conf;
     file.read(conf);
 
@@ -142,22 +137,19 @@ void ChessScene::readColorConfig() {
     if (conf["global"]["borders"] == "true") {
       boardBorders = true;
     }
-
   } catch (const std::exception& e) {
     std::cerr << "I/O error: basic.ini was inaccessible. Continuing with default values..." << std::endl;
   }
 }
 
 
-QColor ChessScene::hexstrToQColor(std::string& hex) {
+QColor ChessScene::hexstrToQColor(const std::string& hex) {
   // regex to validate string.
-  std::regex pattern("#?([a-fA-F0-9]){6}");
-  if (!std::regex_match(hex, pattern)) {
+  if (!std::regex_match(hex, std::regex("#?([a-fA-F0-9]){6}"))) {
     // If string isn't hex
     std::cerr << "The provided string \"" << hex
-              << "\" is not a valid hex color code. Defaulting to #000000 for this value..." << std::endl;
+        << "\" is not a valid hex color code. Defaulting to #000000 for this value..." << std::endl;
     return {0, 0, 0};
-
   }
 
   // Valid hex code. Process into RGB
@@ -176,9 +168,9 @@ QColor ChessScene::hexstrToQColor(std::string& hex) {
 
   // Extract individual color components
   // Shift and mask
-  unsigned int r = (value >> 16) & 0xFF;
-  unsigned int g = (value >> 8) & 0xFF;
-  unsigned int b = value & 0xFF;
+  const unsigned int r = (value >> 16) & 0xFF;
+  const unsigned int g = (value >> 8) & 0xFF;
+  const unsigned int b = value & 0xFF;
 
   // Avoid implementation defined annoyances
   return {static_cast<int>(r), static_cast<int>(g), static_cast<int>(b)};
@@ -213,9 +205,9 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
   // If button pressed is left button
   if (event->button() == Qt::LeftButton) {
     // Transform Qt scene coordinates to board coordinates [0; 7]
-    int x = ((int) ceil(event->scenePos().x() / cellWidth)) - 1;
+    const int x = static_cast<int>(std::ceil(event->scenePos().x() / cellWidth)) - 1;
     // flip y coordinate to conform to chess standards
-    int y = (9 - (int) ceil(event->scenePos().y() / cellWidth)) - 1;
+    const int y = (9 - static_cast<int>(std::ceil(event->scenePos().y() / cellWidth))) - 1;
 
     // If callback is valid
     if (clickCallback) {
@@ -227,11 +219,10 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
 
 void ChessScene::setCellMarkedSelected(int x, int y) {
-
   if (!(selected.x == x && selected.y == y)) {
     // Check if this operation will override a marking of lower precedence.
-      // Remember the marking to be overwritten
-      inactiveMarking = {{x, y}, markings[x][y]};
+    // Remember the marking to be overwritten
+    inactiveMarking = {{x, y}, markings[x][y]};
 
 
     // Mark cell as selected.
@@ -241,23 +232,23 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
   } else {
     selected.x = -1;
     selected.y = -1;
-    }
   }
+}
 
 
 void ChessScene::removeCellMarkedSelected() {
-  Coords c = inactiveMarking.first;
+  const Coords c = inactiveMarking.first;
   markings[c.x][c.y] = inactiveMarking.second;
 }
 
 
-void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
+void ChessScene::removeAllMarkingsType(const BoardMarkingType type) {
   if (type == BoardMarkingType::SELECTED) {
     removeCellMarkedSelected();
   }
 
-  for (auto & markingRow : markings) {
-    for (auto & marking : markingRow) {
+  for (auto& markingRow : markings) {
+    for (auto& marking : markingRow) {
       if (marking == type) {
         marking = BoardMarkingType::NONE;
       }
@@ -271,18 +262,17 @@ void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
 }
 
 
-void ChessScene::setCellMarkedType(int x, int y, BoardMarkingType type) {
+void ChessScene::setCellMarkedType(const int x, const int y, const BoardMarkingType type) {
   // Enforce range
   if (x < 0 || x > 7 || y < 0 || y > 7) {
     throw std::out_of_range(
-        "Fatal: setCellMarkedType(): x, y must be [0; 7]. Actual: (" +
-            std::to_string(x) + ", " + std::to_string(y) + ")");
+      "Fatal: setCellMarkedType(): x, y must be [0; 7]. Actual: (" +
+      std::to_string(x) + ", " + std::to_string(y) + ")");
   }
 
   // If type is SELECTED, handle in specific function
   if (type == SELECTED) {
     setCellMarkedSelected(x, y);
-
   } else {
     // If not, add type to markings.
     // SELECTED already marked has priority.
@@ -296,15 +286,14 @@ void ChessScene::setCellMarkedType(int x, int y, BoardMarkingType type) {
 }
 
 
-void ChessScene::setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color) {
+void ChessScene::setCellPieceType(const int x, const int y, const ChessPieceType type, const ChessPieceColor color) {
   images[x][y] = {type, color};
 }
 
 
-void ChessScene::refreshImage(int x, int y) {
-
+void ChessScene::refreshImage(const int x, const int y) {
   if (images[x][y].first == ChessPieceType::EMPTY ||
-      images[x][y].second == ChessPieceColor::NO_COLOR) {
+    images[x][y].second == ChessPieceColor::NO_COLOR) {
     return;
   }
 
@@ -312,8 +301,8 @@ void ChessScene::refreshImage(int x, int y) {
   if (filename.isEmpty())
     return;
 
-  quint32 xQt = cellWidth * (x);
-  quint32 yQt = cellWidth * (7 - y);
+  const quint32 xQt = cellWidth * (x);
+  const quint32 yQt = cellWidth * (7 - y);
 
   auto* item = new QGraphicsPixmapItem(QPixmap(filename));
 
@@ -336,13 +325,12 @@ void ChessScene::refreshImages() {
   }
 }
 
-QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color) {
+QString ChessScene::getImageFileName(const ChessPieceType type, const ChessPieceColor color) {
   // Start
   QString link = "../resources/";
 
   // Add color
   switch (color) {
-
     case BLACK: {
       link += "black";
       break;
@@ -362,7 +350,6 @@ QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color)
 
   // Add type
   switch (type) {
-
     case ::KING: {
       link += "king";
       break;
@@ -398,7 +385,6 @@ QString ChessScene::getImageFileName(ChessPieceType type, ChessPieceColor color)
 
 
 void ChessScene::clearGUI() {
-
   // Clear all variables
   for (int i = 0; i < BOARDSIZE; ++i) {
     for (int j = 0; j < BOARDSIZE; ++j) {
@@ -449,4 +435,3 @@ void ChessScene::customMsgBox(const std::string& title, const std::string& heade
   // TODO: fix icon
   msgBox.exec();
 }
-

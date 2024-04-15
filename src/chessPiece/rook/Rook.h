@@ -13,7 +13,7 @@
 #include "../ChessPiece.h"
 
 
-class Rook : public ChessPiece {
+class Rook final : public ChessPiece {
  public:
   Rook(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 

@@ -29,7 +29,7 @@
  *
  * @throws std::out_of_range If invalid board coördinates are provided
  */
-class Game : public ChessWindow {
+class Game final : public ChessWindow {
  Q_OBJECT
  private:
   // ╔════════════════════════════════════════╗
@@ -127,6 +127,7 @@ class Game : public ChessWindow {
    *
    * @param x x-coordinate of the cell
    * @param y y-coordinate of the cell
+   * @param type Type of what the cell should be marked as
    */
   void markCellAs(int x, int y, BoardMarkingType type) override;
 

@@ -171,7 +171,7 @@ void Game::onVisualizeThreatenedFriendly() {
 
 // MouseClickEvent Handler
 
-void Game::onClick(int x, int y) {
+void Game::onClick(const int x, const int y) {
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
   // Remove all markings from previous iteration
   removeAllMarkingsType(BoardMarkingType::POSSIBLE);
@@ -191,8 +191,7 @@ void Game::onClick(int x, int y) {
   // If a cell was previously selected and that cell contains a chess piece and the new cell is empty
   if (isSelected && board[selected.x][selected.y] != nullptr) {
     bool moveIsValid = false;
-    std::vector<Coords> moves = board[selected.x][selected.y]->getValidMoves(board);
-    for (auto & move : moves) {
+    for (const auto& move : board[selected.x][selected.y]->getValidMoves(board)) {
       if (move.x == x && move.y == y) {
         moveIsValid = true;
         break;
@@ -203,7 +202,7 @@ void Game::onClick(int x, int y) {
       std::cout << "move" << std::endl;
 
       if (board[selected.x][selected.y]->getType() == ChessPieceType::PAWN) {
-        Pawn* p = (Pawn*) board[selected.x][selected.y];
+        auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
         if (p->getIsFirstMove()) {
           p->setIsFirstMove(false);
         }
@@ -213,9 +212,6 @@ void Game::onClick(int x, int y) {
       movePiece(selected.x, selected.y, x, y);
 
       setSelected(x, y, false);
-
-//      markCellAs(selected.x, selected.y, BoardMarkingType::SELECTED);
-      std::cout << isSelected << std::endl;
 
       // Switch turns
       currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
@@ -254,8 +250,7 @@ void Game::onClick(int x, int y) {
 
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
-  std::vector<Coords> moves = piece->getValidMoves(board);
-  for (auto & move : moves) {
+  for (const auto & move : piece->getValidMoves(board)) {
     markCellAs(move.x, move.y, BoardMarkingType::POSSIBLE);
   }
 }
@@ -309,7 +304,7 @@ void Game::initializeGame() {
 }
 
 
-bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color) {
+bool Game::generatePiece(const int x, const int y, const ChessPieceType type, const ChessPieceColor color) {
   // Position occupied, fail.
   if (board[x][y] != nullptr) {
     return false;
@@ -359,7 +354,7 @@ bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor colo
 }
 
 
-void Game::movePiece(int x1, int y1, int x2, int y2) {
+void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
 
   ChessPiece* current = board[x1][y1];
 
@@ -384,7 +379,7 @@ void Game::movePiece(int x1, int y1, int x2, int y2) {
 }
 
 
-void Game::setSelected(int x, int y, bool _isSelected) {
+void Game::setSelected(const int x, const int y, const bool _isSelected) {
   if (_isSelected) {
     markCellAs(x, y, BoardMarkingType::SELECTED);
     this->isSelected = true;
@@ -404,11 +399,11 @@ void Game::setSelected(int x, int y, bool _isSelected) {
 // ║          Inherited Functions           ║
 // ╚════════════════════════════════════════╝
 
-void Game::markCellAs(int x, int y, BoardMarkingType type) {
+void Game::markCellAs(const int x, const int y, const BoardMarkingType type) {
   ChessWindow::markCellAs(x, y, type);
 }
 
-void Game::removeAllMarkingsType(BoardMarkingType type) {
+void Game::removeAllMarkingsType(const BoardMarkingType type) {
   ChessWindow::removeAllMarkingsType(type);
 }
 
@@ -416,7 +411,7 @@ void Game::refreshGui() {
   ChessWindow::refreshGui();
 }
 
-void Game::setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) {
+void Game::setChessItem(const int x, const int y, const ChessPieceType type, const ChessPieceColor color) {
   ChessWindow::setChessItem(x, y, type, color);
 }
 

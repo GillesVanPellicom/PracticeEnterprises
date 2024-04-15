@@ -8,17 +8,17 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Pawn.h"
-Pawn::Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) :
+Pawn::Pawn(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
     ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
 
-  int _x = this->getX();
-  int _y = this->getY();
-  ChessPieceColor color = this->getColor();
+  const int _x = this->getX();
+  const int _y = this->getY();
+  const ChessPieceColor color = this->getColor();
 
-  int deltaY = (color == ChessPieceColor::WHITE) ? 1 : -1;
+  const int deltaY = color == ChessPieceColor::WHITE ? 1 : -1;
 
   ChessPiece* p;
 
@@ -31,7 +31,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   }
 
   // Left & right
-  for (int dx : {-1, 1}) {
+  for (const int dx : {-1, 1}) {
     // Capture
     p = board[_x + dx][_y + deltaY];
     if (p != nullptr && p->getColor() != color) {
@@ -59,7 +59,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
 
   return moves;
 }
-void Pawn::setIsFirstMove(bool is_first_move) {
+void Pawn::setIsFirstMove(const bool is_first_move) {
   isFirstMove = is_first_move;
 }
 bool Pawn::getIsFirstMove() const {

@@ -12,7 +12,7 @@
 
 #include "../ChessPiece.h"
 
-class Pawn : public ChessPiece {
+class Pawn final : public ChessPiece {
 
   bool isFirstMove = true;
  public:

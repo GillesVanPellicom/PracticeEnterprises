@@ -22,7 +22,7 @@ ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
   createMenus();
 
   // Initialize click callback
-  scene->setClickCallback([this](int x, int y) {
+  scene->setClickCallback([this](const int x, const int y) {
     onClick(x, y);
   });
 

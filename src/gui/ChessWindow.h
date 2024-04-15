@@ -52,12 +52,12 @@ class ChessWindow : public QMainWindow {
   // Abstract click event handler
   virtual void onClick(int x, int y) = 0;
   // Cell marking functions
-  virtual void markCellAs(int x, int y, BoardMarkingType type) { scene->setCellMarkedType(x, y, type); }
-  virtual void removeAllMarkingsType(BoardMarkingType type) { scene->removeAllMarkingsType(type); }
+  virtual void markCellAs(const int x, const int y, const BoardMarkingType type) { scene->setCellMarkedType(x, y, type); }
+  virtual void removeAllMarkingsType(const BoardMarkingType type) { scene->removeAllMarkingsType(type); }
   // Global GUI functions
   virtual void refreshGui() { scene->refreshBoard(); }
 
-  virtual void setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) {
+  virtual void setChessItem(const int x, const int y, const ChessPieceType type, const ChessPieceColor color) {
     scene->setCellPieceType(x, y, type, color);
   }
 

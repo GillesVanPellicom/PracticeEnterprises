@@ -8,17 +8,18 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Knight.h"
-Knight::Knight(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type, color, instance, x, y) {}
+Knight::Knight(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
+ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
 
-  int _x = this->getX();
-  int _y = this->getY();
-  ChessPieceColor color = this->getColor();
+  const int _x = this->getX();
+  const int _y = this->getY();
+  const ChessPieceColor color = this->getColor();
 
   // Define helper function to check if a square is valid to move to
-  auto isValidMove = [&](int x, int y) {
+  auto isValidMove = [&](const int x, const int y) {
     // If the move is within bounds and
     // (the cell in question is empty or
     // the color of the not empty cell is not the same as the color of the current piece)
@@ -26,8 +27,8 @@ std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
         (board[x][y] == nullptr || board[x][y]->getColor() != color);
   };
 
-  int deltaX[] = {1, 1, 2, 2, -1, -1, -2, -2};
-  int deltaY[] = {2, -2, 1, -1, 2, -2, 1, -1};
+  constexpr int deltaX[] = {1, 1, 2, 2, -1, -1, -2, -2};
+  constexpr int deltaY[] = {2, -2, 1, -1, 2, -2, 1, -1};
 
   for (int i = 0; i < 8; ++i) {
     int newX = _x + deltaX[i];

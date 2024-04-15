@@ -8,16 +8,17 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Rook.h"
-Rook::Rook(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y) : ChessPiece(type, color, instance, x, y) {}
+Rook::Rook(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
+ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> Rook::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
   int _x = this->getX();
   int _y = this->getY();
-  ChessPieceColor color = this->getColor();
+  const ChessPieceColor color = this->getColor();
 
   // Define helper function to check if a square is valid to move to
-  auto isValidMove = [&](int x, int y) {
+  auto isValidMove = [&](const int x, const int y) {
     return x >= 0 && x < 8 && y >= 0 && y < 8 &&
         (board[x][y] == nullptr || board[x][y]->getColor() != color);
   };

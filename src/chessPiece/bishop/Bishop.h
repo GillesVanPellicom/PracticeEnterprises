@@ -12,7 +12,7 @@
 
 #include "../ChessPiece.h"
 
-class Bishop : public ChessPiece {
+class Bishop final : public ChessPiece {
  public:
   Bishop(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
