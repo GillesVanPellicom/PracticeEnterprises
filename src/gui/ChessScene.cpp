@@ -228,25 +228,11 @@ void ChessScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
 void ChessScene::setCellMarkedSelected(int x, int y) {
 
-  // Remove selected marking
-
-
-  removeAllMarkingsType(SELECTED);
-
-  // If another marking was overridden, restore it
-  if (isInactiveMarkingUsed) {
-    isInactiveMarkingUsed = false;
-    Coords c = inactiveMarking.first;
-    markings[c.x][c.y] = inactiveMarking.second;
-  }
-
   if (!(selected.x == x && selected.y == y)) {
     // Check if this operation will override a marking of lower precedence.
-    if (markings[x][y] != BoardMarkingType::NONE) {
       // Remember the marking to be overwritten
       inactiveMarking = {{x, y}, markings[x][y]};
-      isInactiveMarkingUsed = true;
-    }
+
 
     // Mark cell as selected.
     selected.x = x;
@@ -259,8 +245,10 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
   }
 
 
-
-
+void ChessScene::removeCellMarkedSelected() {
+  Coords c = inactiveMarking.first;
+  markings[c.x][c.y] = inactiveMarking.second;
+}
 
 
 void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
@@ -457,3 +445,4 @@ void ChessScene::customMsgBox(const std::string& title, const std::string& heade
   // TODO: fix icon
   msgBox.exec();
 }
+

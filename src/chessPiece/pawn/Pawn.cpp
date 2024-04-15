@@ -62,3 +62,6 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
 void Pawn::setIsFirstMove(bool is_first_move) {
   isFirstMove = is_first_move;
 }
+bool Pawn::getIsFirstMove() const {
+  return isFirstMove;
+}

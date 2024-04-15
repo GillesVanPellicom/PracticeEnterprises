@@ -20,6 +20,7 @@ class Pawn : public ChessPiece {
 
   std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
   void setIsFirstMove(bool is_first_move);
+  bool getIsFirstMove() const;
 };
 
 

@@ -175,11 +175,6 @@ void Game::onClick(int x, int y) {
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
   // Remove all markings from previous iteration
   removeAllMarkingsType(BoardMarkingType::POSSIBLE);
-  removeAllMarkingsType(BoardMarkingType::THREATENED_ENEMY);
-  removeAllMarkingsType(BoardMarkingType::THREATENED_FRIENDLY);
-
-  // Due to the working of SELECTED, pre-select
-  markCellAs(x, y, BoardMarkingType::SELECTED);
 
   ChessPiece* piece = board[x][y];
 
@@ -187,9 +182,8 @@ void Game::onClick(int x, int y) {
   if (isSelected && selected.x == x && selected.y == y) {
     std::cout << "deselect" << std::endl;
     // Unmark
-    markCellAs(x, y, BoardMarkingType::SELECTED);
-
     setSelected(x, y, false);
+
     refreshGui();
     return;
   }
@@ -207,20 +201,21 @@ void Game::onClick(int x, int y) {
 
     if (moveIsValid) {
       std::cout << "move" << std::endl;
-      // A possible move could be made.
-      // FIXME: Check move validity
-      // Temp: just move piece
+
       if (board[selected.x][selected.y]->getType() == ChessPieceType::PAWN) {
         Pawn* p = (Pawn*) board[selected.x][selected.y];
-        p->setIsFirstMove(false);
+        if (p->getIsFirstMove()) {
+          p->setIsFirstMove(false);
+        }
+        // FIXME: en passant
       }
 
       movePiece(selected.x, selected.y, x, y);
 
       setSelected(x, y, false);
 
-      // Unmark when move is complete
-      markCellAs(x, y, BoardMarkingType::SELECTED);
+//      markCellAs(selected.x, selected.y, BoardMarkingType::SELECTED);
+      std::cout << isSelected << std::endl;
 
       // Switch turns
       currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
@@ -385,11 +380,13 @@ void Game::movePiece(int x1, int y1, int x2, int y2) {
 
 void Game::setSelected(int x, int y, bool _isSelected) {
   if (_isSelected) {
+    markCellAs(x, y, BoardMarkingType::SELECTED);
     this->isSelected = true;
     selected.x = x;
     selected.y = y;
   } else {
 
+    removeCellMarkedSelected();
     this->isSelected = false;
     selected.x = -1;
     selected.y = -1;
@@ -404,29 +401,41 @@ void Game::setSelected(int x, int y, bool _isSelected) {
 void Game::markCellAs(int x, int y, BoardMarkingType type) {
   ChessWindow::markCellAs(x, y, type);
 }
+
 void Game::removeAllMarkingsType(BoardMarkingType type) {
   ChessWindow::removeAllMarkingsType(type);
 }
+
+void Game::removeCellMarkedSelected() {
+  ChessWindow::removeCellMarkedSelected();
+}
+
 void Game::refreshGui() {
   ChessWindow::refreshGui();
 }
+
 void Game::setChessItem(int x, int y, ChessPieceType type, ChessPieceColor color) {
   ChessWindow::setChessItem(x, y, type, color);
 }
+
 void Game::clearGUI() {
   ChessWindow::clearGUI();
 }
+
 QMessageBox::StandardButton Game::saveQuitMsgBox() {
   return ChessWindow::saveQuitMsgBox();
 }
+
 void Game::customMsgBox(const std::string& title, const std::string& header, const std::string& subtext) {
   ChessWindow::customMsgBox(title, header, subtext);
 }
+
 QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
                                               const std::string& header,
                                               const std::string& subtext) {
   return ChessWindow::yesNoMsgBox(title, header, subtext);
 }
+
 
 
 

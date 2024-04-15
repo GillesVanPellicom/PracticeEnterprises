@@ -189,6 +189,12 @@ class ChessScene : public QGraphicsScene {
    */
   void setCellMarkedType(int x, int y, BoardMarkingType type);
 
+
+  /**
+   *
+   */
+  void removeCellMarkedSelected();
+
   /**
    * Sets the image for a certain cell
    * @param x x-coordinate of the cell

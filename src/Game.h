@@ -129,11 +129,20 @@ class Game : public ChessWindow {
    * @param y y-coordinate of the cell
    */
   void markCellAs(int x, int y, BoardMarkingType type) override;
+
+
   /**
    * Removes all markings of a specified type
    * @param type Type to be specified
    */
   void removeAllMarkingsType(BoardMarkingType type) override;
+
+
+  /**
+   *
+   * @param type
+   */
+  void removeCellMarkedSelected() override;
 
 
   // Global GUI functions
