@@ -230,6 +230,12 @@ void Game::onClick(int x, int y) {
   if (piece != nullptr && piece->getColor() == currentTurn) {
     std::cout << "select" << std::endl;
 
+    // If a cell is already selected
+    if (isSelected) {
+      // Deselect old cell
+      setSelected(-1, -1, false);
+    }
+
     // Select cell
     setSelected(x, y, true);
     
