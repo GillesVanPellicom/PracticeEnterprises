@@ -283,14 +283,14 @@ class Game final : public ChessWindow {
     void showVisualizeMoves(ChessPiece* piece);
 
     // Board variable
-    ChessPiece* board[8][8];
+    ChessPiece* board[8][8]{};
 
     // Current selected cell variables
     bool isSelected = false;
     Coords selected = {-1, -1};
 
     // Current turn
-    ChessPieceColor currentTurn = ChessPieceColor::WHITE;
+    ChessPieceColor currentTurn = WHITE;
 
     // Booleans for menuBar checkboxes
     bool doVisualizeMoves = false;

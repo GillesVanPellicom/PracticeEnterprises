@@ -22,7 +22,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   const int _y = this->getY();
   const ChessPieceColor color = this->getColor();
 
-  const int deltaY = color == ChessPieceColor::WHITE ? 1 : -1;
+  const int deltaY = color == WHITE ? 1 : -1;
 
   ChessPiece* p;
 
@@ -45,7 +45,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     // En passant
     p = board[_x + dx][_y];
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
-    if (p != nullptr && p->getColor() != color && p->getType() == ChessPieceType::PAWN) {
+    if (p != nullptr && p->getColor() != color && p->getType() == PAWN) {
       // Conditions met
       ChessPiece* p2 = board[_x + dx][_y + deltaY];
       if (p2 != nullptr && p2->getColor() == color) {

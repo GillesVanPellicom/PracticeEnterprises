@@ -128,8 +128,8 @@ void Game::onVisualizeThreatenedEnemy() {
   // =========================
   markCellAs(1, 3, THREATENED_ENEMY);
   markCellAs(1, 2, THREATENED_ENEMY);
-  setChessItem(4, 4, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
-  setChessItem(0, 0, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+  setChessItem(4, 4, EMPTY, NO_COLOR);
+  setChessItem(0, 0, PAWN, BLACK);
 
   refreshGui();
   // =========================
@@ -163,7 +163,7 @@ void Game::onVisualizeThreatenedFriendly() {
 void Game::onClick(const int x, const int y) {
   std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
   // Remove all markings from previous iteration
-  removeAllMarkingsType(BoardMarkingType::POSSIBLE);
+  removeAllMarkingsType(POSSIBLE);
 
   ChessPiece* piece = board[x][y];
 
@@ -190,7 +190,7 @@ void Game::onClick(const int x, const int y) {
     if (moveIsValid) {
       std::cout << "move" << std::endl;
 
-      if (board[selected.x][selected.y]->getType() == ChessPieceType::PAWN) {
+      if (board[selected.x][selected.y]->getType() == PAWN) {
         auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
         if (p->getIsFirstMove()) {
           p->setIsFirstMove(false);
@@ -203,7 +203,7 @@ void Game::onClick(const int x, const int y) {
       setSelected(x, y, false);
 
       // Switch turns
-      currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+      currentTurn = (currentTurn == WHITE) ? BLACK : WHITE;
 
       refreshGui();
       return;
@@ -240,14 +240,14 @@ void Game::onClick(const int x, const int y) {
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
   for (const auto& move : piece->getValidMoves(board)) {
-    markCellAs(move.x, move.y, BoardMarkingType::POSSIBLE);
+    markCellAs(move.x, move.y, POSSIBLE);
   }
 }
 
 
 void Game::initializeGame() {
   isSelected = false;
-  currentTurn = ChessPieceColor::WHITE;
+  currentTurn = WHITE;
 
   // Initialize board as nullptr
   // Skipping this step leads to undefined cross-platform behavior
@@ -258,34 +258,34 @@ void Game::initializeGame() {
   }
 
   // Black pieces top row
-  generatePiece(0, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
-  generatePiece(1, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
-  generatePiece(2, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
-  generatePiece(3, 7, ChessPieceType::QUEEN, ChessPieceColor::BLACK);
-  generatePiece(4, 7, ChessPieceType::KING, ChessPieceColor::BLACK);
-  generatePiece(5, 7, ChessPieceType::BISHOP, ChessPieceColor::BLACK);
-  generatePiece(6, 7, ChessPieceType::KNIGHT, ChessPieceColor::BLACK);
-  generatePiece(7, 7, ChessPieceType::ROOK, ChessPieceColor::BLACK);
+  generatePiece(0, 7, ROOK, BLACK);
+  generatePiece(1, 7, KNIGHT, BLACK);
+  generatePiece(2, 7, BISHOP, BLACK);
+  generatePiece(3, 7, QUEEN, BLACK);
+  generatePiece(4, 7, KING, BLACK);
+  generatePiece(5, 7, BISHOP, BLACK);
+  generatePiece(6, 7, KNIGHT, BLACK);
+  generatePiece(7, 7, ROOK, BLACK);
 
   // Black pawn row
   for (int i = 0; i < 8; ++i) {
-    generatePiece(i, 6, ChessPieceType::PAWN, ChessPieceColor::BLACK);
+    generatePiece(i, 6, PAWN, BLACK);
   }
 
   // White pawn row
   for (int i = 0; i < 8; ++i) {
-    generatePiece(i, 1, ChessPieceType::PAWN, ChessPieceColor::WHITE);
+    generatePiece(i, 1, PAWN, WHITE);
   }
 
   // White pieces bottom row
-  generatePiece(0, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
-  generatePiece(1, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
-  generatePiece(2, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
-  generatePiece(3, 0, ChessPieceType::QUEEN, ChessPieceColor::WHITE);
-  generatePiece(4, 0, ChessPieceType::KING, ChessPieceColor::WHITE);
-  generatePiece(5, 0, ChessPieceType::BISHOP, ChessPieceColor::WHITE);
-  generatePiece(6, 0, ChessPieceType::KNIGHT, ChessPieceColor::WHITE);
-  generatePiece(7, 0, ChessPieceType::ROOK, ChessPieceColor::WHITE);
+  generatePiece(0, 0, ROOK, WHITE);
+  generatePiece(1, 0, KNIGHT, WHITE);
+  generatePiece(2, 0, BISHOP, WHITE);
+  generatePiece(3, 0, QUEEN, WHITE);
+  generatePiece(4, 0, KING, WHITE);
+  generatePiece(5, 0, BISHOP, WHITE);
+  generatePiece(6, 0, KNIGHT, WHITE);
+  generatePiece(7, 0, ROOK, WHITE);
 
 
   refreshGui();
@@ -344,11 +344,12 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
 void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   ChessPiece* current = board[x1][y1];
 
-  // Move piece
-  // If piece is taken
+  // If move takes piece
   if (board[x2][y2] != nullptr) {
     delete board[x2][y2];
   }
+
+  // Move piece
   board[x2][y2] = current;
   board[x1][y1] = nullptr;
 
@@ -357,8 +358,8 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   current->setY(y2);
 
   // Make GUI reflect changes
-  setChessItem(x1, y1, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
-  setChessItem(x2, y2, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
+  setChessItem(x1, y1, EMPTY, NO_COLOR);
+  setChessItem(x2, y2, EMPTY, NO_COLOR);
 
   setChessItem(x2, y2, current->getType(), current->getColor());
 }
@@ -366,12 +367,12 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
 
 void Game::setSelected(const int x, const int y, const bool _isSelected) {
   if (_isSelected) {
-    markCellAs(x, y, BoardMarkingType::SELECTED);
+    markCellAs(x, y, SELECTED);
     this->isSelected = true;
     selected.x = x;
     selected.y = y;
   } else {
-    removeAllMarkingsType(BoardMarkingType::SELECTED);
+    removeAllMarkingsType(SELECTED);
     this->isSelected = false;
     selected.x = -1;
     selected.y = -1;

@@ -204,7 +204,7 @@ class ChessScene final : public QGraphicsScene {
      * @param type type of the chess piece
      * @param color color of the chess piece
      */
-    void setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color = ChessPieceColor::NO_COLOR);
+    void setCellPieceType(int x, int y, ChessPieceType type, ChessPieceColor color = NO_COLOR);
 
     /**
      * Clears the entire GUI to begin-state

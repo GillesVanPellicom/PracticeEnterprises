@@ -180,7 +180,7 @@ QColor ChessScene::hexstrToQColor(const std::string& hex) {
 void ChessScene::initializeMarkingsMap() {
   for (auto& markingRow : markings) {
     for (auto& marking : markingRow) {
-      marking = BoardMarkingType::NONE;
+      marking = NONE;
     }
   }
 }
@@ -189,7 +189,7 @@ void ChessScene::initializeMarkingsMap() {
 void ChessScene::initializeImagesMap() {
   for (auto& imageRow : images) {
     for (auto& image : imageRow) {
-      image = {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR};
+      image = {EMPTY, NO_COLOR};
     }
   }
 }
@@ -228,7 +228,7 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
     // Mark cell as selected.
     selected.x = x;
     selected.y = y;
-    markings[x][y] = BoardMarkingType::SELECTED;
+    markings[x][y] = SELECTED;
   } else {
     selected.x = -1;
     selected.y = -1;
@@ -243,14 +243,14 @@ void ChessScene::removeCellMarkedSelected() {
 
 
 void ChessScene::removeAllMarkingsType(const BoardMarkingType type) {
-  if (type == BoardMarkingType::SELECTED) {
+  if (type == SELECTED) {
     removeCellMarkedSelected();
   }
 
   for (auto& markingRow : markings) {
     for (auto& marking : markingRow) {
       if (marking == type) {
-        marking = BoardMarkingType::NONE;
+        marking = NONE;
       }
     }
   }
@@ -292,8 +292,8 @@ void ChessScene::setCellPieceType(const int x, const int y, const ChessPieceType
 
 
 void ChessScene::refreshImage(const int x, const int y) {
-  if (images[x][y].first == ChessPieceType::EMPTY ||
-    images[x][y].second == ChessPieceColor::NO_COLOR) {
+  if (images[x][y].first == EMPTY ||
+    images[x][y].second == NO_COLOR) {
     return;
   }
 
@@ -388,8 +388,8 @@ void ChessScene::clearGUI() {
   // Clear all variables
   for (int i = 0; i < BOARDSIZE; ++i) {
     for (int j = 0; j < BOARDSIZE; ++j) {
-      markings[i][j] = BoardMarkingType::NONE;
-      images[i][j] = {ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR};
+      markings[i][j] = NONE;
+      images[i][j] = {EMPTY, NO_COLOR};
     }
   }
 
