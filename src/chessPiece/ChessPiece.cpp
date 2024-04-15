@@ -36,4 +36,5 @@ ChessPieceColor ChessPiece::getColor() const {
 Game* ChessPiece::getInstance() const {
   return instance;
 }
+ChessPiece::~ChessPiece() = default;
 

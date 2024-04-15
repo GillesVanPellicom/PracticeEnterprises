@@ -257,9 +257,8 @@ class Game : public ChessWindow {
    * @param y1
    * @param x2
    * @param y2
-   * @return
    */
-  bool movePiece(int x1, int y1, int x2, int y2);
+  void movePiece(int x1, int y1, int x2, int y2);
 
   /**
    * Sets the currently selected piece.

@@ -185,30 +185,49 @@ void Game::onClick(int x, int y) {
 
   // If selected cell is the same as the new cell
   if (isSelected && selected.x == x && selected.y == y) {
-    std::cout << "Unmarked" << std::endl;
+    std::cout << "deselect" << std::endl;
     // Unmark
+    markCellAs(x, y, BoardMarkingType::SELECTED);
+
     setSelected(x, y, false);
     refreshGui();
     return;
   }
 
   // If a cell was previously selected and that cell contains a chess piece and the new cell is empty
-  if (isSelected && board[selected.x][selected.y] != nullptr && board[x][y] == nullptr) {
-    std::cout << "move" << std::endl;
-    // A possible move could be made.
-    // FIXME: Check move validity
-    // Temp: just move piece
-    movePiece(selected.x, selected.y, x, y);
-    setSelected(x, y, false);
+  if (isSelected && board[selected.x][selected.y] != nullptr) {
+    bool moveIsValid = false;
+    std::vector<Coords> moves = board[selected.x][selected.y]->getValidMoves(board);
+    for (auto & move : moves) {
+      if (move.x == x && move.y == y) {
+        moveIsValid = true;
+        break;
+      }
+    }
 
-    // Unmark when move is complete
-    markCellAs(x, y, BoardMarkingType::SELECTED);
+    if (moveIsValid) {
+      std::cout << "move" << std::endl;
+      // A possible move could be made.
+      // FIXME: Check move validity
+      // Temp: just move piece
+      if (board[selected.x][selected.y]->getType() == ChessPieceType::PAWN) {
+        Pawn* p = (Pawn*) board[selected.x][selected.y];
+        p->setIsFirstMove(false);
+      }
 
-    // Switch turns
-    currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+      movePiece(selected.x, selected.y, x, y);
 
-    refreshGui();
-    return;
+      setSelected(x, y, false);
+
+      // Unmark when move is complete
+      markCellAs(x, y, BoardMarkingType::SELECTED);
+
+      // Switch turns
+      currentTurn = (currentTurn == ChessPieceColor::WHITE) ? ChessPieceColor::BLACK : ChessPieceColor::WHITE;
+
+      refreshGui();
+      return;
+    }
   }
 
 
@@ -229,7 +248,7 @@ void Game::onClick(int x, int y) {
     return;
   }
 
-  std::cout << "Invalid" << std::endl;
+  std::cout << "invalid" << std::endl;
 }
 
 
@@ -339,15 +358,15 @@ bool Game::generatePiece(int x, int y, ChessPieceType type, ChessPieceColor colo
 }
 
 
-bool Game::movePiece(int x1, int y1, int x2, int y2) {
-
-  if (board[x2][y2] != nullptr) {
-    return false;
-  }
+void Game::movePiece(int x1, int y1, int x2, int y2) {
 
   ChessPiece* current = board[x1][y1];
 
   // Move piece
+  // If piece is taken
+  if (board[x2][y2] != nullptr) {
+    delete board[x2][y2];
+  }
   board[x2][y2] = current;
   board[x1][y1] = nullptr;
 
@@ -357,9 +376,10 @@ bool Game::movePiece(int x1, int y1, int x2, int y2) {
 
   // Make GUI reflect changes
   setChessItem(x1, y1, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
+  setChessItem(x2, y2, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
+
   setChessItem(x2, y2, current->getType(), current->getColor());
 
-  return true;
 }
 
 

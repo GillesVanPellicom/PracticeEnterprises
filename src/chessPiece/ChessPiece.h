@@ -34,7 +34,7 @@ class ChessPiece {
   ChessPieceType getType() const;
   ChessPieceColor getColor() const;
   ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
-
+  virtual ~ChessPiece();
 
 };
 

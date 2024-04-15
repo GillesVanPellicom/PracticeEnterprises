@@ -28,7 +28,6 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   // Opening extra cell
   if (isFirstMove) {
     moves.emplace_back(_x, _y + deltaY*2);
-    isFirstMove = false;
   }
 
   // Left & right
@@ -59,4 +58,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   }
 
   return moves;
+}
+void Pawn::setIsFirstMove(bool is_first_move) {
+  isFirstMove = is_first_move;
 }
