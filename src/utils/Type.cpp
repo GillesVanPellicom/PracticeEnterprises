@@ -11,6 +11,5 @@
 #include "Type.h"
 
 // this.x := x, this.y := y
-Coords::Coords(const int x, const int y) : x(x), y(y) {}
-
-
+Coords::Coords(const int x, const int y) : x(x), y(y) {
+}

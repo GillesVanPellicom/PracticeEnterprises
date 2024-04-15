@@ -8,8 +8,12 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Knight.h"
-Knight::Knight(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
-ChessPiece(type, color, instance, x, y) {}
+Knight::Knight(const ChessPieceType type,
+               const ChessPieceColor color,
+               Game* instance,
+               const int x,
+               const int y) : ChessPiece(type, color, instance, x, y) {
+}
 
 std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;

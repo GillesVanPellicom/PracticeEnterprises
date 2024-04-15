@@ -8,8 +8,12 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Pawn.h"
-Pawn::Pawn(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
-    ChessPiece(type, color, instance, x, y) {}
+Pawn::Pawn(const ChessPieceType type,
+           const ChessPieceColor color,
+           Game* instance,
+           const int x,
+           const int y) : ChessPiece(type, color, instance, x, y) {
+}
 
 std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
@@ -27,7 +31,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
 
   // Opening extra cell
   if (isFirstMove) {
-    moves.emplace_back(_x, _y + deltaY*2);
+    moves.emplace_back(_x, _y + deltaY * 2);
   }
 
   // Left & right
@@ -43,7 +47,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     if (p != nullptr && p->getColor() != color && p->getType() == ChessPieceType::PAWN) {
       // Conditions met
-      ChessPiece* p2 = board[_x + dx][_y+deltaY];
+      ChessPiece* p2 = board[_x + dx][_y + deltaY];
       if (p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;

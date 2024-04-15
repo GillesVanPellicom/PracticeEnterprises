@@ -14,11 +14,10 @@
 #include "../ChessPiece.h"
 
 class Queen final : public ChessPiece {
- public:
-  Queen(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+  public:
+    Queen(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
-  std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
-
+    std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
 };
 
 

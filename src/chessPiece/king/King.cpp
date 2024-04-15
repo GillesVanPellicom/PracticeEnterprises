@@ -8,8 +8,12 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "King.h"
-King::King(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
-ChessPiece(type, color, instance, x, y) {}
+King::King(const ChessPieceType type,
+           const ChessPieceColor color,
+           Game* instance,
+           const int x,
+           const int y) : ChessPiece(type, color, instance, x, y) {
+}
 
 std::vector<Coords> King::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;

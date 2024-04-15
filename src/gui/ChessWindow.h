@@ -31,91 +31,92 @@
  * @throws std::out_of_range If invalid board coördinates are provided
  */
 class ChessWindow : public QMainWindow {
- Q_OBJECT
+    Q_OBJECT
+
+  public:
+    explicit ChessWindow(QWidget* parent = nullptr);
+
+  protected slots:
+    // Abstract menu bar event handlers
+    virtual void onFileQuit() = 0;
+    virtual void onFileNew() = 0;
+    virtual void onFileSave() = 0;
+    virtual void onFileLoad() = 0;
+    virtual void onGameUndo() = 0;
+    virtual void onGameRedo() = 0;
+    virtual void onVisualizeMoves() = 0;
+    virtual void onVisualizeThreatenedEnemy() = 0;
+    virtual void onVisualizeThreatenedFriendly() = 0;
+
+  protected:
+    // Abstract click event handler
+    virtual void onClick(int x, int y) = 0;
+    // Cell marking functions
+    virtual void markCellAs(const int x, const int y, const BoardMarkingType type) {
+      scene->setCellMarkedType(x, y, type);
+    }
+    virtual void removeAllMarkingsType(const BoardMarkingType type) { scene->removeAllMarkingsType(type); }
+    // Global GUI functions
+    virtual void refreshGui() { scene->refreshBoard(); }
+
+    virtual void setChessItem(const int x, const int y, const ChessPieceType type, const ChessPieceColor color) {
+      scene->setCellPieceType(x, y, type, color);
+    }
+
+    virtual QMessageBox::StandardButton saveQuitMsgBox() { return ChessScene::saveQuitMsgBox(); }
+
+    virtual void customMsgBox(const std::string& title,
+                              const std::string& header,
+                              const std::string& subtext) { ChessScene::customMsgBox(title, header, subtext); }
+
+    virtual QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
+                                                    const std::string& header,
+                                                    const std::string& subtext) {
+      return ChessScene::yesNoMsgBox(title, header, subtext);
+    }
 
 
- public:
-  explicit ChessWindow(QWidget* parent = nullptr);
+    virtual void clearGUI() {
+      scene->clearGUI();
+      visualizeMovesAction->setChecked(false);
+      visualizeThreatenedEnemyAction->setChecked(false);
+      visualizeThreatenedPlayerAction->setChecked(false);
+    };
 
- protected slots:
-  // Abstract menu bar event handlers
-  virtual void onFileQuit() = 0;
-  virtual void onFileNew() = 0;
-  virtual void onFileSave() = 0;
-  virtual void onFileLoad() = 0;
-  virtual void onGameUndo() = 0;
-  virtual void onGameRedo() = 0;
-  virtual void onVisualizeMoves() = 0;
-  virtual void onVisualizeThreatenedEnemy() = 0;
-  virtual void onVisualizeThreatenedFriendly() = 0;
- protected:
-  // Abstract click event handler
-  virtual void onClick(int x, int y) = 0;
-  // Cell marking functions
-  virtual void markCellAs(const int x, const int y, const BoardMarkingType type) { scene->setCellMarkedType(x, y, type); }
-  virtual void removeAllMarkingsType(const BoardMarkingType type) { scene->removeAllMarkingsType(type); }
-  // Global GUI functions
-  virtual void refreshGui() { scene->refreshBoard(); }
+  private:
+    // Menu bar setup
+    /**
+     * Creates all menus
+     *
+     * Creates all QMenus to be used in MenuBar()
+     */
+    void createMenus();
+    /**
+     * Creates all actions
+     *
+     * Creates all QAction to be used in QMenu
+     */
+    void createActions();
 
-  virtual void setChessItem(const int x, const int y, const ChessPieceType type, const ChessPieceColor color) {
-    scene->setCellPieceType(x, y, type, color);
-  }
+    // Define menus
+    QMenu* fileMenu{};
+    QMenu* gameMenu{};
+    QMenu* visualizeMenu{};
 
-  virtual QMessageBox::StandardButton saveQuitMsgBox() { return ChessScene::saveQuitMsgBox(); }
+    // Define menu actions
+    QAction* fileQuitAction{};
+    QAction* fileNewAction{};
+    QAction* fileSaveAction{};
+    QAction* fileLoadAction{};
+    QAction* gameUndoAction{};
+    QAction* gameRedoAction{};
+    QAction* visualizeMovesAction{};
+    QAction* visualizeThreatenedPlayerAction{};
+    QAction* visualizeThreatenedEnemyAction{};
 
-  virtual void customMsgBox(const std::string& title,
-                            const std::string& header,
-                            const std::string& subtext) { ChessScene::customMsgBox(title, header, subtext); }
-
-  virtual QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
-                                                  const std::string& header,
-                                                  const std::string& subtext) {
-    return ChessScene::yesNoMsgBox(title, header, subtext);
-  }
-
-
-  virtual void clearGUI() {
-    scene->clearGUI();
-    visualizeMovesAction->setChecked(false);
-    visualizeThreatenedEnemyAction->setChecked(false);
-    visualizeThreatenedPlayerAction->setChecked(false);
-  };
-
-
- private:
-  // Menu bar setup
-  /**
-   * Creates all menus
-   *
-   * Creates all QMenus to be used in MenuBar()
-   */
-  void createMenus();
-  /**
-   * Creates all actions
-   *
-   * Creates all QAction to be used in QMenu
-   */
-  void createActions();
-
-  // Define menus
-  QMenu* fileMenu{};
-  QMenu* gameMenu{};
-  QMenu* visualizeMenu{};
-
-  // Define menu actions
-  QAction* fileQuitAction{};
-  QAction* fileNewAction{};
-  QAction* fileSaveAction{};
-  QAction* fileLoadAction{};
-  QAction* gameUndoAction{};
-  QAction* gameRedoAction{};
-  QAction* visualizeMovesAction{};
-  QAction* visualizeThreatenedPlayerAction{};
-  QAction* visualizeThreatenedEnemyAction{};
-
-  // Define the scene and the view
-  QGraphicsView* view;
-  ChessScene* scene;
+    // Define the scene and the view
+    QGraphicsView* view;
+    ChessScene* scene;
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSWINDOW_H_

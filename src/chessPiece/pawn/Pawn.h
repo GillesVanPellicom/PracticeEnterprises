@@ -13,14 +13,14 @@
 #include "../ChessPiece.h"
 
 class Pawn final : public ChessPiece {
-
   bool isFirstMove = true;
- public:
-  Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
-  std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
-  void setIsFirstMove(bool is_first_move);
-  bool getIsFirstMove() const;
+  public:
+    Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+
+    std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
+    void setIsFirstMove(bool is_first_move);
+    bool getIsFirstMove() const;
 };
 
 

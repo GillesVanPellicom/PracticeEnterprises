@@ -47,22 +47,22 @@ enum BoardMarkingType {
  * @throws std::out_of_range If invalid board coördinates are provided
  */
 class Coords {
- public:
-  Coords(int x, int y);
-  // Overload comparison function to enable comparisons
-  bool operator==(const Coords& other) const {
-    return (x == other.x) && (y == other.y);
-  }
-
-  // Hash function for Coords objects
-  struct Hash {
-    std::size_t operator()(const Coords& coords) const {
-      // Combine hash values of x and y to create a unique hash value
-      return std::hash<int>()(coords.x) ^ (std::hash<int>()(coords.y) << 1);
+  public:
+    Coords(int x, int y);
+    // Overload comparison function to enable comparisons
+    bool operator==(const Coords& other) const {
+      return (x == other.x) && (y == other.y);
     }
-  };
-  int x = 0;
-  int y = 0;
+
+    // Hash function for Coords objects
+    struct Hash {
+      std::size_t operator()(const Coords& coords) const {
+        // Combine hash values of x and y to create a unique hash value
+        return std::hash<int>()(coords.x) ^ (std::hash<int>()(coords.y) << 1);
+      }
+    };
+    int x = 0;
+    int y = 0;
 };
 
 

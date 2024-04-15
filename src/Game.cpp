@@ -32,16 +32,13 @@ void Game::onFileQuit() {
   if (returnValue == QMessageBox::Save) {
     // User clicked Save
     std::cout << "Save clicked" << std::endl;
-
   } else if (returnValue == QMessageBox::Discard) {
     // User clicked Discard
     std::cout << "Discard clicked" << std::endl;
     exit(0);
-
   } else if (returnValue == QMessageBox::Cancel) {
     // User clicked Cancel
     std::cout << "Cancel clicked" << std::endl;
-
   } else {
     // User closed the message box without clicking any button
     std::cout << "Message box closed without selection" << std::endl;
@@ -53,20 +50,18 @@ void Game::onFileNew() {
   // TODO: handle new game request
 
   QMessageBox::StandardButton returnValue = yesNoMsgBox(
-      "New game",
-      "Do you want to start a new game?",
-      "All changes will be lost.");
+    "New game",
+    "Do you want to start a new game?",
+    "All changes will be lost.");
 
   if (returnValue == QMessageBox::Ok) {
     // User clicked Ok
     // Set all game variables back to default
     clearGUI();
     initializeGame();
-
   } else if (returnValue == QMessageBox::Cancel) {
     // User clicked Cancel
     std::cout << "Cancel clicked" << std::endl;
-
   } else {
     // User closed the message box without clicking any button
     std::cout << "Message box closed without selection" << std::endl;
@@ -77,28 +72,24 @@ void Game::onFileNew() {
 void Game::onFileSave() {
   // TODO: handle file saving
   std::cout << "Test file/save" << std::endl;
-
 }
 
 
 void Game::onFileLoad() {
   // TODO: handle file loading
   std::cout << "Test file/load" << std::endl;
-
 }
 
 
 void Game::onGameUndo() {
   // TODO: undo functionality
   std::cout << "Test game/undo" << std::endl;
-
 }
 
 
 void Game::onGameRedo() {
   // TODO: redo functionality
   std::cout << "Test game/redo" << std::endl;
-
 }
 
 
@@ -142,7 +133,6 @@ void Game::onVisualizeThreatenedEnemy() {
 
   refreshGui();
   // =========================
-
 }
 
 
@@ -166,7 +156,6 @@ void Game::onVisualizeThreatenedFriendly() {
   markCellAs(3, 6, THREATENED_FRIENDLY);
   refreshGui();
   // =========================
-
 }
 
 // MouseClickEvent Handler
@@ -234,7 +223,7 @@ void Game::onClick(const int x, const int y) {
 
     // Select cell
     setSelected(x, y, true);
-    
+
     // Something has to be visualised
 
     if (doVisualizeMoves) {
@@ -250,14 +239,13 @@ void Game::onClick(const int x, const int y) {
 
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
-  for (const auto & move : piece->getValidMoves(board)) {
+  for (const auto& move : piece->getValidMoves(board)) {
     markCellAs(move.x, move.y, BoardMarkingType::POSSIBLE);
   }
 }
 
 
 void Game::initializeGame() {
-
   isSelected = false;
   currentTurn = ChessPieceColor::WHITE;
 
@@ -312,7 +300,6 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
 
   // Instantiate appropriate object for type
   switch (type) {
-
     case KING: {
       board[x][y] = new King(type, color, this, x, y);
       break;
@@ -355,7 +342,6 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
 
 
 void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
-
   ChessPiece* current = board[x1][y1];
 
   // Move piece
@@ -375,7 +361,6 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   setChessItem(x2, y2, ChessPieceType::EMPTY, ChessPieceColor::NO_COLOR);
 
   setChessItem(x2, y2, current->getType(), current->getColor());
-
 }
 
 
@@ -386,7 +371,6 @@ void Game::setSelected(const int x, const int y, const bool _isSelected) {
     selected.x = x;
     selected.y = y;
   } else {
-
     removeAllMarkingsType(BoardMarkingType::SELECTED);
     this->isSelected = false;
     selected.x = -1;
@@ -432,8 +416,3 @@ QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
                                               const std::string& subtext) {
   return ChessWindow::yesNoMsgBox(title, header, subtext);
 }
-
-
-
-
-

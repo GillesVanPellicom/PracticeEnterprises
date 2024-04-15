@@ -23,19 +23,17 @@ class ChessPiece {
   int x;
   int y;
 
-
- public:
-  [[nodiscard]] Game* getInstance() const;
-  virtual std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) = 0;
-  [[nodiscard]] int getY() const;
-  void setY(int y);
-  [[nodiscard]] int getX() const;
-  void setX(int x);
-  [[nodiscard]] ChessPieceType getType() const;
-  [[nodiscard]] ChessPieceColor getColor() const;
-  ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
-  virtual ~ChessPiece();
-
+  public:
+    [[nodiscard]] Game* getInstance() const;
+    virtual std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) = 0;
+    [[nodiscard]] int getY() const;
+    void setY(int y);
+    [[nodiscard]] int getX() const;
+    void setX(int x);
+    [[nodiscard]] ChessPieceType getType() const;
+    [[nodiscard]] ChessPieceColor getColor() const;
+    ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+    virtual ~ChessPiece();
 };
 
 

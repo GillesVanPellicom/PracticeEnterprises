@@ -12,7 +12,7 @@
 
 
 ChessWindow::ChessWindow(QWidget* parent) : QMainWindow(parent) {
-//  scene = new ChessScene(this);
+  //  scene = new ChessScene(this);
   scene = new ChessScene(this);
   view = new QGraphicsView(scene);
   setCentralWidget(view);
@@ -48,7 +48,6 @@ void ChessWindow::createMenus() {
   visualizeMenu->addAction(visualizeMovesAction);
   visualizeMenu->addAction(visualizeThreatenedPlayerAction);
   visualizeMenu->addAction(visualizeThreatenedEnemyAction);
-
 }
 
 
@@ -109,10 +108,4 @@ void ChessWindow::createActions() {
   visualizeThreatenedPlayerAction->setStatusTip(tr("Mark all vulnerable friendlies"));
   visualizeThreatenedPlayerAction->setCheckable(true);
   connect(visualizeThreatenedPlayerAction, &QAction::triggered, this, &ChessWindow::onVisualizeThreatenedFriendly);
-
 }
-
-
-
-
-

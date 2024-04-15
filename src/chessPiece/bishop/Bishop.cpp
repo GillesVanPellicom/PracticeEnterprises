@@ -8,8 +8,12 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Bishop.h"
-Bishop::Bishop(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y) :
-ChessPiece(type, color, instance, x, y) {}
+Bishop::Bishop(const ChessPieceType type,
+               const ChessPieceColor color,
+               Game* instance,
+               const int x,
+               const int y) : ChessPiece(type, color, instance, x, y) {
+}
 
 std::vector<Coords> Bishop::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
