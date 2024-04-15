@@ -133,16 +133,12 @@ class Game : public ChessWindow {
 
   /**
    * Removes all markings of a specified type
+   *
+   * When type is SELECTED:
+   * Removal will restore any kind of marking previously present
    * @param type Type to be specified
    */
   void removeAllMarkingsType(BoardMarkingType type) override;
-
-
-  /**
-   *
-   * @param type
-   */
-  void removeCellMarkedSelected() override;
 
 
   // Global GUI functions

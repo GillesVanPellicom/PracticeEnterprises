@@ -252,6 +252,10 @@ void ChessScene::removeCellMarkedSelected() {
 
 
 void ChessScene::removeAllMarkingsType(BoardMarkingType type) {
+  if (type == BoardMarkingType::SELECTED) {
+    removeCellMarkedSelected();
+  }
+
   for (auto & markingRow : markings) {
     for (auto & marking : markingRow) {
       if (marking == type) {

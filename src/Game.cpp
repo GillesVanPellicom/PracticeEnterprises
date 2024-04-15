@@ -392,7 +392,7 @@ void Game::setSelected(int x, int y, bool _isSelected) {
     selected.y = y;
   } else {
 
-    removeCellMarkedSelected();
+    removeAllMarkingsType(BoardMarkingType::SELECTED);
     this->isSelected = false;
     selected.x = -1;
     selected.y = -1;
@@ -410,10 +410,6 @@ void Game::markCellAs(int x, int y, BoardMarkingType type) {
 
 void Game::removeAllMarkingsType(BoardMarkingType type) {
   ChessWindow::removeAllMarkingsType(type);
-}
-
-void Game::removeCellMarkedSelected() {
-  ChessWindow::removeCellMarkedSelected();
 }
 
 void Game::refreshGui() {

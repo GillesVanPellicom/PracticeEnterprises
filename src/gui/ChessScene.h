@@ -167,6 +167,9 @@ class ChessScene : public QGraphicsScene {
 
   /**
    * Removes all markings of a specified type
+   *
+   * When type is SELECTED:
+   * Removal will restore any kind of marking previously present.
    * @param type Type to be specified
    */
   void removeAllMarkingsType(BoardMarkingType type);
@@ -175,11 +178,8 @@ class ChessScene : public QGraphicsScene {
    * Marks a specified cell as a specified type
    *
    * When type is SELECTED:
-   * Only one cell can be selected at one time.
-   * Old selected cells will be automatically deselected.
-   * Selecting an already selected cell will deselect that cell.
-   * If the cell to be deselected already had a marking before selection,
-   * that marking will be restored.
+   * Any markings present will be saved.
+   * It will be restored when the SELECTED marking is removed.
    *
    * When type is anything else:
    * Override the current type for that cell.
@@ -191,7 +191,8 @@ class ChessScene : public QGraphicsScene {
 
 
   /**
-   *
+   * Removes SELECTED marking
+   * Removal will restore any kind of marking previously present.
    */
   void removeCellMarkedSelected();
 
