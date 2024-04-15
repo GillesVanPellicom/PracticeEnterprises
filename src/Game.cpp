@@ -24,7 +24,6 @@ Game::Game() {
 // ╚════════════════════════════════════════╝
 
 // MenuBar
-
 void Game::onFileQuit() {
   // TODO: Handle all option branches
   QMessageBox::StandardButton returnValue = saveQuitMsgBox();
@@ -47,24 +46,17 @@ void Game::onFileQuit() {
 
 
 void Game::onFileNew() {
-  // TODO: handle new game request
-
-  QMessageBox::StandardButton returnValue = yesNoMsgBox(
-    "New game",
-    "Do you want to start a new game?",
-    "All changes will be lost.");
-
-  if (returnValue == QMessageBox::Ok) {
+  // Ask user input
+  if (yesNoMsgBox(
+      "New game",
+      "Do you want to start a new game?",
+      "All changes will be lost.") == QMessageBox::Ok) {
     // User clicked Ok
-    // Set all game variables back to default
+    // Reset GUI
     clearGUI();
+
+    // Set all game variables back to default
     initializeGame();
-  } else if (returnValue == QMessageBox::Cancel) {
-    // User clicked Cancel
-    std::cout << "Cancel clicked" << std::endl;
-  } else {
-    // User closed the message box without clicking any button
-    std::cout << "Message box closed without selection" << std::endl;
   }
 }
 
@@ -101,11 +93,12 @@ void Game::onVisualizeMoves() {
     doVisualizeMoves = false;
     return;
   }
-
+  // Turn on markings
   doVisualizeMoves = true;
 
   // In case piece was already selected
   if (isSelected) {
+    // Immediately show markings
     showVisualizeMoves(board[selected.x][selected.y]);
     refreshGui();
   }
@@ -225,7 +218,6 @@ void Game::onClick(const int x, const int y) {
     setSelected(x, y, true);
 
     // Something has to be visualised
-
     if (doVisualizeMoves) {
       showVisualizeMoves(piece);
     }
@@ -237,6 +229,10 @@ void Game::onClick(const int x, const int y) {
   std::cout << "invalid" << std::endl;
 }
 
+
+// ╔════════════════════════════════════════╗
+// ║         Game helper functions          ║
+// ╚════════════════════════════════════════╝
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
   for (const auto& move : piece->getValidMoves(board)) {
