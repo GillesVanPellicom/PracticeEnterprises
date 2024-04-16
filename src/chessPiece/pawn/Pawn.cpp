@@ -22,6 +22,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   const int _y = this->getY();
   const ChessPieceColor color = this->getColor();
 
+  // Movement goes up for white, down for black.
   const int deltaY = color == WHITE ? 1 : -1;
 
   ChessPiece* p;
@@ -29,8 +30,8 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   // Straight ahead
   moves.emplace_back(_x, _y + deltaY);
 
-  // Opening extra cell
-  if (isFirstMove) {
+  // Opening 2-cell
+  if ((_y == 1 && color == WHITE) || (_y == 6 && color == BLACK)) {
     moves.emplace_back(_x, _y + deltaY * 2);
   }
 
@@ -62,10 +63,4 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   }
 
   return moves;
-}
-void Pawn::setIsFirstMove(const bool is_first_move) {
-  isFirstMove = is_first_move;
-}
-bool Pawn::getIsFirstMove() const {
-  return isFirstMove;
 }

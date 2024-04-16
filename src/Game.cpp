@@ -172,6 +172,7 @@ void Game::onClick(const int x, const int y) {
 
   // If a cell was previously selected and that cell contains a chess piece and the new cell is empty
   if (isSelected && board[selected.x][selected.y] != nullptr) {
+    // potential move
     bool moveIsValid = false;
     for (const auto& move : board[selected.x][selected.y]->getValidMoves(board)) {
       if (move.x == x && move.y == y) {
@@ -181,15 +182,13 @@ void Game::onClick(const int x, const int y) {
     }
 
     if (moveIsValid) {
+      // confirmed move
       std::cout << "move" << std::endl;
 
-      if (board[selected.x][selected.y]->getType() == PAWN) {
-        auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
-        if (p->getIsFirstMove()) {
-          p->setIsFirstMove(false);
-        }
-        // FIXME: en passant
-      }
+      // if (board[selected.x][selected.y]->getType() == PAWN) {
+      //   auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
+      //   // FIXME: en passant
+      // }
 
       movePiece(selected.x, selected.y, x, y);
 
