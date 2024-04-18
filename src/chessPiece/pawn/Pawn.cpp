@@ -51,6 +51,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     }
     // Capture
     p = board[_x + dx][_y + dy];
+    // If cell isn't empty and piece is enemy
     if (p != nullptr && p->getColor() != color) {
       moves.emplace_back(_x + dx, _y + dy);
     }
@@ -61,20 +62,17 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     if (p != nullptr && p->getColor() != color && p->getType() == PAWN) {
       // Conditions met
       ChessPiece* p2 = board[_x + dx][_y + dy];
+      // If cell isn't empty and piece is friendly
       if (p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
       }
-      // if (p2 != nullptr && p2->getColor() != color) {
-      //   // Enemy piece in way, double capture
-      //   // FIXME: implement double capture
-      // }
-      // Valid move
-      // FIXME: relay this as a capture
-      enPassentIsValid = true;
-      enPassentMoves[i++] = {_x + dx, _y + dy};
 
-      moves.emplace_back(_x + dx, _y + dy);
+      // Valid en passent move
+      enPassentIsValid = true;
+      Coords move = {_x + dx, _y + dy};
+      enPassentMoves[i++] = move;
+      moves.emplace_back(move);
     }
   }
 

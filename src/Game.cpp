@@ -173,21 +173,21 @@ void Game::onClick(const int x, const int y) {
   // If a cell was previously selected and that cell contains a chess piece and the new cell is empty
   if (isSelected && board[selected.x][selected.y] != nullptr) {
     // potential move
-    bool moveIsValid = false;
-    for (const auto& move : board[selected.x][selected.y]->getValidMoves(board)) {
-      if (move.x == x && move.y == y) {
-        moveIsValid = true;
-        break;
-      }
-    }
 
+    // Check potential move against list of actually valid moves for that piece
+    const auto& validMoves = board[selected.x][selected.y]->getValidMoves(board);
+    auto iterator = std::ranges::find_if(validMoves,
+      [x, y](const auto& move) {
+        return move.x == x && move.y == y;
+    });
 
-    if (moveIsValid) {
+    // if an iterator is returned
+    if (iterator != validMoves.end()) {
       // confirmed move
       std::cout << "move" << std::endl;
 
       // If selected piece is not empty and of type PAWN and an en passent move is possible
-      if (const auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
+      if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
         p != nullptr && p->getType() == PAWN && p-> getEnPassentIsValid()) {
 
         // If the move to be made can be found in the list of possible en passent moves

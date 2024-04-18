@@ -15,7 +15,7 @@
 
 class Pawn final : public ChessPiece {
   bool lastMoveWastwoCellMove = false;
-  bool enPassentIsValid;
+  bool enPassentIsValid{};
   std::array<Coords, 2> enPassentMoves = {{{-1, -1}, {-1, -1}}};
 
   public:
