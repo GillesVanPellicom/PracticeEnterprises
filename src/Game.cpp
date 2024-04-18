@@ -48,9 +48,9 @@ void Game::onFileQuit() {
 void Game::onFileNew() {
   // Ask user input
   if (yesNoMsgBox(
-      "New game",
-      "Do you want to start a new game?",
-      "All changes will be lost.") == QMessageBox::Ok) {
+    "New game",
+    "Do you want to start a new game?",
+    "All changes will be lost.") == QMessageBox::Ok) {
     // User clicked Ok
     // Reset GUI
     clearGUI();
@@ -181,38 +181,36 @@ void Game::onClick(const int x, const int y) {
       }
     }
 
+
     if (moveIsValid) {
       // confirmed move
       std::cout << "move" << std::endl;
 
-      if (board[selected.x][selected.y]->getType() == PAWN) {
-        auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
+      // If selected piece is not empty and of type PAWN and an en passent move is possible
+      if (const auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
+        p != nullptr && p->getType() == PAWN && p-> getEnPassentIsValid()) {
 
-        if (p->getEnPassentIsValid()) {
-          bool moveIsEnPassent = false;
-          for (int i = 0; i < 2; ++i) {
-              if (p->getEnPassentMoves()[i].x == x && p->getEnPassentMoves()[i].y == y) {
-                moveIsEnPassent = true;
-                break;
-              }
-          }
+        // If the move to be made can be found in the list of possible en passent moves
+        if (auto enPassentMoves = p->getEnPassentMoves();
+          std::ranges::find_if(enPassentMoves.begin(),
+                               enPassentMoves.end(),
+                               [x, y](const auto& move) {
+                                 return move.x == x && move.y == y;
+                               }) != enPassentMoves.end()) {
+          // Current move is en passent
+          std::cout << "en passent" << std::endl;
 
-          if (moveIsEnPassent) {
-            std::cout << "En passent" << std::endl;
+          // Movement goes down for white, up for black.
+          const int dy = p->getColor() == WHITE ? -1 : 1;
 
-            // For white, delta = one down and for black one up
-            const int dy = p->getColor() == WHITE ? -1 : 1;
+          // Special case, take piece under or above location to be moved to
+          movePiece(selected.x, selected.y, x, y + dy);
 
-            // Special case, take piece under or above location to be moved to
-            movePiece(selected.x, selected.y, x, y+dy);
+          // Modify selected coordinates to reflect move
+          selected.x = x;
+          selected.y = y + dy;
 
-            // Modify selected coordinates to reflect move
-            selected.x = x;
-            selected.y = y+dy;
-
-            // Let final location movement and potential double capture be handled by main code
-
-          }
+          // Let final location movement and potential double capture be handled by main code
         }
       }
 

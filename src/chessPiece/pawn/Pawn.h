@@ -11,11 +11,12 @@
 #define CHESS_SRC_CHESSPIECE_PAWN_PAWN_H_
 
 #include "../ChessPiece.h"
+#include <array>
 
 class Pawn final : public ChessPiece {
   bool lastMoveWastwoCellMove = false;
   bool enPassentIsValid;
-  Coords enPassentMoves[2] = {{-1, -1}, {-1, -1}};
+  std::array<Coords, 2> enPassentMoves = {{{-1, -1}, {-1, -1}}};
 
   public:
     Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
@@ -37,7 +38,7 @@ class Pawn final : public ChessPiece {
       return enPassentIsValid;
     }
 
-  Coords* getEnPassentMoves() {
+  [[nodiscard]] const std::array<Coords, 2>& getEnPassentMoves() const {
       return enPassentMoves;
     }
 };
