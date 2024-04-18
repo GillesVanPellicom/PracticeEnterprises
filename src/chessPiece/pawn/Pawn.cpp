@@ -45,6 +45,10 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
+    if (_x + dx < 0 || _x + dx >= 8) {
+      // Out of bounds
+      continue;
+    }
     // Capture
     p = board[_x + dx][_y + dy];
     if (p != nullptr && p->getColor() != color) {
