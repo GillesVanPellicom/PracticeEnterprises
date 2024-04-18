@@ -13,12 +13,33 @@
 #include "../ChessPiece.h"
 
 class Pawn final : public ChessPiece {
-  bool isFirstMove = true;
+  bool lastMoveWastwoCellMove = false;
+  bool enPassentIsValid;
+  Coords enPassentMoves[2] = {{-1, -1}, {-1, -1}};
 
   public:
     Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
-
     std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
+
+    void setLastMoveWasTwoCellMove(bool last_move_wastwo_cell_move) {
+      lastMoveWastwoCellMove = last_move_wastwo_cell_move;
+    }
+
+    [[nodiscard]] bool getLastMoveWasTwoCellMove() const {
+      return lastMoveWastwoCellMove;
+    }
+
+    void setEnPassentIsValid(bool en_passent_is_valid) {
+      enPassentIsValid = en_passent_is_valid;
+    }
+
+  [[nodiscard]] bool getEnPassentIsValid() const {
+      return enPassentIsValid;
+    }
+
+  Coords* getEnPassentMoves() {
+      return enPassentMoves;
+    }
 };
 
 

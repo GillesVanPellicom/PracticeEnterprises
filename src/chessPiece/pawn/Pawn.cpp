@@ -18,6 +18,13 @@ Pawn::Pawn(const ChessPieceType type,
 std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   std::vector<Coords> moves;
 
+  // Reset variables from previous iteration
+  if (enPassentIsValid) {
+    enPassentIsValid = false;
+    enPassentMoves[0] = {-1, -1};
+    enPassentMoves[1] = {-1, -1};
+  }
+
   const int _x = this->getX();
   const int _y = this->getY();
   const ChessPieceColor color = this->getColor();
@@ -35,6 +42,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     moves.emplace_back(_x, _y + deltaY * 2);
   }
 
+  int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
     // Capture
@@ -52,12 +60,16 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
       if (p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
-      } else if (p2 != nullptr && p2->getColor() != color) {
-        // Enemy piece in way, double capture
-        // FIXME: implement double capture
       }
+      // if (p2 != nullptr && p2->getColor() != color) {
+      //   // Enemy piece in way, double capture
+      //   // FIXME: implement double capture
+      // }
       // Valid move
       // FIXME: relay this as a capture
+      enPassentIsValid = true;
+      enPassentMoves[i++] = {_x + dx, _y + deltaY};
+
       moves.emplace_back(_x + dx, _y + deltaY);
     }
   }

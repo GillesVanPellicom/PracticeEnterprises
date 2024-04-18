@@ -185,10 +185,36 @@ void Game::onClick(const int x, const int y) {
       // confirmed move
       std::cout << "move" << std::endl;
 
-      // if (board[selected.x][selected.y]->getType() == PAWN) {
-      //   auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
-      //   // FIXME: en passant
-      // }
+      if (board[selected.x][selected.y]->getType() == PAWN) {
+        auto* p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
+
+        if (p->getEnPassentIsValid()) {
+          bool moveIsEnPassent = false;
+          for (int i = 0; i < 2; ++i) {
+              if (p->getEnPassentMoves()[i].x == x && p->getEnPassentMoves()[i].y == y) {
+                moveIsEnPassent = true;
+                break;
+              }
+          }
+
+          if (moveIsEnPassent) {
+            std::cout << "En passent" << std::endl;
+
+            // For white, delta = one down and for black one up
+            const int dy = p->getColor() == WHITE ? -1 : 1;
+
+            // Special case, take piece under or above location to be moved to
+            movePiece(selected.x, selected.y, x, y+dy);
+
+            // Modify selected coordinates to reflect move
+            selected.x = x;
+            selected.y = y+dy;
+
+            // Let final location movement and potential double capture be handled by main code
+
+          }
+        }
+      }
 
       movePiece(selected.x, selected.y, x, y);
 
