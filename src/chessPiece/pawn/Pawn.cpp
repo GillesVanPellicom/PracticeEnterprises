@@ -60,7 +60,8 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     // En passant
     p = board[nexX][_y];
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
-    if (p != nullptr && p->getColor() != color && p->getType() == PAWN) {
+    // If cell isn't empty and piece is enemy and piece is pawn and (piece is on row 3 or 4)
+    if (p != nullptr && p->getColor() != color && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
       // Conditions met
       ChessPiece* p2 = board[nexX][_y + dy];
       // If cell isn't empty and piece is friendly
