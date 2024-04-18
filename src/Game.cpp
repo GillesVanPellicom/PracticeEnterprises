@@ -171,9 +171,9 @@ void Game::onClick(const int x, const int y) {
     // Check potential move against list of actually valid moves for that piece
     const auto& validMoves = board[selected.x][selected.y]->getValidMoves(board);
     auto iterator = std::ranges::find_if(validMoves,
-      [x, y](const auto& move) {
-        return move.x == x && move.y == y;
-    });
+                                         [x, y](const auto& move) {
+                                           return move.x == x && move.y == y;
+                                         });
 
     // if an iterator is returned
     if (iterator != validMoves.end()) {
@@ -182,8 +182,7 @@ void Game::onClick(const int x, const int y) {
 
       // If selected piece is not empty and of type PAWN and an en passent move is possible
       if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
-        p != nullptr && p->getType() == PAWN && p-> getEnPassentIsValid()) {
-
+        p != nullptr && p->getType() == PAWN && p->getEnPassentIsValid()) {
         // If the move to be made can be found in the list of possible en passent moves
         if (auto enPassentMoves = p->getEnPassentMoves();
           std::ranges::find_if(enPassentMoves.begin(),
@@ -363,34 +362,36 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   }
 
   // If promotion is applicable
+
+  // No special move applicable
+
+  // Move piece
+  board[x2][y2] = current;
+  board[x1][y1] = nullptr;
+
+  // Make piece aware of its own position
+  current->setX(x2);
+  current->setY(y2);
+
   if ((y2 == 7 || y2 == 0) && current->getType() == PAWN) {
     // Get attributes before removal
     const ChessPieceColor color = current->getColor();
 
-    // Remove pawn
+    // Remove current pawn
     delete current;
-    board[x1][y1] = nullptr;
-    setChessItem(x1, y1, EMPTY, NO_COLOR);
+    board[x2][y2] = nullptr;
 
-    // Generate new piece
+    // Generate new piece as chosen by promotionBox()
     generatePiece(x2, y2, promotionBox(), color);
-  } else {
-    // No special move applicable
-
-    // Move piece
-    board[x2][y2] = current;
-    board[x1][y1] = nullptr;
-
-    // Make piece aware of its own position
-    current->setX(x2);
-    current->setY(y2);
-
-    // Make GUI reflect changes
-    setChessItem(x1, y1, EMPTY, NO_COLOR);
-    setChessItem(x2, y2, EMPTY, NO_COLOR);
-
-    setChessItem(x2, y2, current->getType(), current->getColor());
+    // Point current to new ChessPiece
+    current = board[x2][y2];
   }
+
+  // Make GUI reflect changes
+  setChessItem(x1, y1, EMPTY, NO_COLOR);
+  setChessItem(x2, y2, EMPTY, NO_COLOR);
+
+  setChessItem(x2, y2, current->getType(), current->getColor());
 }
 
 
