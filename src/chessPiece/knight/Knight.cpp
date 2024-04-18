@@ -20,16 +20,6 @@ std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
 
   const int _x = this->getX();
   const int _y = this->getY();
-  const ChessPieceColor color = this->getColor();
-
-  // Define helper function to check if a square is valid to move to
-  auto isValidMove = [&](const int x, const int y) {
-    // If the move is within bounds and
-    // (the cell in question is empty or
-    // the color of the not empty cell is not the same as the color of the current piece)
-    return x >= 0 && x < 8 && y >= 0 && y < 8 &&
-        (board[x][y] == nullptr || board[x][y]->getColor() != color);
-  };
 
   constexpr int dx[] = {1, 1, 2, 2, -1, -1, -2, -2};
   constexpr int dy[] = {2, -2, 1, -1, 2, -2, 1, -1};
@@ -37,7 +27,7 @@ std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
   for (int i = 0; i < 8; ++i) {
     int newX = _x + dx[i];
     int newY = _y + dy[i];
-    if (isValidMove(newX, newY)) {
+    if (isValidMove(newX, newY, board)) {
       moves.emplace_back(newX, newY);
     }
   }

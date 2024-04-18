@@ -35,7 +35,9 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   ChessPiece* p;
 
   // Straight ahead
-  moves.emplace_back(_x, _y + dy);
+  if (board[_x][_y + dy] == nullptr) {
+    moves.emplace_back(_x, _y + dy);
+  }
 
   // Opening 2-cell
   if ((_y == 1 && color == WHITE) || (_y == 6 && color == BLACK)) {

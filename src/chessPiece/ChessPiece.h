@@ -33,6 +33,8 @@ class ChessPiece {
     [[nodiscard]] ChessPieceType getType() const;
     [[nodiscard]] ChessPieceColor getColor() const;
     ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+
+  bool isValidMove(int x, int y, ChessPiece* board[8][8]);
     virtual ~ChessPiece();
 };
 

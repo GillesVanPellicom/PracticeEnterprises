@@ -270,7 +270,7 @@ void Game::initializeGame() {
   }
 
   // Black pieces top row
-  //generatePiece(0, 7, ROOK, BLACK);
+  generatePiece(0, 7, ROOK, BLACK);
   generatePiece(1, 7, KNIGHT, BLACK);
   generatePiece(2, 7, BISHOP, BLACK);
   generatePiece(3, 7, QUEEN, BLACK);
@@ -280,7 +280,7 @@ void Game::initializeGame() {
   generatePiece(7, 7, ROOK, BLACK);
 
   // Black pawn row
-  for (int i = 1; i < 8; ++i) {
+  for (int i = 0; i < 8; ++i) {
     generatePiece(i, 6, PAWN, BLACK);
   }
 

@@ -16,6 +16,10 @@ ChessPiece::ChessPiece(const ChessPieceType type, const ChessPieceColor color, G
 std::vector<Coords> ChessPiece::getValidMoves(ChessPiece* board[8][8]) {
   return {};
 }
+bool ChessPiece::isValidMove(const int x, const int y, ChessPiece* board[8][8]) {
+  return x >= 0 && x < 8 && y >= 0 && y < 8 && (board[x][y] == nullptr || board[x][y]->getColor() != color);
+}
+
 int ChessPiece::getY() const {
   return y;
 }
