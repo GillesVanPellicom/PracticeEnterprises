@@ -30,25 +30,25 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   const ChessPieceColor color = this->getColor();
 
   // Movement goes up for white, down for black.
-  const int deltaY = color == WHITE ? 1 : -1;
+  const int dy = color == WHITE ? 1 : -1;
 
   ChessPiece* p;
 
   // Straight ahead
-  moves.emplace_back(_x, _y + deltaY);
+  moves.emplace_back(_x, _y + dy);
 
   // Opening 2-cell
   if ((_y == 1 && color == WHITE) || (_y == 6 && color == BLACK)) {
-    moves.emplace_back(_x, _y + deltaY * 2);
+    moves.emplace_back(_x, _y + dy * 2);
   }
 
   int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
     // Capture
-    p = board[_x + dx][_y + deltaY];
+    p = board[_x + dx][_y + dy];
     if (p != nullptr && p->getColor() != color) {
-      moves.emplace_back(_x + dx, _y + deltaY);
+      moves.emplace_back(_x + dx, _y + dy);
     }
 
     // En passant
@@ -56,7 +56,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     if (p != nullptr && p->getColor() != color && p->getType() == PAWN) {
       // Conditions met
-      ChessPiece* p2 = board[_x + dx][_y + deltaY];
+      ChessPiece* p2 = board[_x + dx][_y + dy];
       if (p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
@@ -68,9 +68,9 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
       // Valid move
       // FIXME: relay this as a capture
       enPassentIsValid = true;
-      enPassentMoves[i++] = {_x + dx, _y + deltaY};
+      enPassentMoves[i++] = {_x + dx, _y + dy};
 
-      moves.emplace_back(_x + dx, _y + deltaY);
+      moves.emplace_back(_x + dx, _y + dy);
     }
   }
 

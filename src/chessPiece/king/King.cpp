@@ -22,12 +22,12 @@ std::vector<Coords> King::getValidMoves(ChessPiece* board[8][8]) {
   const int _y = this->getY();
 
   // Pseudo-valid
-  constexpr int deltaX[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-  constexpr int deltaY[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+  constexpr int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+  constexpr int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
   for (int i = 0; i < 8; ++i) {
-    const int newX = _x + deltaX[i];
-    const int newY = _y + deltaY[i];
+    const int newX = _x + dx[i];
+    const int newY = _y + dy[i];
     if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
       // If move cell contains a piece and that piece is the same color as the current piece
       if (board[newX][newY] != nullptr && board[newX][newY]->getColor() == this->getColor()) {

@@ -31,12 +31,12 @@ std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
         (board[x][y] == nullptr || board[x][y]->getColor() != color);
   };
 
-  constexpr int deltaX[] = {1, 1, 2, 2, -1, -1, -2, -2};
-  constexpr int deltaY[] = {2, -2, 1, -1, 2, -2, 1, -1};
+  constexpr int dx[] = {1, 1, 2, 2, -1, -1, -2, -2};
+  constexpr int dy[] = {2, -2, 1, -1, 2, -2, 1, -1};
 
   for (int i = 0; i < 8; ++i) {
-    int newX = _x + deltaX[i];
-    int newY = _y + deltaY[i];
+    int newX = _x + dx[i];
+    int newY = _y + dy[i];
     if (isValidMove(newX, newY)) {
       moves.emplace_back(newX, newY);
     }
