@@ -75,6 +75,8 @@ class ChessWindow : public QMainWindow {
       return ChessScene::yesNoMsgBox(title, header, subtext);
     }
 
+    virtual ChessPieceType promotionBox() { return ChessScene::promotionBox(); }
+
 
     virtual void clearGUI() {
       scene->clearGUI();

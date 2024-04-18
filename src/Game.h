@@ -235,6 +235,8 @@ class Game final : public ChessWindow {
                                             const std::string& header,
                                             const std::string& subtext) override;
 
+    ChessPieceType promotionBox() override;
+
 
     // ╔════════════════════════════════════════╗
     // ║              Chess Logic               ║

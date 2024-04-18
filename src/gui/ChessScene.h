@@ -15,6 +15,7 @@
 // Qt
 #include <QGraphicsColorizeEffect>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QGuiApplication>
 #include <QStyleHints>
 #include <QColor>
@@ -273,6 +274,9 @@ class ChessScene final : public QGraphicsScene {
     static QMessageBox::StandardButton yesNoMsgBox(const std::string& title,
                                                    const std::string& header,
                                                    const std::string& subtext);
+
+
+ static ChessPieceType promotionBox();
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_

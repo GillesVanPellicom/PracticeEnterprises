@@ -117,15 +117,9 @@ void Game::onVisualizeThreatenedEnemy() {
 
   // TODO: Place code to retrieve and display threatened enemy pieces here
 
-  // EXAMPLE
-  // =========================
-  markCellAs(1, 3, THREATENED_ENEMY);
-  markCellAs(1, 2, THREATENED_ENEMY);
-  setChessItem(4, 4, EMPTY, NO_COLOR);
-  setChessItem(0, 0, PAWN, BLACK);
-
-  refreshGui();
-  // =========================
+  if (promotionBox() == QUEEN) {
+    std::cout << "great success" << std::endl;
+  }
 }
 
 
@@ -188,7 +182,7 @@ void Game::onClick(const int x, const int y) {
 
       // If selected piece is not empty and of type PAWN and an en passent move is possible
       if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
-        p->getType() == PAWN && p-> getEnPassentIsValid()) {
+        p != nullptr && p->getType() == PAWN && p-> getEnPassentIsValid()) {
 
         // If the move to be made can be found in the list of possible en passent moves
         if (auto enPassentMoves = p->getEnPassentMoves();
@@ -277,7 +271,7 @@ void Game::initializeGame() {
   }
 
   // Black pieces top row
-  generatePiece(0, 7, ROOK, BLACK);
+  //generatePiece(0, 7, ROOK, BLACK);
   generatePiece(1, 7, KNIGHT, BLACK);
   generatePiece(2, 7, BISHOP, BLACK);
   generatePiece(3, 7, QUEEN, BLACK);
@@ -287,7 +281,7 @@ void Game::initializeGame() {
   generatePiece(7, 7, ROOK, BLACK);
 
   // Black pawn row
-  for (int i = 0; i < 8; ++i) {
+  for (int i = 1; i < 8; ++i) {
     generatePiece(i, 6, PAWN, BLACK);
   }
 
@@ -368,19 +362,35 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
     delete board[x2][y2];
   }
 
-  // Move piece
-  board[x2][y2] = current;
-  board[x1][y1] = nullptr;
+  // If promotion is applicable
+  if ((y2 == 7 || y2 == 0) && current->getType() == PAWN) {
+    // Get attributes before removal
+    const ChessPieceColor color = current->getColor();
 
-  // Make piece aware of its own position
-  current->setX(x2);
-  current->setY(y2);
+    // Remove pawn
+    delete current;
+    board[x1][y1] = nullptr;
+    setChessItem(x1, y1, EMPTY, NO_COLOR);
 
-  // Make GUI reflect changes
-  setChessItem(x1, y1, EMPTY, NO_COLOR);
-  setChessItem(x2, y2, EMPTY, NO_COLOR);
+    // Generate new piece
+    generatePiece(x2, y2, promotionBox(), color);
+  } else {
+    // No special move applicable
 
-  setChessItem(x2, y2, current->getType(), current->getColor());
+    // Move piece
+    board[x2][y2] = current;
+    board[x1][y1] = nullptr;
+
+    // Make piece aware of its own position
+    current->setX(x2);
+    current->setY(y2);
+
+    // Make GUI reflect changes
+    setChessItem(x1, y1, EMPTY, NO_COLOR);
+    setChessItem(x2, y2, EMPTY, NO_COLOR);
+
+    setChessItem(x2, y2, current->getType(), current->getColor());
+  }
 }
 
 
@@ -435,4 +445,8 @@ QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
                                               const std::string& header,
                                               const std::string& subtext) {
   return ChessWindow::yesNoMsgBox(title, header, subtext);
+}
+
+ChessPieceType Game::promotionBox() {
+  return ChessWindow::promotionBox();
 }

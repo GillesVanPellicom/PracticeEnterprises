@@ -435,3 +435,33 @@ void ChessScene::customMsgBox(const std::string& title, const std::string& heade
   // TODO: fix icon
   msgBox.exec();
 }
+
+ChessPieceType ChessScene::promotionBox() {
+  QMessageBox msgBox;
+  msgBox.setWindowTitle("Pawn Promotion");
+  msgBox.setText("What piece do you want to promote your pawn to?");
+  auto* b1 = new QPushButton("Queen");
+  auto* b2 = new QPushButton("Rook");
+  auto* b3 = new QPushButton("Bishop");
+  auto* b4 = new QPushButton("Knight");
+
+  // Add buttons to the message box
+  msgBox.addButton(b1, QMessageBox::ActionRole);
+  msgBox.addButton(b2, QMessageBox::ActionRole);
+  msgBox.addButton(b3, QMessageBox::ActionRole);
+  msgBox.addButton(b4, QMessageBox::ActionRole);
+
+  // Set QUEEN as the default button
+  msgBox.setDefaultButton(b1);
+
+  switch (msgBox.exec()) {
+    case 1:
+      return ROOK;
+    case 2:
+      return BISHOP;
+    case 3:
+      return KNIGHT;
+    default:
+      return QUEEN;
+  }
+}
