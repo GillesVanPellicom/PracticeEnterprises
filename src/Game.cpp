@@ -188,7 +188,7 @@ void Game::onClick(const int x, const int y) {
 
       // If selected piece is not empty and of type PAWN and an en passent move is possible
       if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
-        p != nullptr && p->getType() == PAWN && p-> getEnPassentIsValid()) {
+        p->getType() == PAWN && p-> getEnPassentIsValid()) {
 
         // If the move to be made can be found in the list of possible en passent moves
         if (auto enPassentMoves = p->getEnPassentMoves();

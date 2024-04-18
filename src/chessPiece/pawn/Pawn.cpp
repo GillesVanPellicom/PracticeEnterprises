@@ -45,23 +45,24 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
   int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
-    if (_x + dx < 0 || _x + dx >= 8) {
+    int nexX = _x + dx;
+    if (nexX < 0 || nexX >= 8) {
       // Out of bounds
       continue;
     }
     // Capture
-    p = board[_x + dx][_y + dy];
+    p = board[nexX][_y + dy];
     // If cell isn't empty and piece is enemy
     if (p != nullptr && p->getColor() != color) {
-      moves.emplace_back(_x + dx, _y + dy);
+      moves.emplace_back(nexX, _y + dy);
     }
 
     // En passant
-    p = board[_x + dx][_y];
+    p = board[nexX][_y];
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     if (p != nullptr && p->getColor() != color && p->getType() == PAWN) {
       // Conditions met
-      ChessPiece* p2 = board[_x + dx][_y + dy];
+      ChessPiece* p2 = board[nexX][_y + dy];
       // If cell isn't empty and piece is friendly
       if (p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
@@ -70,7 +71,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
 
       // Valid en passent move
       enPassentIsValid = true;
-      Coords move = {_x + dx, _y + dy};
+      Coords move = {nexX, _y + dy};
       enPassentMoves[i++] = move;
       moves.emplace_back(move);
     }
