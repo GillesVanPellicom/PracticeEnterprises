@@ -284,23 +284,42 @@ class Game final : public ChessWindow {
      */
     void showVisualizeMoves(ChessPiece* piece);
 
+    /**
+     * Examine if specific piece causes a check
+     * @param piece Piece to be examined
+     * @return true if check, false if not
+     */
     bool isCheck(ChessPiece* piece);
 
+    /**
+     * Examines the entire board and both sides for checks.
+     * Will modify global variables blackInCheck and whiteInCheck after call.
+     */
     void check();
 
+    /**
+     * Inverts a color. Eg. BLACK => WHITE and WHITE => BLACK
+     * @param color Color to be inverted
+     * @return
+     */
     static ChessPieceColor invertColor(ChessPieceColor color);
 
-    [[nodiscard]] Coords& findKing(ChessPieceColor color) ;
+    /**
+     * Returns the position of the specified king
+     * @param color Color of the king to find
+     * @return Position of the king
+     */
+    [[nodiscard]] Coords& findKing(ChessPieceColor color);
 
     // Board variable
     ChessPiece* board[8][8]{};
 
     // Current selected cell variables
-    bool isSelected = false;
+    bool isSelected;
     Coords selected = {-1, -1};
 
-    Coords whiteKingPos = {4, 0};
-    Coords blackKingPos = {4, 7};
+    Coords whiteKingPos = {-1, -1};
+    Coords blackKingPos = {-1, -1};
 
     // Current turn
     ChessPieceColor currentTurn = WHITE;
@@ -310,6 +329,7 @@ class Game final : public ChessWindow {
     bool doVisualizeThreatenedEnemy = false;
     bool doVisualizeThreatenedFriendly = false;
 
+    // Booleans to keep track of current checks
     bool blackInCheck = false;
     bool whiteInCheck = false;
 

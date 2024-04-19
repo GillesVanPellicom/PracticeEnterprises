@@ -266,12 +266,18 @@ ChessPieceColor Game::invertColor(const ChessPieceColor color) {
 
 
 void Game::check() {
+  // Reset variables from previous iteration
   whiteInCheck = false;
   blackInCheck = false;
+
+  // For both sides
   for (const ChessPieceColor c : {WHITE, BLACK}) {
+    // For the entire board
     for (const auto & i : board) {
       for (const auto p : i) {
+        // If cell not empty, color is current side and this piece specifically causes check
         if (p != nullptr && p->getColor() == c && isCheck(p)) {
+          // Set correct variable
           if (c == WHITE) {
             blackInCheck = true;
           } else {
@@ -286,8 +292,10 @@ void Game::check() {
 
 
 bool Game::isCheck(ChessPiece* piece) {
+  // Get valid moves for piece to be tested
   const auto& moves = piece->getValidMoves(board);
 
+  // If one of the valid moves equals the opposing's king's current location
   if (Coords kp = findKing(invertColor(piece->getColor()));
     std::ranges::find_if(moves,
                          [&kp](const auto& move) {
@@ -310,17 +318,28 @@ Coords& Game::findKing(const ChessPieceColor color) {
 
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
+  // For all moves
   for (const auto& move : piece->getValidMoves(board)) {
+    // Mark cell
     markCellAs(move.x, move.y, POSSIBLE);
   }
 }
 
 
 void Game::initializeGame() {
-  isSelected = false;
+  // Reset variables from previous iteration
   currentTurn = WHITE;
 
-  // Initialize board as nullptr
+  isSelected = false;
+  selected = {-1, -1};
+
+  whiteKingPos = {4, 0};
+  blackKingPos = {4, 7};
+
+  blackInCheck = false;
+  whiteInCheck = false;
+
+  // Initialize board as nullptrs
   // Skipping this step leads to undefined cross-platform behavior
   for (int i = 0; i < std::size(board); ++i) {
     for (int j = 0; j < std::size(board[0]); ++j) {
