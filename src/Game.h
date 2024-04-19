@@ -284,12 +284,21 @@ class Game final : public ChessWindow {
      */
     void showVisualizeMoves(ChessPiece* piece);
 
+    bool isCheck(ChessPiece* piece);
+
+    static ChessPieceColor invertColor(ChessPieceColor color);
+
+    [[nodiscard]] Coords& findKing(ChessPieceColor color) ;
+
     // Board variable
     ChessPiece* board[8][8]{};
 
     // Current selected cell variables
     bool isSelected = false;
     Coords selected = {-1, -1};
+
+    Coords whiteKingPos = {4, 0};
+    Coords blackKingPos = {4, 7};
 
     // Current turn
     ChessPieceColor currentTurn = WHITE;

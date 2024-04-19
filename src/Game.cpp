@@ -148,7 +148,7 @@ void Game::onVisualizeThreatenedFriendly() {
 // MouseClickEvent Handler
 
 void Game::onClick(const int x, const int y) {
-  std::cout << "Clicked at coordinates: (" << x << ", " << y << ")" << std::endl;
+  std::cout << "click: (" << x << ", " << y << ") => ";
   // Remove all markings from previous iteration
   removeAllMarkingsType(POSSIBLE);
 
@@ -170,15 +170,14 @@ void Game::onClick(const int x, const int y) {
 
     // Check potential move against list of actually valid moves for that piece
     const auto& validMoves = board[selected.x][selected.y]->getValidMoves(board);
-    auto iterator = std::ranges::find_if(validMoves,
-                                         [x, y](const auto& move) {
-                                           return move.x == x && move.y == y;
-                                         });
 
     // if an iterator is returned
-    if (iterator != validMoves.end()) {
+    if (std::ranges::find_if(validMoves,
+                             [x, y](const auto& move) {
+                               return move.x == x && move.y == y;
+                             }) != validMoves.end()) {
       // confirmed move
-      std::cout << "move" << std::endl;
+      std::cout << "move";
 
       // If selected piece is not empty and of type PAWN and an en passent move is possible
       if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
@@ -191,7 +190,7 @@ void Game::onClick(const int x, const int y) {
                                  return move.x == x && move.y == y;
                                }) != enPassentMoves.end()) {
           // Current move is en passent
-          std::cout << "en passent" << std::endl;
+          std::cout << ", en passent";
 
           // Movement goes down for white, up for black.
           const int dy = p->getColor() == WHITE ? -1 : 1;
@@ -208,13 +207,19 @@ void Game::onClick(const int x, const int y) {
       }
 
       movePiece(selected.x, selected.y, x, y);
-
       setSelected(x, y, false);
+
+      // Check check
+      if (isCheck(board[x][y])) {
+        std::cout << ", check";
+      }
 
       // Switch turns
       currentTurn = (currentTurn == WHITE) ? BLACK : WHITE;
 
       refreshGui();
+      std::cout << std::endl;
+
       return;
     }
   }
@@ -249,6 +254,35 @@ void Game::onClick(const int x, const int y) {
 // ╔════════════════════════════════════════╗
 // ║         Game helper functions          ║
 // ╚════════════════════════════════════════╝
+
+ChessPieceColor Game::invertColor(const ChessPieceColor color) {
+  return color == WHITE ? BLACK : WHITE;
+}
+
+
+bool Game::isCheck(ChessPiece* piece) {
+  const auto& moves = piece->getValidMoves(board);
+
+  if (Coords kp = findKing(invertColor(piece->getColor()));
+    std::ranges::find_if(moves,
+                         [&kp](const auto& move) {
+                           return move.x == kp.x && move.y == kp.y;
+                         }) != moves.end()) {
+    // Check found
+    return true;
+  }
+  // No check found
+  return false;
+}
+
+
+Coords& Game::findKing(const ChessPieceColor color) {
+  if (color == WHITE) {
+    return whiteKingPos;
+  }
+  return blackKingPos;
+}
+
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
   for (const auto& move : piece->getValidMoves(board)) {
@@ -358,6 +392,7 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
 
   // If move takes piece
   if (board[x2][y2] != nullptr) {
+    std::cout << ", capture";
     delete board[x2][y2];
   }
 
@@ -374,6 +409,7 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   current->setY(y2);
 
   if ((y2 == 7 || y2 == 0) && current->getType() == PAWN) {
+    std::cout << ", promotion";
     // Get attributes before removal
     const ChessPieceColor color = current->getColor();
 
@@ -385,6 +421,17 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
     generatePiece(x2, y2, promotionBox(), color);
     // Point current to new ChessPiece
     current = board[x2][y2];
+  }
+
+  // Remember king position
+  if (current->getType() == KING) {
+    if (current->getColor() == WHITE) {
+      whiteKingPos.x = x2;
+      whiteKingPos.y = y2;
+    } else {
+      blackKingPos.x = x2;
+      blackKingPos.y = y2;
+    }
   }
 
   // Make GUI reflect changes
