@@ -210,8 +210,13 @@ void Game::onClick(const int x, const int y) {
       setSelected(x, y, false);
 
       // Check check
-      if (isCheck(board[x][y])) {
-        std::cout << ", check";
+      check();
+
+      if (whiteInCheck) {
+        std::cout << ", check (white)";
+      }
+      if (blackInCheck) {
+        std::cout << ", check (black)";
       }
 
       // Switch turns
@@ -257,6 +262,26 @@ void Game::onClick(const int x, const int y) {
 
 ChessPieceColor Game::invertColor(const ChessPieceColor color) {
   return color == WHITE ? BLACK : WHITE;
+}
+
+
+void Game::check() {
+  whiteInCheck = false;
+  blackInCheck = false;
+  for (const ChessPieceColor c : {WHITE, BLACK}) {
+    for (const auto & i : board) {
+      for (const auto p : i) {
+        if (p != nullptr && p->getColor() == c && isCheck(p)) {
+          if (c == WHITE) {
+            blackInCheck = true;
+          } else {
+            whiteInCheck = true;
+          }
+          break;
+        }
+      }
+    }
+  }
 }
 
 

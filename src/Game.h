@@ -286,6 +286,8 @@ class Game final : public ChessWindow {
 
     bool isCheck(ChessPiece* piece);
 
+    void check();
+
     static ChessPieceColor invertColor(ChessPieceColor color);
 
     [[nodiscard]] Coords& findKing(ChessPieceColor color) ;
@@ -307,6 +309,9 @@ class Game final : public ChessWindow {
     bool doVisualizeMoves = false;
     bool doVisualizeThreatenedEnemy = false;
     bool doVisualizeThreatenedFriendly = false;
+
+    bool blackInCheck = false;
+    bool whiteInCheck = false;
 
   public:
     Game();
