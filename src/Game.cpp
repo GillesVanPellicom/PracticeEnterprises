@@ -273,7 +273,7 @@ void Game::check() {
   // For both sides
   for (const ChessPieceColor c : {WHITE, BLACK}) {
     // For the entire board
-    for (const auto & i : board) {
+    for (const auto& i : board) {
       for (const auto p : i) {
         // If cell not empty, color is current side and this piece specifically causes check
         if (p != nullptr && p->getColor() == c && isCheck(p)) {
@@ -433,10 +433,16 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
 
 void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   ChessPiece* current = board[x1][y1];
+  ChessPieceColor win = NO_COLOR;
 
-  // If move takes piece
+  // If move captures piece
   if (board[x2][y2] != nullptr) {
     std::cout << ", capture";
+    // If piece captured is a king
+    if (const ChessPiece* p = board[x2][y2]; p->getType() == KING) {
+      // Set win variable to appropriate side
+      win = p->getColor() == WHITE ? BLACK : WHITE;
+    }
     delete board[x2][y2];
   }
 
@@ -483,6 +489,14 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   setChessItem(x2, y2, EMPTY, NO_COLOR);
 
   setChessItem(x2, y2, current->getType(), current->getColor());
+
+  // Game over
+  if (win != NO_COLOR) {
+    const std::string name = win == WHITE ? "White" : "Black";
+    customMsgBox("Checkmate", "Checkmate", name + " is the winner");
+    clearGUI();
+    initializeGame();
+  }
 }
 
 

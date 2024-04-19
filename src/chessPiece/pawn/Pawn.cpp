@@ -65,9 +65,8 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     // If cell isn't empty and piece is enemy and piece is pawn and (piece is on row 3 or 4)
     if (p != nullptr && p->getColor() != color && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
       // Conditions met
-      ChessPiece* p2 = board[nexX][_y + dy];
       // If cell isn't empty and piece is friendly
-      if (p2 != nullptr && p2->getColor() == color) {
+      if (const ChessPiece* p2 = board[nexX][_y + dy]; p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
       }
