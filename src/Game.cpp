@@ -183,7 +183,7 @@ void Game::onClick(const int x, const int y) {
       if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
         p != nullptr && p->getType() == PAWN && p->getEnPassentIsValid()) {
         // If the move to be made can be found in the list of possible en passent moves
-        if (auto enPassentMoves = p->getEnPassentMoves();
+        if (const auto& enPassentMoves = p->getEnPassentMoves();
           std::ranges::find_if(enPassentMoves.begin(),
                                enPassentMoves.end(),
                                [x, y](const auto& move) {
@@ -274,7 +274,7 @@ void Game::check() {
   for (const ChessPieceColor c : {WHITE, BLACK}) {
     // For the entire board
     for (const auto& i : board) {
-      for (const auto p : i) {
+      for (const auto& p : i) {
         // If cell not empty, color is current side and this piece specifically causes check
         if (p != nullptr && p->getColor() == c && isCheck(p)) {
           // Set correct variable
