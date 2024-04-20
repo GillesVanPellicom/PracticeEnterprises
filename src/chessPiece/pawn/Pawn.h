@@ -19,8 +19,8 @@ class Pawn final : public ChessPiece {
   std::array<Coords, 2> enPassentMoves = {{{-1, -1}, {-1, -1}}};
 
   public:
-    Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
-    std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
+    Pawn(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
+    std::vector<Coords> getValidMoves() override;
 
     void setLastMoveWasTwoCellMove(bool last_move_wastwo_cell_move) {
       lastMoveWastwoCellMove = last_move_wastwo_cell_move;

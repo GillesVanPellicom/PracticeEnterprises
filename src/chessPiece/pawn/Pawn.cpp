@@ -8,14 +8,17 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Pawn.h"
+
+#include "../../Game.h"
 Pawn::Pawn(const ChessPieceType type,
            const ChessPieceColor color,
-           Game* instance,
+           Game& instance,
            const int x,
            const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> Pawn::getValidMoves() {
+  auto& board = this->getInstance()->board;
   std::vector<Coords> moves;
 
   // Reset variables from previous iteration

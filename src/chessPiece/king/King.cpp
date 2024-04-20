@@ -10,12 +10,14 @@
 #include "King.h"
 King::King(const ChessPieceType type,
            const ChessPieceColor color,
-           Game* instance,
+           Game& instance,
            const int x,
            const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> King::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> King::getValidMoves() {
+  auto& board = this->getInstance()->board;
+
   std::vector<Coords> moves;
 
   const int _x = this->getX();
@@ -27,7 +29,7 @@ std::vector<Coords> King::getValidMoves(ChessPiece* board[8][8]) {
   for (int i = 0; i < 8; ++i) {
     const int newX = _x + dx[i];
     const int newY = _y + dy[i];
-    if (isValidMove(newX, newY, board)) {
+    if (isValidMove(newX, newY)) {
 
       moves.emplace_back(newX, newY);
     }

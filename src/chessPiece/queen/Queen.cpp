@@ -10,12 +10,14 @@
 #include "Queen.h"
 Queen::Queen(const ChessPieceType type,
              const ChessPieceColor color,
-             Game* instance,
+             Game& instance,
              const int x,
              const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> Queen::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> Queen::getValidMoves() {
+  auto& board = this->getInstance()->board;
+
   std::vector<Coords> moves;
 
   const int _x = this->getX();

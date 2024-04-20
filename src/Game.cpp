@@ -16,6 +16,7 @@
 
 Game::Game() {
   initializeGame();
+
 }
 
 
@@ -169,7 +170,7 @@ void Game::onClick(const int x, const int y) {
     // potential move
 
     // Check potential move against list of actually valid moves for that piece
-    const auto& validMoves = board[selected.x][selected.y]->getValidMoves(board);
+    const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
 
     // if an iterator is returned
     if (std::ranges::find_if(validMoves,
@@ -278,7 +279,7 @@ bool Game::isCheck(const int x, const int y, const ChessPieceColor attackerColor
       // If current cell is not empty and is an attacker
       if (j != nullptr && j->getColor() == attackerColor) {
         // Generate it's valid moves and see if one of these moves is a check, if so return true
-        if (const auto& moves = j->getValidMoves(board);
+        if (const auto& moves = j->getValidMoves();
           std::ranges::any_of(moves,
                               [&](const auto& move) {
                                 return move.x == x && move.y == y;
@@ -303,7 +304,7 @@ Coords& Game::findKing(const ChessPieceColor color) {
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
   // For all moves
-  for (const auto& move : piece->getValidMoves(board)) {
+  for (const auto& move : piece->getValidMoves()) {
     // Mark cell
     markCellAs(move.x, move.y, POSSIBLE);
   }

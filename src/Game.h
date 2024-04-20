@@ -32,7 +32,7 @@
 class Game final : public ChessWindow {
     Q_OBJECT
 
-  private:
+  public:
     // ╔════════════════════════════════════════╗
     // ║          Inherited Functions           ║
     // ╚════════════════════════════════════════╝
@@ -312,8 +312,8 @@ class Game final : public ChessWindow {
     [[nodiscard]] Coords& findKing(ChessPieceColor color);
 
     // Board variable
-    ChessPiece* board[8][8]{};
-
+    ChessPiece* board[8][8];
+    // ChessPiece* board[8][8]{};
     // Current selected cell variables
     bool isSelected;
     Coords selected = {-1, -1};
