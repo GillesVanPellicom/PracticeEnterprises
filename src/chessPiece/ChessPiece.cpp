@@ -11,8 +11,8 @@
 
 #include "../Game.h"
 
-ChessPiece::ChessPiece(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y)
-  : type(type), color(color), instance(instance), x(x), y(y), board(instance->board) {
+ChessPiece::ChessPiece(const ChessPieceType type, const ChessPieceColor color, Game& instance, const int x, const int y)
+  : type(type), color(color), instance(instance), x(x), y(y), board(instance.board) {
 }
 
 std::vector<Coords> ChessPiece::getValidMoves() {
@@ -40,7 +40,7 @@ ChessPieceType ChessPiece::getType() const {
 ChessPieceColor ChessPiece::getColor() const {
   return color;
 }
-Game* ChessPiece::getInstance() const {
+Game& ChessPiece::getInstance() const {
   return instance;
 }
 ChessPiece::~ChessPiece() = default;

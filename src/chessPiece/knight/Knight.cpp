@@ -10,7 +10,7 @@
 #include "Knight.h"
 Knight::Knight(const ChessPieceType type,
                const ChessPieceColor color,
-               Game* instance,
+               Game& instance,
                const int x,
                const int y) : ChessPiece(type, color, instance, x, y) {
 }

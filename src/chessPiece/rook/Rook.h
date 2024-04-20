@@ -15,7 +15,7 @@
 
 class Rook final : public ChessPiece {
   public:
-    Rook(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+    Rook(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
 
     std::vector<Coords> getValidMoves() override;
 };

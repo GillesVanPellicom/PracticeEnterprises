@@ -276,7 +276,7 @@ class ChessScene final : public QGraphicsScene {
                                                    const std::string& subtext);
 
 
- static ChessPieceType promotionBox();
+    static ChessPieceType promotionBox();
 };
 
 #endif //PRACTICEENTERPRISES_GUI_CHESSSCENE_H_

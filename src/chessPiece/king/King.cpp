@@ -10,7 +10,7 @@
 #include "King.h"
 King::King(const ChessPieceType type,
            const ChessPieceColor color,
-           Game* instance,
+           Game& instance,
            const int x,
            const int y) : ChessPiece(type, color, instance, x, y) {
 }
@@ -28,7 +28,6 @@ std::vector<Coords> King::getValidMoves() {
     const int newX = _x + dx[i];
     const int newY = _y + dy[i];
     if (isValidMove(newX, newY)) {
-
       moves.emplace_back(newX, newY);
     }
   }

@@ -374,32 +374,32 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
   // Instantiate appropriate object for type
   switch (type) {
     case KING: {
-      board[x][y] = new King(type, color, this, x, y);
+      board[x][y] = new King(type, color, *this, x, y);
       break;
     }
 
     case QUEEN: {
-      board[x][y] = new Queen(type, color, this, x, y);
+      board[x][y] = new Queen(type, color, *this, x, y);
       break;
     }
 
     case ROOK: {
-      board[x][y] = new Rook(type, color, this, x, y);
+      board[x][y] = new Rook(type, color, *this, x, y);
       break;
     }
 
     case BISHOP: {
-      board[x][y] = new Bishop(type, color, this, x, y);
+      board[x][y] = new Bishop(type, color, *this, x, y);
       break;
     }
 
     case KNIGHT: {
-      board[x][y] = new Knight(type, color, this, x, y);
+      board[x][y] = new Knight(type, color, *this, x, y);
       break;
     }
 
     case PAWN: {
-      board[x][y] = new Pawn(type, color, this, x, y);
+      board[x][y] = new Pawn(type, color, *this, x, y);
       break;
     }
     case EMPTY: {

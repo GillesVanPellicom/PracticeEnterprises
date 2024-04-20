@@ -14,7 +14,7 @@
 
 class Knight final : public ChessPiece {
   public:
-    Knight(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+    Knight(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
 
     std::vector<Coords> getValidMoves() override;
 };

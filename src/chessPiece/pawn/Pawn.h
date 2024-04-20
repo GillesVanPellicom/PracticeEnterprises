@@ -14,13 +14,27 @@
 #include <array>
 
 class Pawn final : public ChessPiece {
-  bool lastMoveWastwoCellMove = false;
-  bool enPassentIsValid{};
-  std::array<Coords, 2> enPassentMoves = {{{-1, -1}, {-1, -1}}};
+  private:
+    // ╔════════════════════════════════════════╗
+    // ║               Variables                ║
+    // ╚════════════════════════════════════════╝
+
+    bool lastMoveWastwoCellMove = false;
+    bool enPassentIsValid{};
+    std::array<Coords, 2> enPassentMoves = {{{-1, -1}, {-1, -1}}};
 
   public:
-    Pawn(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
+    // ╔════════════════════════════════════════╗
+    // ║       Constructors / Destructors       ║
+    // ╚════════════════════════════════════════╝
+
+    Pawn(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
     std::vector<Coords> getValidMoves() override;
+
+
+    // ╔════════════════════════════════════════╗
+    // ║           Getters / Setters            ║
+    // ╚════════════════════════════════════════╝
 
     void setLastMoveWasTwoCellMove(bool last_move_wastwo_cell_move) {
       lastMoveWastwoCellMove = last_move_wastwo_cell_move;
@@ -34,11 +48,11 @@ class Pawn final : public ChessPiece {
       enPassentIsValid = en_passent_is_valid;
     }
 
-  [[nodiscard]] bool getEnPassentIsValid() const {
+    [[nodiscard]] bool getEnPassentIsValid() const {
       return enPassentIsValid;
     }
 
-  [[nodiscard]] const std::array<Coords, 2>& getEnPassentMoves() const {
+    [[nodiscard]] const std::array<Coords, 2>& getEnPassentMoves() const {
       return enPassentMoves;
     }
 };

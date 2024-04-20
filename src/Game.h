@@ -32,8 +32,116 @@
 class Game final : public ChessWindow {
     Q_OBJECT
 
+  private:
+    // ╔════════════════════════════════════════╗
+    // ║               Variables                ║
+    // ╚════════════════════════════════════════╝
+
+    // Current selected cell variables
+    bool isSelected;
+    Coords selected = {-1, -1};
+
+    Coords whiteKingPos = {-1, -1};
+    Coords blackKingPos = {-1, -1};
+
+    // Current turn
+    ChessPieceColor currentTurn = WHITE;
+
+    // Booleans for menuBar checkboxes
+    bool doVisualizeMoves = false;
+    bool doVisualizeThreatenedEnemy = false;
+    bool doVisualizeThreatenedFriendly = false;
+
+    // Booleans to keep track of current checks
+    bool blackInCheck = false;
+    bool whiteInCheck = false;
+
   public:
+    // Board variable
+    // KEEP PUBLIC
+    std::array<std::array<ChessPiece*, 8>, 8> board;
+
+
+    // ╔════════════════════════════════════════╗
+    // ║       Constructors / Destructors       ║
+    // ╚════════════════════════════════════════╝
+
     Game();
+
+
+    // ╔════════════════════════════════════════╗
+    // ║              Chess Logic               ║
+    // ╚════════════════════════════════════════╝
+
+    /**
+     * Sets the game to a begin-state.
+     * (re)sets the GUI and all game variables.
+     * Does not reset GUI preferences such as visualizations.
+     */
+    void initializeGame();
+
+    /**
+     * Generates a ChessPiece of a specified type at a specified location on the board.
+     * @param x x-coordinate of location
+     * @param y y-coordinate of location
+     * @param type Type of the new ChessPiece
+     * @param color Color of the new ChessPiece
+     * @return false when position invalid or type = EMPTY
+     */
+    bool generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color);
+
+    /**
+     * Move piece from pos_1 to pos_2
+     * FIXME: Unfinished function. Write docs
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
+    void movePiece(int x1, int y1, int x2, int y2);
+
+    /**
+     * Sets the currently selected piece.
+     * Only used to handle game variables. Doesn't alter GUI.
+     * @param x x-coordinate of the select
+     * @param y y-coordinate of the select
+     * @param _isSelected true if something is selected. Global, not only for these coordinates.
+     */
+    void setSelected(int x, int y, bool _isSelected);
+
+    /**
+     * Shows all valid moves for a specific piece.
+     * @param piece
+     */
+    void showVisualizeMoves(ChessPiece* piece);
+
+    /**
+     * Examine if a specific cell can be attacked
+     * @param x x-coordinate of the cell
+     * @param y y-coordinate of the cell
+     * @param attackerColor Color of the attacking side
+     * @return true if that cell can be attacked, else false
+     */
+    bool isAttackable(int x, int y, ChessPieceColor attackerColor);
+    /**
+     * Examines the entire board and both sides for checks.
+     * Will modify global variables blackInCheck and whiteInCheck after call.
+     */
+    void check();
+
+    /**
+     * Inverts a color. Eg. BLACK => WHITE and WHITE => BLACK
+     * @param color Color to be inverted
+     * @return
+     */
+    static ChessPieceColor invertColor(ChessPieceColor color);
+
+    /**
+     * Returns the position of the specified king
+     * @param color Color of the king to find
+     * @return Position of the king
+     */
+    [[nodiscard]] Coords& findKing(ChessPieceColor color);
 
 
     // ╔════════════════════════════════════════╗
@@ -239,107 +347,6 @@ class Game final : public ChessWindow {
                                             const std::string& subtext) override;
 
     ChessPieceType promotionBox() override;
-
-
-    // ╔════════════════════════════════════════╗
-    // ║              Chess Logic               ║
-    // ╚════════════════════════════════════════╝
-
-    /**
-     * Sets the game to a begin-state.
-     * (re)sets the GUI and all game variables.
-     * Does not reset GUI preferences such as visualizations.
-     */
-    void initializeGame();
-
-    /**
-     * Generates a ChessPiece of a specified type at a specified location on the board.
-     * @param x x-coordinate of location
-     * @param y y-coordinate of location
-     * @param type Type of the new ChessPiece
-     * @param color Color of the new ChessPiece
-     * @return false when position invalid or type = EMPTY
-     */
-    bool generatePiece(int x, int y, ChessPieceType type, ChessPieceColor color);
-
-    /**
-     * Move piece from pos_1 to pos_2
-     * FIXME: Unfinished function. Write docs
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     */
-    void movePiece(int x1, int y1, int x2, int y2);
-
-    /**
-     * Sets the currently selected piece.
-     * Only used to handle game variables. Doesn't alter GUI.
-     * @param x x-coordinate of the select
-     * @param y y-coordinate of the select
-     * @param _isSelected true if something is selected. Global, not only for these coordinates.
-     */
-    void setSelected(int x, int y, bool _isSelected);
-
-    /**
-     * Shows all valid moves for a specific piece.
-     * @param piece
-     */
-    void showVisualizeMoves(ChessPiece* piece);
-
-    /**
-     * Examine if a specific cell can be attacked
-     * @param x x-coordinate of the cell
-     * @param y y-coordinate of the cell
-     * @param attackerColor Color of the attacking side
-     * @return true if that cell can be attacked, else false
-     */
-    bool isAttackable(int x, int y, ChessPieceColor attackerColor);
-    /**
-     * Examines the entire board and both sides for checks.
-     * Will modify global variables blackInCheck and whiteInCheck after call.
-     */
-    void check();
-
-    /**
-     * Inverts a color. Eg. BLACK => WHITE and WHITE => BLACK
-     * @param color Color to be inverted
-     * @return
-     */
-    static ChessPieceColor invertColor(ChessPieceColor color);
-
-    /**
-     * Returns the position of the specified king
-     * @param color Color of the king to find
-     * @return Position of the king
-     */
-    [[nodiscard]] Coords& findKing(ChessPieceColor color);
-
-
-    // Board variable
-    // KEEP PUBLIC
-    // ChessPiece* board[8][8]{};
-    std::array<std::array<ChessPiece*, 8>, 8> board;
-
-  private:
-    // Current selected cell variables
-    bool isSelected;
-    Coords selected = {-1, -1};
-
-    Coords whiteKingPos = {-1, -1};
-    Coords blackKingPos = {-1, -1};
-
-    // Current turn
-    ChessPieceColor currentTurn = WHITE;
-
-    // Booleans for menuBar checkboxes
-    bool doVisualizeMoves = false;
-    bool doVisualizeThreatenedEnemy = false;
-    bool doVisualizeThreatenedFriendly = false;
-
-    // Booleans to keep track of current checks
-    bool blackInCheck = false;
-    bool whiteInCheck = false;
 };
 
 #endif //PRACTICEENTERPRISES_GAME_H_

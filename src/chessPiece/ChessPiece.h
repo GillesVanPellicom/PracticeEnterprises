@@ -17,27 +17,47 @@
 class Game;
 
 class ChessPiece {
-  ChessPieceType type;
-  ChessPieceColor color;
-  Game* instance;
-  int x;
-  int y;
+  private:
+    // ╔════════════════════════════════════════╗
+    // ║               Variables                ║
+    // ╚════════════════════════════════════════╝
+    ChessPieceType type;
+    ChessPieceColor color;
+    Game& instance;
+    int x;
+    int y;
 
   public:
-    [[nodiscard]] Game* getInstance() const;
-    virtual std::vector<Coords> getValidMoves() = 0;
-    [[nodiscard]] int getY() const;
-    void setY(int y);
-    [[nodiscard]] int getX() const;
-    void setX(int x);
-    [[nodiscard]] ChessPieceType getType() const;
-    [[nodiscard]] ChessPieceColor getColor() const;
-    ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
-
+    // Board mirror
+    // KEEP PUBLIC
     std::array<std::array<ChessPiece*, 8>, 8>& board;
 
-    bool isValidMove(int x, int y);
+
+    // ╔════════════════════════════════════════╗
+    // ║       Constructors / Destructors       ║
+    // ╚════════════════════════════════════════╝
+
+    ChessPiece(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
+
+
+    // ╔════════════════════════════════════════╗
+    // ║           Getters / Setters            ║
+    // ╚════════════════════════════════════════╝
     virtual ~ChessPiece();
+
+    [[nodiscard]] Game& getInstance() const;
+    virtual std::vector<Coords> getValidMoves() = 0;
+
+    [[nodiscard]] int getX() const;
+    void setX(int x);
+
+    [[nodiscard]] int getY() const;
+    void setY(int y);
+
+    [[nodiscard]] ChessPieceType getType() const;
+    [[nodiscard]] ChessPieceColor getColor() const;
+
+    bool isValidMove(int x, int y);
 };
 
 

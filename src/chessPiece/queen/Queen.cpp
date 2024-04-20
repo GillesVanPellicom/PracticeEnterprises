@@ -10,7 +10,7 @@
 #include "Queen.h"
 Queen::Queen(const ChessPieceType type,
              const ChessPieceColor color,
-             Game* instance,
+             Game& instance,
              const int x,
              const int y) : ChessPiece(type, color, instance, x, y) {
 }
@@ -20,74 +20,36 @@ std::vector<Coords> Queen::getValidMoves() {
 
   const int _x = this->getX();
   const int _y = this->getY();
-  const ChessPieceColor color = this->getColor();
-
-  // Define helper function to check if a square is valid to move to
-  auto isValidMove = [&](const int x, const int y) {
-    // If the move is within bounds and
-    // (the cell in question is empty or
-    // the color of the not empty cell is not the same as the color of the current piece)
-    return x >= 0 && x < 8 && y >= 0 && y < 8 &&
-        (board[x][y] == nullptr || board[x][y]->getColor() != color);
-  };
 
   // Check diagonal moves (top-right, top-left, bottom-right, bottom-left)
-  // Top-right
-  for (int i = 1; i < 8; ++i) {
-    if (!isValidMove(_x + i, _y + i)) break;
-    moves.emplace_back(_x + i, _y + i);
-    if (board[_x + i][_y + i] != nullptr) break;
+  for (const int dx : {-1, 1}) {
+    for (const int dy : {-1, 1}) {
+      for (int i = 1; i < 8; ++i) {
+        int new_x = _x + i * dx;
+        int new_y = _y + i * dy;
+        if (!isValidMove(new_x, new_y)) break;
+        moves.emplace_back(new_x, new_y);
+        if (this->board[new_x][new_y] != nullptr) break;
+      }
+    }
   }
 
-  // Top-left
-  for (int i = 1; i < 8; ++i) {
-    if (!isValidMove(_x + i, _y - i)) break;
-    moves.emplace_back(_x + i, _y - i);
-    if (board[_x + i][_y - i] != nullptr) break;
+  // Horizontal moves (right, left)
+  for (const int dx : {-1, 1}) {
+    for (int x = _x + dx; x >= 0 && x < 8; x += dx) {
+      if (!isValidMove(x, _y)) break;
+      moves.emplace_back(x, _y);
+      if (this->board[x][_y] != nullptr) break;
+    }
   }
 
-  // Bottom-right
-  for (int i = 1; i < 8; ++i) {
-    if (!isValidMove(_x - i, _y + i)) break;
-    moves.emplace_back(_x - i, _y + i);
-    if (board[_x - i][_y + i] != nullptr) break;
-  }
-
-  // Bottom-left
-  for (int i = 1; i < 8; ++i) {
-    if (!isValidMove(_x - i, _y - i)) break;
-    moves.emplace_back(_x - i, _y - i);
-    if (board[_x - i][_y - i] != nullptr) break;
-  }
-
-  // Check horizontal moves (left, right)
-  // Right
-  for (int x = _x + 1; x < 8; ++x) {
-    if (!isValidMove(x, _y)) break;
-    moves.emplace_back(x, _y);
-    if (board[x][_y] != nullptr) break;
-  }
-
-  // Left
-  for (int x = _x - 1; x >= 0; --x) {
-    if (!isValidMove(x, _y)) break;
-    moves.emplace_back(x, _y);
-    if (board[x][_y] != nullptr) break;
-  }
-
-  // Check vertical moves (up, down)
-  // Up
-  for (int y = _y + 1; y < 8; ++y) {
-    if (!isValidMove(_x, y)) break;
-    moves.emplace_back(_x, y);
-    if (board[_x][y] != nullptr) break;
-  }
-
-  // Down
-  for (int y = _y - 1; y >= 0; --y) {
-    if (!isValidMove(_x, y)) break;
-    moves.emplace_back(_x, y);
-    if (board[_x][y] != nullptr) break;
+  // Vertical moves (up, down)
+  for (const int dy : {-1, 1}) {
+    for (int y = _y + dy; y >= 0 && y < 8; y += dy) {
+      if (!isValidMove(_x, y)) break;
+      moves.emplace_back(_x, y);
+      if (this->board[_x][y] != nullptr) break;
+    }
   }
 
   return moves;

@@ -12,7 +12,7 @@
 #include "../../Game.h"
 Pawn::Pawn(const ChessPieceType type,
            const ChessPieceColor color,
-           Game* instance,
+           Game& instance,
            const int x,
            const int y) : ChessPiece(type, color, instance, x, y) {
 }
@@ -27,9 +27,9 @@ std::vector<Coords> Pawn::getValidMoves() {
     enPassentMoves[1] = {-1, -1};
   }
 
-  const int _x = getX();
-  const int _y = getY();
-  const ChessPieceColor color = getColor();
+  const int _x = this->getX();
+  const int _y = this->getY();
+  const ChessPieceColor color = this->getColor();
 
   // Movement goes up for white, down for black.
   const int dy = color == WHITE ? 1 : -1;
@@ -48,33 +48,33 @@ std::vector<Coords> Pawn::getValidMoves() {
   int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
-    int nexX = _x + dx;
-    if (nexX < 0 || nexX >= 8) {
+    int newX = _x + dx;
+    if (newX < 0 || newX >= 8) {
       // Out of bounds
       continue;
     }
     // Capture
-    ChessPiece* p = board[nexX][_y + dy];
+    ChessPiece* p = this->board[newX][_y + dy];
     // If cell isn't empty and piece is enemy
     if (p != nullptr && p->getColor() != color) {
-      moves.emplace_back(nexX, _y + dy);
+      moves.emplace_back(newX, _y + dy);
     }
 
     // En passant
-    p = board[nexX][_y];
+    p = this->board[newX][_y];
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     // If cell isn't empty and piece is enemy and piece is pawn and (piece is on row 3 or 4)
     if (p != nullptr && p->getColor() != color && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
       // Conditions met
       // If cell isn't empty and piece is friendly
-      if (const ChessPiece* p2 = board[nexX][_y + dy]; p2 != nullptr && p2->getColor() == color) {
+      if (const ChessPiece* p2 = this->board[newX][_y + dy]; p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
       }
 
       // Valid en passent move
       enPassentIsValid = true;
-      Coords move = {nexX, _y + dy};
+      Coords move = {newX, _y + dy};
       enPassentMoves[i++] = move;
       moves.emplace_back(move);
     }
