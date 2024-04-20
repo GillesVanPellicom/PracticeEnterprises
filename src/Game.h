@@ -4,7 +4,6 @@
 // ║ Author(s)    : "Bert Schenkelaars" <r990071@student.thomasmore.be>               ║
 // ║              : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/12                                                        ║                
-// ║ Version      : 1.5                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 

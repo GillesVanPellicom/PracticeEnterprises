@@ -3,7 +3,6 @@
 // ║ Description  : Implementation of the pawn chess piece                            ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/04/12                                                        ║                
-// ║ Version      : 2.1                                                               ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
