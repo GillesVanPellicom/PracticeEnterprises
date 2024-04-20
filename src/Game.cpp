@@ -99,7 +99,7 @@ void Game::onVisualizeMoves() {
   // In case piece was already selected
   if (isSelected) {
     // Immediately show markings
-    showVisualizeMoves(board[selected.x][selected.y]);
+    showVisualizeMoves(selected.x, selected.y);
     refreshGui();
   }
 }
@@ -152,7 +152,7 @@ void Game::onClick(const int x, const int y) {
   // Remove all markings from previous iteration
   removeAllMarkingsType(POSSIBLE);
 
-  ChessPiece* piece = board[x][y];
+  ChessPiecePtr& piece = board[x][y];
 
   // If selected cell is the same as the new cell
   if (isSelected && selected.x == x && selected.y == y) {
@@ -180,7 +180,7 @@ void Game::onClick(const int x, const int y) {
       std::cout << "move";
 
       // If selected piece is not empty and of type PAWN and an en passent move is possible
-      if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y]);
+      if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y].get());
         p != nullptr && p->getType() == PAWN && p->getEnPassentIsValid()) {
         // If the move to be made can be found in the list of possible en passent moves
         if (const auto& enPassentMoves = p->getEnPassentMoves();
@@ -245,7 +245,7 @@ void Game::onClick(const int x, const int y) {
 
     // Something has to be visualised
     if (doVisualizeMoves) {
-      showVisualizeMoves(piece);
+      showVisualizeMoves(x, y);
     }
 
     refreshGui();
@@ -277,7 +277,7 @@ bool Game::isAttackable(const int x, const int y, const ChessPieceColor attacker
       // If current cell is not empty and is an attacker
       if (j != nullptr && j->getColor() == attackerColor) {
         // Generate it's valid moves and see if one of these moves is a check, if so return true
-        if (const auto& moves = j->getValidMoves();
+        if (const auto moves = j->getValidMoves();
           std::ranges::any_of(moves,
                               [&](const auto& move) {
                                 return move.x == x && move.y == y;
@@ -300,9 +300,9 @@ Coords& Game::findKing(const ChessPieceColor color) {
 }
 
 
-void Game::showVisualizeMoves(ChessPiece* piece) {
+void Game::showVisualizeMoves(const int x, const int y) {
   // For all moves
-  for (const auto& move : piece->getValidMoves()) {
+  for (const auto& move : board[x][y]->getValidMoves()) {
     // Mark cell
     markCellAs(move.x, move.y, POSSIBLE);
   }
@@ -374,32 +374,32 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
   // Instantiate appropriate object for type
   switch (type) {
     case KING: {
-      board[x][y] = new King(type, color, *this, x, y);
+      board[x][y] = std::make_unique<King>(type, color, *this, x, y);
       break;
     }
 
     case QUEEN: {
-      board[x][y] = new Queen(type, color, *this, x, y);
+      board[x][y] = std::make_unique<Queen>(type, color, *this, x, y);
       break;
     }
 
     case ROOK: {
-      board[x][y] = new Rook(type, color, *this, x, y);
+      board[x][y] = std::make_unique<Rook>(type, color, *this, x, y);
       break;
     }
 
     case BISHOP: {
-      board[x][y] = new Bishop(type, color, *this, x, y);
+      board[x][y] = std::make_unique<Bishop>(type, color, *this, x, y);
       break;
     }
 
     case KNIGHT: {
-      board[x][y] = new Knight(type, color, *this, x, y);
+      board[x][y] = std::make_unique<Knight>(type, color, *this, x, y);
       break;
     }
 
     case PAWN: {
-      board[x][y] = new Pawn(type, color, *this, x, y);
+      board[x][y] = std::make_unique<Pawn>(type, color, *this, x, y);
       break;
     }
     case EMPTY: {
@@ -415,18 +415,18 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
 
 
 void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
-  ChessPiece* current = board[x1][y1];
+  ChessPiecePtr& current = board[x1][y1];
   ChessPieceColor win = NO_COLOR;
 
   // If move captures piece
   if (board[x2][y2] != nullptr) {
     std::cout << ", capture";
     // If piece captured is a king
-    if (const ChessPiece* p = board[x2][y2]; p->getType() == KING) {
+    if (const ChessPiecePtr& p = board[x2][y2]; p->getType() == KING) {
       // Set win variable to appropriate side
       win = p->getColor() == WHITE ? BLACK : WHITE;
     }
-    delete board[x2][y2];
+    board[x2][y2].reset();
   }
 
   // If promotion is applicable
@@ -434,31 +434,30 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   // No special move applicable
 
   // Move piece
-  board[x2][y2] = current;
-  board[x1][y1] = nullptr;
+  board[x2][y2] = std::move(current);
+  board[x1][y1].reset();
 
   // Make piece aware of its own position
-  current->setX(x2);
-  current->setY(y2);
+  board[x2][y2]->setX(x2);
+  board[x2][y2]->setY(y2);
 
-  if ((y2 == 7 || y2 == 0) && current->getType() == PAWN) {
+  if ((y2 == 7 || y2 == 0) && board[x2][y2]->getType() == PAWN) {
     std::cout << ", promotion";
     // Get attributes before removal
-    const ChessPieceColor color = current->getColor();
+    const ChessPieceColor color = board[x2][y2]->getColor();
 
     // Remove current pawn
-    delete current;
     board[x2][y2] = nullptr;
 
     // Generate new piece as chosen by promotionBox()
     generatePiece(x2, y2, promotionBox(), color);
     // Point current to new ChessPiece
-    current = board[x2][y2];
+
   }
 
   // Remember king position
-  if (current->getType() == KING) {
-    if (current->getColor() == WHITE) {
+  if (board[x2][y2]->getType() == KING) {
+    if (board[x2][y2]->getColor() == WHITE) {
       whiteKingPos.x = x2;
       whiteKingPos.y = y2;
     } else {
@@ -471,7 +470,7 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   setChessItem(x1, y1, EMPTY, NO_COLOR);
   setChessItem(x2, y2, EMPTY, NO_COLOR);
 
-  setChessItem(x2, y2, current->getType(), current->getColor());
+  setChessItem(x2, y2, board[x2][y2]->getType(), board[x2][y2]->getColor());
 
   // Game over
   if (win != NO_COLOR) {

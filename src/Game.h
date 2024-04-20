@@ -13,6 +13,7 @@
 
 // std
 #include <iostream>
+#include <memory>
 
 // local
 #include "gui/ChessWindow.h"
@@ -23,6 +24,8 @@
 #include "chessPiece/bishop/Bishop.h"
 #include "chessPiece/knight/Knight.h"
 #include "chessPiece/pawn/Pawn.h"
+
+using ChessPiecePtr = std::unique_ptr<ChessPiece>;
 
 /**
  * @brief Head game logic class.
@@ -59,7 +62,7 @@ class Game final : public ChessWindow {
   public:
     // Board variable
     // KEEP PUBLIC
-    std::array<std::array<ChessPiece*, 8>, 8> board;
+    std::array<std::array<std::unique_ptr<ChessPiece>, 8>, 8> board;
 
 
     // ╔════════════════════════════════════════╗
@@ -111,9 +114,10 @@ class Game final : public ChessWindow {
 
     /**
      * Shows all valid moves for a specific piece.
-     * @param piece
+     * @param x x-coordinate
+     * @param y y-coordinate
      */
-    void showVisualizeMoves(ChessPiece* piece);
+    void showVisualizeMoves(int x, int y);
 
     /**
      * Examine if a specific cell can be attacked

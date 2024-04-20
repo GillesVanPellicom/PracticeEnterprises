@@ -54,20 +54,20 @@ std::vector<Coords> Pawn::getValidMoves() {
       continue;
     }
     // Capture
-    ChessPiece* p = this->board[newX][_y + dy];
+
     // If cell isn't empty and piece is enemy
-    if (p != nullptr && p->getColor() != color) {
+    if (ChessPiecePtr& p = this->board[newX][_y + dy]; p != nullptr && p->getColor() != color) {
       moves.emplace_back(newX, _y + dy);
     }
 
     // En passant
-    p = this->board[newX][_y];
+
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     // If cell isn't empty and piece is enemy and piece is pawn and (piece is on row 3 or 4)
-    if (p != nullptr && p->getColor() != color && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
+    if (ChessPiecePtr& p = this->board[newX][_y]; p != nullptr && p->getColor() != color && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
       // Conditions met
       // If cell isn't empty and piece is friendly
-      if (const ChessPiece* p2 = this->board[newX][_y + dy]; p2 != nullptr && p2->getColor() == color) {
+      if (const ChessPiecePtr& p2 = this->board[newX][_y + dy]; p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
       }
