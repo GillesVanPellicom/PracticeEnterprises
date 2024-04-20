@@ -265,12 +265,12 @@ ChessPieceColor Game::invertColor(const ChessPieceColor color) {
 }
 
 void Game::check() {
-  whiteInCheck = isCheck(whiteKingPos.x, whiteKingPos.y, BLACK);
-  blackInCheck = isCheck(blackKingPos.x, blackKingPos.y, WHITE);
+  whiteInCheck = isAttackable(whiteKingPos.x, whiteKingPos.y, BLACK);
+  blackInCheck = isAttackable(blackKingPos.x, blackKingPos.y, WHITE);
 }
 
 
-bool Game::isCheck(const int x, const int y, const ChessPieceColor attackerColor) {
+bool Game::isAttackable(const int x, const int y, const ChessPieceColor attackerColor) {
   // For the entire board
   for (const auto& i : board) {
     for (const auto& j : i) {

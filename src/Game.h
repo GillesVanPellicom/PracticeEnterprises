@@ -288,11 +288,13 @@ class Game final : public ChessWindow {
     void showVisualizeMoves(ChessPiece* piece);
 
     /**
-     * Examine if specific piece causes a check
-     * @param piece Piece to be examined
-     * @return true if check, false if not
+     * Examine if a specific cell can be attacked
+     * @param x x-coordinate of the cell
+     * @param y y-coordinate of the cell
+     * @param attackerColor Color of the attacking side
+     * @return true if that cell can be attacked, else false
      */
-    bool isCheck(int x, int y, ChessPieceColor attackerColor);
+    bool isAttackable(int x, int y, ChessPieceColor attackerColor);
     /**
      * Examines the entire board and both sides for checks.
      * Will modify global variables blackInCheck and whiteInCheck after call.
@@ -319,8 +321,7 @@ class Game final : public ChessWindow {
     // ChessPiece* board[8][8]{};
     std::array<std::array<ChessPiece*, 8>, 8> board;
 
-  private
-  :
+  private:
     // Current selected cell variables
     bool isSelected;
     Coords selected = {-1, -1};
