@@ -289,7 +289,7 @@ class Game final : public ChessWindow {
      * @param piece Piece to be examined
      * @return true if check, false if not
      */
-    bool isCheck(ChessPiece* piece);
+    bool isCheck(int x, int y, ChessPieceColor attackerColor);
 
     /**
      * Examines the entire board and both sides for checks.

@@ -266,45 +266,29 @@ ChessPieceColor Game::invertColor(const ChessPieceColor color) {
 
 
 void Game::check() {
-  // Reset variables from previous iteration
-  whiteInCheck = false;
-  blackInCheck = false;
+  whiteInCheck = isCheck(whiteKingPos.x, whiteKingPos.y, BLACK);
+  blackInCheck = isCheck(blackKingPos.x, blackKingPos.y, WHITE);
+}
 
-  // For both sides
-  for (const ChessPieceColor c : {WHITE, BLACK}) {
-    // For the entire board
-    for (const auto& i : board) {
-      for (const auto& p : i) {
-        // If cell not empty, color is current side and this piece specifically causes check
-        if (p != nullptr && p->getColor() == c && isCheck(p)) {
-          // Set correct variable
-          if (c == WHITE) {
-            blackInCheck = true;
-          } else {
-            whiteInCheck = true;
-          }
-          break;
+
+bool Game::isCheck(const int x, const int y, const ChessPieceColor attackerColor) {
+  // For the entire board
+  for (const auto& i : board) {
+    for (const auto& j : i) {
+      // If current cell is not empty and is an attacker
+      if (j != nullptr && j->getColor() == attackerColor) {
+        // Generate it's valid moves and see if one of these moves is a check, if so return true
+        if (const auto& moves = j->getValidMoves(board);
+          std::ranges::any_of(moves,
+                              [&](const auto& move) {
+                                return move.x == x && move.y == y;
+                              })) {
+          return true;
         }
       }
     }
   }
-}
-
-
-bool Game::isCheck(ChessPiece* piece) {
-  // Get valid moves for piece to be tested
-  const auto& moves = piece->getValidMoves(board);
-
-  // If one of the valid moves equals the opposing's king's current location
-  if (Coords kp = findKing(invertColor(piece->getColor()));
-    std::ranges::find_if(moves,
-                         [&kp](const auto& move) {
-                           return move.x == kp.x && move.y == kp.y;
-                         }) != moves.end()) {
-    // Check found
-    return true;
-  }
-  // No check found
+  // If no check was found, return false
   return false;
 }
 
