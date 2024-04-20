@@ -16,7 +16,7 @@ class King final : public ChessPiece {
   public:
     King(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
-    std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) override;
+    std::vector<Coords> getValidMoves() override;
 };
 
 

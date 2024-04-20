@@ -9,14 +9,16 @@
 
 #include "ChessPiece.h"
 
+#include "../Game.h"
+
 ChessPiece::ChessPiece(const ChessPieceType type, const ChessPieceColor color, Game* instance, const int x, const int y)
-  : type(type), color(color), instance(instance), x(x), y(y) {
+  : type(type), color(color), instance(instance), x(x), y(y), board(instance->board) {
 }
 
-std::vector<Coords> ChessPiece::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> ChessPiece::getValidMoves() {
   return {};
 }
-bool ChessPiece::isValidMove(const int x, const int y, ChessPiece* board[8][8]) {
+bool ChessPiece::isValidMove(const int x, const int y) {
   return x >= 0 && x < 8 && y >= 0 && y < 8 && (board[x][y] == nullptr || board[x][y]->getColor() != color);
 }
 

@@ -8,6 +8,8 @@
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
 #include "Pawn.h"
+
+#include "../../Game.h"
 Pawn::Pawn(const ChessPieceType type,
            const ChessPieceColor color,
            Game* instance,
@@ -15,7 +17,7 @@ Pawn::Pawn(const ChessPieceType type,
            const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> Pawn::getValidMoves() {
   std::vector<Coords> moves;
 
   // Reset variables from previous iteration
@@ -25,14 +27,13 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
     enPassentMoves[1] = {-1, -1};
   }
 
-  const int _x = this->getX();
-  const int _y = this->getY();
-  const ChessPieceColor color = this->getColor();
+  const int _x = getX();
+  const int _y = getY();
+  const ChessPieceColor color = getColor();
 
   // Movement goes up for white, down for black.
   const int dy = color == WHITE ? 1 : -1;
 
-  ChessPiece* p;
 
   // Straight ahead
   if (board[_x][_y + dy] == nullptr) {
@@ -53,7 +54,7 @@ std::vector<Coords> Pawn::getValidMoves(ChessPiece* board[8][8]) {
       continue;
     }
     // Capture
-    p = board[nexX][_y + dy];
+    ChessPiece* p = board[nexX][_y + dy];
     // If cell isn't empty and piece is enemy
     if (p != nullptr && p->getColor() != color) {
       moves.emplace_back(nexX, _y + dy);

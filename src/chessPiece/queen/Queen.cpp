@@ -15,7 +15,7 @@ Queen::Queen(const ChessPieceType type,
              const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> Queen::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> Queen::getValidMoves() {
   std::vector<Coords> moves;
 
   const int _x = this->getX();

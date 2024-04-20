@@ -15,7 +15,7 @@ Knight::Knight(const ChessPieceType type,
                const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> Knight::getValidMoves() {
   std::vector<Coords> moves;
 
   const int _x = this->getX();
@@ -27,7 +27,7 @@ std::vector<Coords> Knight::getValidMoves(ChessPiece* board[8][8]) {
   for (int i = 0; i < 8; ++i) {
     int newX = _x + dx[i];
     int newY = _y + dy[i];
-    if (isValidMove(newX, newY, board)) {
+    if (isValidMove(newX, newY)) {
       moves.emplace_back(newX, newY);
     }
   }

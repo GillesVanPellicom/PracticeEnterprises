@@ -32,7 +32,10 @@
 class Game final : public ChessWindow {
     Q_OBJECT
 
-  private:
+  public:
+    Game();
+
+
     // ╔════════════════════════════════════════╗
     // ║          Inherited Functions           ║
     // ╚════════════════════════════════════════╝
@@ -311,9 +314,13 @@ class Game final : public ChessWindow {
      */
     [[nodiscard]] Coords& findKing(ChessPieceColor color);
 
-    // Board variable
-    ChessPiece* board[8][8]{};
 
+    // Board variable
+    // KEEP PUBLIC
+    // ChessPiece* board[8][8]{};
+    std::array<std::array<ChessPiece*, 8>, 8> board;
+
+  private:
     // Current selected cell variables
     bool isSelected;
     Coords selected = {-1, -1};
@@ -332,9 +339,6 @@ class Game final : public ChessWindow {
     // Booleans to keep track of current checks
     bool blackInCheck = false;
     bool whiteInCheck = false;
-
-  public:
-    Game();
 };
 
 #endif //PRACTICEENTERPRISES_GAME_H_

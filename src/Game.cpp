@@ -169,7 +169,7 @@ void Game::onClick(const int x, const int y) {
     // potential move
 
     // Check potential move against list of actually valid moves for that piece
-    const auto& validMoves = board[selected.x][selected.y]->getValidMoves(board);
+    const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
 
     // if an iterator is returned
     if (std::ranges::find_if(validMoves,
@@ -264,7 +264,6 @@ ChessPieceColor Game::invertColor(const ChessPieceColor color) {
   return color == WHITE ? BLACK : WHITE;
 }
 
-
 void Game::check() {
   // Reset variables from previous iteration
   whiteInCheck = false;
@@ -293,7 +292,7 @@ void Game::check() {
 
 bool Game::isCheck(ChessPiece* piece) {
   // Get valid moves for piece to be tested
-  const auto& moves = piece->getValidMoves(board);
+  const auto& moves = piece->getValidMoves();
 
   // If one of the valid moves equals the opposing's king's current location
   if (Coords kp = findKing(invertColor(piece->getColor()));
@@ -319,7 +318,7 @@ Coords& Game::findKing(const ChessPieceColor color) {
 
 void Game::showVisualizeMoves(ChessPiece* piece) {
   // For all moves
-  for (const auto& move : piece->getValidMoves(board)) {
+  for (const auto& move : piece->getValidMoves()) {
     // Mark cell
     markCellAs(move.x, move.y, POSSIBLE);
   }
@@ -341,9 +340,9 @@ void Game::initializeGame() {
 
   // Initialize board as nullptrs
   // Skipping this step leads to undefined cross-platform behavior
-  for (int i = 0; i < std::size(board); ++i) {
+  for (auto & i : board) {
     for (int j = 0; j < std::size(board[0]); ++j) {
-      board[i][j] = nullptr;
+      i[j] = nullptr;
     }
   }
 

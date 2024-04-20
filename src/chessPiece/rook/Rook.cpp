@@ -15,31 +15,31 @@ Rook::Rook(const ChessPieceType type,
            const int y) : ChessPiece(type, color, instance, x, y) {
 }
 
-std::vector<Coords> Rook::getValidMoves(ChessPiece* board[8][8]) {
+std::vector<Coords> Rook::getValidMoves() {
   std::vector<Coords> moves;
   int _x = this->getX();
   int _y = this->getY();
 
   // Check horizontal moves to the right
-  for (int x = _x + 1; isValidMove(x, _y, board); ++x) {
+  for (int x = _x + 1; isValidMove(x, _y); ++x) {
     moves.emplace_back(x, _y);
     if (board[x][_y] != nullptr) break;
   }
 
   // Check horizontal moves to the left
-  for (int x = _x - 1; isValidMove(x, _y, board); --x) {
+  for (int x = _x - 1; isValidMove(x, _y); --x) {
     moves.emplace_back(x, _y);
     if (board[x][_y] != nullptr) break;
   }
 
   // Check vertical moves upwards
-  for (int y = _y + 1; isValidMove(_x, y, board); ++y) {
+  for (int y = _y + 1; isValidMove(_x, y); ++y) {
     moves.emplace_back(_x, y);
     if (board[_x][y] != nullptr) break;
   }
 
   // Check vertical moves downwards
-  for (int y = _y - 1; isValidMove(_x, y, board); --y) {
+  for (int y = _y - 1; isValidMove(_x, y); --y) {
     moves.emplace_back(_x, y);
     if (board[_x][y] != nullptr) break;
   }

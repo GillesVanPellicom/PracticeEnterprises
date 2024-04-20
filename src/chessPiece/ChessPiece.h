@@ -25,7 +25,7 @@ class ChessPiece {
 
   public:
     [[nodiscard]] Game* getInstance() const;
-    virtual std::vector<Coords> getValidMoves(ChessPiece* board[8][8]) = 0;
+    virtual std::vector<Coords> getValidMoves() = 0;
     [[nodiscard]] int getY() const;
     void setY(int y);
     [[nodiscard]] int getX() const;
@@ -34,7 +34,9 @@ class ChessPiece {
     [[nodiscard]] ChessPieceColor getColor() const;
     ChessPiece(ChessPieceType type, ChessPieceColor color, Game* instance, int x, int y);
 
-  bool isValidMove(int x, int y, ChessPiece* board[8][8]);
+    std::array<std::array<ChessPiece*, 8>, 8>& board;
+
+    bool isValidMove(int x, int y);
     virtual ~ChessPiece();
 };
 
