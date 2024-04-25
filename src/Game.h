@@ -24,7 +24,7 @@
 #include "chessPiece/knight/Knight.h"
 #include "chessPiece/pawn/Pawn.h"
 
-using ChessPiecePtr = std::unique_ptr<ChessPiece>;
+using ChessPiecePtr = std::shared_ptr<ChessPiece>;
 
 /**
  * @brief Head game logic class.
@@ -40,7 +40,7 @@ class Game final : public ChessWindow {
     // ╚════════════════════════════════════════╝
 
     // Current selected cell variables
-    bool isSelected;
+    bool isSelected{};
     Coords selected = {-1, -1};
 
     Coords whiteKingPos = {-1, -1};
@@ -61,7 +61,7 @@ class Game final : public ChessWindow {
   public:
     // Board variable
     // KEEP PUBLIC
-    std::array<std::array<std::unique_ptr<ChessPiece>, 8>, 8> board;
+    std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8> board;
 
 
     // ╔════════════════════════════════════════╗

@@ -29,7 +29,7 @@ class ChessPiece {
   public:
     // Board mirror
     // KEEP PUBLIC
-    std::array<std::array<std::unique_ptr<ChessPiece>, 8>, 8>& board;
+    std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8>& board;
 
 
     // ╔════════════════════════════════════════╗

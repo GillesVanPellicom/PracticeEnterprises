@@ -373,32 +373,32 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
   // Instantiate appropriate object for type
   switch (type) {
     case KING: {
-      board[x][y] = std::make_unique<King>(type, color, *this, x, y);
+      board[x][y] = std::make_shared<King>(type, color, *this, x, y);
       break;
     }
 
     case QUEEN: {
-      board[x][y] = std::make_unique<Queen>(type, color, *this, x, y);
+      board[x][y] = std::make_shared<Queen>(type, color, *this, x, y);
       break;
     }
 
     case ROOK: {
-      board[x][y] = std::make_unique<Rook>(type, color, *this, x, y);
+      board[x][y] = std::make_shared<Rook>(type, color, *this, x, y);
       break;
     }
 
     case BISHOP: {
-      board[x][y] = std::make_unique<Bishop>(type, color, *this, x, y);
+      board[x][y] = std::make_shared<Bishop>(type, color, *this, x, y);
       break;
     }
 
     case KNIGHT: {
-      board[x][y] = std::make_unique<Knight>(type, color, *this, x, y);
+      board[x][y] = std::make_shared<Knight>(type, color, *this, x, y);
       break;
     }
 
     case PAWN: {
-      board[x][y] = std::make_unique<Pawn>(type, color, *this, x, y);
+      board[x][y] = std::make_shared<Pawn>(type, color, *this, x, y);
       break;
     }
     case EMPTY: {
