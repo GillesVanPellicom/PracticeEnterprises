@@ -1,8 +1,7 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
 // ║ Name         : Game.cpp                                                          ║
 // ║ Description  : Implementation of the chess game logic                            ║
-// ║ Author(s)    : "Bert Schenkelaars" <r990071@student.thomasmore.be>               ║
-// ║              : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
+// ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/12                                                        ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
@@ -151,7 +150,7 @@ void Game::onClick(const int x, const int y) {
   // Remove all markings from previous iteration
   removeAllMarkingsType(POSSIBLE);
 
-  ChessPiecePtr& piece = board[x][y];
+  const ChessPiecePtr& piece = board[x][y];
 
   // If selected cell is the same as the new cell
   if (isSelected && selected.x == x && selected.y == y) {
@@ -163,15 +162,16 @@ void Game::onClick(const int x, const int y) {
     return;
   }
 
-  // If a cell was previously selected and that cell contains a chess piece and the new cell is empty
+  // If a cell was previously selected and that cell contains a chess piece
   if (isSelected && board[selected.x][selected.y] != nullptr) {
     // potential move
 
     // Check potential move against list of actually valid moves for that piece
-    const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
+
 
     // if an iterator is returned
-    if (std::ranges::find_if(validMoves,
+    if (const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
+      std::ranges::find_if(validMoves,
                              [x, y](const auto& move) {
                                return move.x == x && move.y == y;
                              }) != validMoves.end()) {

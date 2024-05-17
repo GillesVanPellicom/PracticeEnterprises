@@ -28,12 +28,14 @@ class Pawn final : public ChessPiece {
     // ╚════════════════════════════════════════╝
 
     Pawn(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
-    std::vector<Coords> getValidMoves() override;
 
 
     // ╔════════════════════════════════════════╗
     // ║           Getters / Setters            ║
     // ╚════════════════════════════════════════╝
+
+  std::vector<Coords> getValidMoves() override;
+
 
     void setLastMoveWasTwoCellMove(bool last_move_wastwo_cell_move) {
       lastMoveWastwoCellMove = last_move_wastwo_cell_move;

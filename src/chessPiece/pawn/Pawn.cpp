@@ -13,8 +13,7 @@ Pawn::Pawn(const ChessPieceType type,
            const ChessPieceColor color,
            Game& instance,
            const int x,
-           const int y) : ChessPiece(type, color, instance, x, y) {
-}
+           const int y) : ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> Pawn::getValidMoves() {
   std::vector<Coords> moves;
@@ -25,9 +24,7 @@ std::vector<Coords> Pawn::getValidMoves() {
     enPassentMoves[0] = {-1, -1};
     enPassentMoves[1] = {-1, -1};
   }
-
-  const int _x = this->getX();
-  const int _y = this->getY();
+  
   const ChessPieceColor color = this->getColor();
 
   // Movement goes up for white, down for black.
@@ -35,19 +32,20 @@ std::vector<Coords> Pawn::getValidMoves() {
 
 
   // Straight ahead
-  if (board[_x][_y + dy] == nullptr) {
-    moves.emplace_back(_x, _y + dy);
+  if (board[this->x][this->y + dy] == nullptr) {
+    moves.emplace_back(this->x, this->y + dy);
   }
 
   // Opening 2-cell
-  if ((_y == 1 && color == WHITE) || (_y == 6 && color == BLACK)) {
-    moves.emplace_back(_x, _y + dy * 2);
+  if ((this->y == 1 && color == WHITE) || (this->y == 6 && color == BLACK)) {
+    moves.emplace_back(this->x, this->y + dy * 2);
   }
 
   int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
-    int newX = _x + dx;
+    int newX = this->x + dx;
+
     if (newX < 0 || newX >= 8) {
       // Out of bounds
       continue;
@@ -55,25 +53,26 @@ std::vector<Coords> Pawn::getValidMoves() {
     // Capture
 
     // If cell isn't empty and piece is enemy
-    if (ChessPiecePtr& p = this->board[newX][_y + dy]; p != nullptr && p->getColor() != color) {
-      moves.emplace_back(newX, _y + dy);
+    if (ChessPiecePtr& p = this->board[newX][this->y + dy]; p != nullptr && p->getColor() != color) {
+      moves.emplace_back(newX, this->y + dy);
     }
 
     // En passant
 
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     // If cell isn't empty and piece is enemy and piece is pawn and (piece is on row 3 or 4)
-    if (ChessPiecePtr& p = this->board[newX][_y]; p != nullptr && p->getColor() != color && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
+    if (ChessPiecePtr& p = this->board[newX][this->y]; p != nullptr && p->getColor() != color
+      && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
       // Conditions met
       // If cell isn't empty and piece is friendly
-      if (const ChessPiecePtr& p2 = this->board[newX][_y + dy]; p2 != nullptr && p2->getColor() == color) {
+      if (const ChessPiecePtr& p2 = this->board[newX][this->y + dy]; p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
       }
 
       // Valid en passent move
       enPassentIsValid = true;
-      Coords move = {newX, _y + dy};
+      Coords move = {newX, this->y + dy};
       enPassentMoves[i++] = move;
       moves.emplace_back(move);
     }

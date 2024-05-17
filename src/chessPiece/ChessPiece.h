@@ -16,7 +16,7 @@
 class Game;
 
 class ChessPiece {
-  private:
+  protected:
     // ╔════════════════════════════════════════╗
     // ║               Variables                ║
     // ╚════════════════════════════════════════╝

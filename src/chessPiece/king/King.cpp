@@ -11,22 +11,17 @@ King::King(const ChessPieceType type,
            const ChessPieceColor color,
            Game& instance,
            const int x,
-           const int y) : ChessPiece(type, color, instance, x, y) {
-}
+           const int y) : ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> King::getValidMoves() {
   std::vector<Coords> moves;
 
-  const int _x = this->getX();
-  const int _y = this->getY();
-
-  constexpr int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-  constexpr int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+  constexpr int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1},
+                dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
   for (int i = 0; i < 8; ++i) {
-    const int newX = _x + dx[i];
-    const int newY = _y + dy[i];
-    if (isValidMove(newX, newY)) {
+    if (const int newX = this->x + dx[i], newY = this->y + dy[i];
+      isValidMove(newX, newY)) {
       moves.emplace_back(newX, newY);
     }
   }

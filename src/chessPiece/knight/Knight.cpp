@@ -11,22 +11,17 @@ Knight::Knight(const ChessPieceType type,
                const ChessPieceColor color,
                Game& instance,
                const int x,
-               const int y) : ChessPiece(type, color, instance, x, y) {
-}
+               const int y) : ChessPiece(type, color, instance, x, y) {}
 
 std::vector<Coords> Knight::getValidMoves() {
   std::vector<Coords> moves;
 
-  const int _x = this->getX();
-  const int _y = this->getY();
-
-  constexpr int dx[] = {1, 1, 2, 2, -1, -1, -2, -2};
-  constexpr int dy[] = {2, -2, 1, -1, 2, -2, 1, -1};
+  constexpr int dx[] = {1, 1, 2, 2, -1, -1, -2, -2},
+                dy[] = {2, -2, 1, -1, 2, -2, 1, -1};
 
   for (int i = 0; i < 8; ++i) {
-    const int newX = _x + dx[i];
-    const int newY = _y + dy[i];
-    if (isValidMove(newX, newY)) {
+    if (const int newX = this->x + dx[i], newY = this->y + dy[i];
+      isValidMove(newX, newY)) {
       moves.emplace_back(newX, newY);
     }
   }

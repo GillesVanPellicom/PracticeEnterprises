@@ -1,8 +1,7 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
 // ║ Name         : Game.h                                                            ║
 // ║ Description  : Definitions of the chess game logic                               ║
-// ║ Author(s)    : "Bert Schenkelaars" <r990071@student.thomasmore.be>               ║
-// ║              : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
+// ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/12                                                        ║                
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝

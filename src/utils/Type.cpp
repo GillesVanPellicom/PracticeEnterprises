@@ -1,7 +1,6 @@
 // ╔══════════════════════════════════════════════════════════════════════════════════╗
 // ║ Name         : Type.cpp                                                          ║
 // ║ Description  : Implementations of collected types used in codebase               ║
-// ║                Lorem ipsum dolor sit amet                                        ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
 // ║ Date         : 2024/02/13                                                        ║
 // ║ License      : GPL-3.0                                                           ║
