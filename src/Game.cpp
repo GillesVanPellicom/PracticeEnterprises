@@ -172,9 +172,9 @@ void Game::onClick(const int x, const int y) {
     // if an iterator is returned
     if (const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
       std::ranges::find_if(validMoves,
-                             [x, y](const auto& move) {
-                               return move.x == x && move.y == y;
-                             }) != validMoves.end()) {
+                           [x, y](const auto& move) {
+                             return move.x == x && move.y == y;
+                           }) != validMoves.end()) {
       // confirmed move
       std::cout << "move";
 
@@ -417,6 +417,12 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   ChessPiecePtr& current = board[x1][y1];
   ChessPieceColor win = NO_COLOR;
 
+  // If piece has not moved
+  if (!current->getHasMoved()) {
+    // set hasMoved to true
+    current->setHasMoved(true);
+  }
+
   // If move captures piece
   if (board[x2][y2] != nullptr) {
     std::cout << ", capture";
@@ -451,7 +457,6 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
     // Generate new piece as chosen by promotionBox()
     generatePiece(x2, y2, promotionBox(), color);
     // Point current to new ChessPiece
-
   }
 
   // Remember king position
@@ -493,6 +498,27 @@ void Game::setSelected(const int x, const int y, const bool _isSelected) {
     selected.x = -1;
     selected.y = -1;
   }
+}
+
+bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor color) const {
+  // For entire board
+  for (const auto& row : board) {
+    for (const auto& piece : row) {
+      // Check if the piece is not null and matches the specified color
+      if (piece != nullptr && piece->getColor() == color) {
+        // Check if any attack position matches the valid attacks
+        for (const auto& attacks = piece->getValidAttacks();
+          const auto& attack : attacks) {
+          if (attack.x == x && attack.y == y) {
+            // The position can be attacked
+            return true;
+          }
+        }
+      }
+    }
+  }
+  // The position cannot be attacked
+  return false;
 }
 
 

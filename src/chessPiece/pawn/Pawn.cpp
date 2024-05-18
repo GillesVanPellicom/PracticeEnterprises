@@ -25,26 +25,26 @@ std::vector<Coords> Pawn::getValidMoves() {
     enPassentMoves[1] = {-1, -1};
   }
   
-  const ChessPieceColor color = this->getColor();
+  const ChessPieceColor color = getColor();
 
   // Movement goes up for white, down for black.
   const int dy = color == WHITE ? 1 : -1;
 
 
   // Straight ahead
-  if (board[this->x][this->y + dy] == nullptr) {
-    moves.emplace_back(this->x, this->y + dy);
+  if (board[x][y + dy] == nullptr) {
+    moves.emplace_back(x, y + dy);
   }
 
   // Opening 2-cell
-  if ((this->y == 1 && color == WHITE) || (this->y == 6 && color == BLACK)) {
-    moves.emplace_back(this->x, this->y + dy * 2);
+  if (!hasMoved) {
+    moves.emplace_back(x, y + dy * 2);
   }
 
   int i = 0;
   // Left & right
   for (const int dx : {-1, 1}) {
-    int newX = this->x + dx;
+    int newX = x + dx;
 
     if (newX < 0 || newX >= 8) {
       // Out of bounds
@@ -53,26 +53,26 @@ std::vector<Coords> Pawn::getValidMoves() {
     // Capture
 
     // If cell isn't empty and piece is enemy
-    if (ChessPiecePtr& p = this->board[newX][this->y + dy]; p != nullptr && p->getColor() != color) {
-      moves.emplace_back(newX, this->y + dy);
+    if (ChessPiecePtr& p = board[newX][y + dy]; p != nullptr && p->getColor() != color) {
+      moves.emplace_back(newX, y + dy);
     }
 
     // En passant
 
     // FIXME: doesn't check if the pawn to be captured has just moved 2 cells
     // If cell isn't empty and piece is enemy and piece is pawn and (piece is on row 3 or 4)
-    if (ChessPiecePtr& p = this->board[newX][this->y]; p != nullptr && p->getColor() != color
+    if (ChessPiecePtr& p = board[newX][y]; p != nullptr && p->getColor() != color
       && p->getType() == PAWN && (p->getY() == 3 || p->getY() == 4)) {
       // Conditions met
       // If cell isn't empty and piece is friendly
-      if (const ChessPiecePtr& p2 = this->board[newX][this->y + dy]; p2 != nullptr && p2->getColor() == color) {
+      if (const ChessPiecePtr& p2 = board[newX][y + dy]; p2 != nullptr && p2->getColor() == color) {
         // Friendly piece in way, don't add move
         continue;
       }
 
       // Valid en passent move
       enPassentIsValid = true;
-      Coords move = {newX, this->y + dy};
+      Coords move = {newX, y + dy};
       enPassentMoves[i++] = move;
       moves.emplace_back(move);
     }

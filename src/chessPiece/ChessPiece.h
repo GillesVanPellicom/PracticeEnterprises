@@ -25,6 +25,7 @@ class ChessPiece {
     Game& instance;
     int x;
     int y;
+    bool hasMoved{};
 
   public:
     // Board mirror
@@ -45,7 +46,10 @@ class ChessPiece {
     virtual ~ChessPiece();
 
     [[nodiscard]] Game& getInstance() const;
+
     virtual std::vector<Coords> getValidMoves() = 0;
+
+    std::vector<Coords> getValidAttacks();
 
     [[nodiscard]] int getX() const;
     void setX(int x);
@@ -56,7 +60,10 @@ class ChessPiece {
     [[nodiscard]] ChessPieceType getType() const;
     [[nodiscard]] ChessPieceColor getColor() const;
 
-    bool isValidMove(int x, int y);
+    bool isValidMove(int x, int y) const;
+
+    void setHasMoved(bool hasMoved);
+    [[nodiscard]] bool getHasMoved() const;
 };
 
 

@@ -20,12 +20,12 @@ std::vector<Coords> Bishop::getValidMoves() {
   for (const int dx : {-1, 1}) {
     for (const int dy : {-1, 1}) {
       for (int i = 1; i < 8; ++i) {
-        int newX = this->x + i * dx,
-            newY = this->y + i * dy;
+        int newX = x + i * dx,
+            newY = y + i * dy;
 
         if (!isValidMove(newX, newY)) break;
         moves.emplace_back(newX, newY);
-        if (this->board[newX][newY] != nullptr) break;
+        if (board[newX][newY] != nullptr) break;
       }
     }
   }

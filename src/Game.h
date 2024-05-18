@@ -146,6 +146,9 @@ class Game final : public ChessWindow {
     [[nodiscard]] Coords& findKing(ChessPieceColor color);
 
 
+    [[nodiscard]] bool canBeAttacked(int x, int y, ChessPieceColor color) const;
+
+
     // ╔════════════════════════════════════════╗
     // ║          Inherited Functions           ║
     // ╚════════════════════════════════════════╝

@@ -20,7 +20,7 @@ std::vector<Coords> Knight::getValidMoves() {
                 dy[] = {2, -2, 1, -1, 2, -2, 1, -1};
 
   for (int i = 0; i < 8; ++i) {
-    if (const int newX = this->x + dx[i], newY = this->y + dy[i];
+    if (const int newX = x + dx[i], newY = y + dy[i];
       isValidMove(newX, newY)) {
       moves.emplace_back(newX, newY);
     }
