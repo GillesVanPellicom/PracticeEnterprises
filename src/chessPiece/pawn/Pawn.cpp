@@ -13,7 +13,8 @@ Pawn::Pawn(const ChessPieceType type,
            const ChessPieceColor color,
            Game& instance,
            const int x,
-           const int y) : ChessPiece(type, color, instance, x, y) {}
+           const int y) : ChessPiece(type, color, instance, x, y) {
+}
 
 std::vector<Coords> Pawn::getValidMoves() {
   std::vector<Coords> moves;
@@ -24,7 +25,7 @@ std::vector<Coords> Pawn::getValidMoves() {
     enPassentMoves[0] = {-1, -1};
     enPassentMoves[1] = {-1, -1};
   }
-  
+
   const ChessPieceColor color = getColor();
 
   // Movement goes up for white, down for black.
@@ -34,12 +35,15 @@ std::vector<Coords> Pawn::getValidMoves() {
   // Straight ahead
   if (board[x][y + dy] == nullptr) {
     moves.emplace_back(x, y + dy);
+
+    // Opening 2-cell
+    // Only if pawn hasn't moved yet, the first cell is possible and the second cell is possible
+    if (!hasMoved && board[x][y + dy * 2] == nullptr) {
+      moves.emplace_back(x, y + dy * 2);
+    }
   }
 
-  // Opening 2-cell
-  if (!hasMoved) {
-    moves.emplace_back(x, y + dy * 2);
-  }
+
 
   int i = 0;
   // Left & right
