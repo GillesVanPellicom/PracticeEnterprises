@@ -540,6 +540,11 @@ bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor attacke
   return false;
 }
 
+void Game::takeBoardSnapshot() {
+
+}
+
+
 
 // ╔════════════════════════════════════════╗
 // ║          Inherited Functions           ║

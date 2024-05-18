@@ -53,6 +53,9 @@ class Game final : public ChessWindow {
     bool doVisualizeThreatenedEnemy = false;
     bool doVisualizeThreatenedFriendly = false;
 
+   std::vector<std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8>> boardHistory;
+   unsigned int currentMove = 0;
+
   public:
     // KEEP PUBLIC
 
@@ -155,6 +158,12 @@ class Game final : public ChessWindow {
      * @return
      */
     [[nodiscard]] bool canBeAttacked(int x, int y, ChessPieceColor attackerColor) const;
+
+    /**
+     * Saves the state of the current board to boardHistory
+     * Increments moveCounter by 1;
+     */
+    void takeBoardSnapshot();
 
 
     // ╔════════════════════════════════════════╗
