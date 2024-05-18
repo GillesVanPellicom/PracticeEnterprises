@@ -13,9 +13,16 @@
 
 class King final : public ChessPiece {
   public:
+    Coords castleKS = {-1, -1};
+    Coords castleQS = {-1, -1};
+
+    bool isValidCastleKS = false;
+    bool isValidCastleQS = false;
+
     King(ChessPieceType type, ChessPieceColor color, Game& instance, int x, int y);
 
     std::vector<Coords> getValidMoves() override;
+    std::vector<Coords> getValidMovesExclCastling() const;
 };
 
 

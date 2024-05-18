@@ -1,7 +1,13 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.28)
 project(chess)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 26)
+
+# ASAN
+add_compile_options(-fsanitize=address)
+add_link_options(-fsanitize=address)
+
+set(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror")
 
 # Qt6
 set(CMAKE_AUTOMOC ON)

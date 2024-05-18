@@ -177,7 +177,7 @@ void Game::onClick(const int x, const int y) {
       // confirmed move
       std::cout << "move";
 
-      // If selected piece is not empty and of type PAWN and an en passent move is possible
+      // If selected piece is not empty and of type PAWN and en passent is possible
       if (const auto& p = dynamic_cast<Pawn*>(board[selected.x][selected.y].get());
         p != nullptr && p->getType() == PAWN && p->getEnPassentIsValid()) {
         // If the move to be made can be found in the list of possible en passent moves
@@ -201,6 +201,23 @@ void Game::onClick(const int x, const int y) {
           selected.y = y + dy;
 
           // Let final location movement and potential double capture be handled by main code
+        }
+      }
+
+      // If selected piece is not empty and of type KING and castling is possible
+      if (const auto& k = dynamic_cast<King*>(board[selected.x][selected.y].get());
+        k != nullptr && k->getType() == KING && (k->isValidCastleKS || k->isValidCastleQS)) {
+        // If castle kingside coordinates equal current
+        if (auto [_x, _y] = k->castleKS; _x == x && _y == y) {
+          // Verified KS castle.
+          std::cout << ", castle KS";
+          movePiece(7, y, 5, y);
+
+          // If castle queenside coordinates equal current
+        } else if (auto [_x, _y] = k->castleQS; _x == x && _y == y) {
+          // Verified QS castle.
+          std::cout << ", castle QS";
+          movePiece(0, y, 3, y);
         }
       }
 
@@ -350,12 +367,12 @@ void Game::initializeGame() {
 
   // White pieces bottom row
   generatePiece(0, 0, ROOK, WHITE);
-  generatePiece(1, 0, KNIGHT, WHITE);
-  generatePiece(2, 0, BISHOP, WHITE);
-  generatePiece(3, 0, QUEEN, WHITE);
+  // generatePiece(1, 0, KNIGHT, WHITE);
+  // generatePiece(2, 0, BISHOP, WHITE);
+  // generatePiece(3, 0, QUEEN, WHITE);
   generatePiece(4, 0, KING, WHITE);
-  generatePiece(5, 0, BISHOP, WHITE);
-  generatePiece(6, 0, KNIGHT, WHITE);
+  // generatePiece(5, 0, BISHOP, WHITE);
+  // generatePiece(6, 0, KNIGHT, WHITE);
   generatePiece(7, 0, ROOK, WHITE);
 
 
@@ -505,9 +522,17 @@ bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor color) 
     for (const auto& piece : row) {
       // Check if the piece is not null and matches the specified color
       if (piece != nullptr && piece->getColor() == color) {
-        // Check if any attack position matches the valid attacks
-        for (const auto& attacks = piece->getValidAttacks();
-          const auto [_x, _y] : attacks) {
+        // For all attacks for this piece, check if the given position is vulnerable
+
+        // King's getValidMoves() makes a call to this function trough other functions.
+        // getValidAttacks() makes a call to getValidMoves();
+        // To avoid an infinite function loop,
+        // when the type is KING, we need to get all moves excluding castling
+        // This doesn't affect anything since you can't capture with castling anyways.
+        for (const auto& attacks = (piece->getType() == KING)
+                                     ? dynamic_cast<King*>(piece.get())->getValidMovesExclCastling()
+                                     : piece->getValidAttacks();
+             const auto [_x, _y] : attacks) {
           if (_x == x && _y == y) {
             // The position can be attacked
             return true;

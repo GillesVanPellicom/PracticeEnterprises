@@ -53,14 +53,15 @@ class Game final : public ChessWindow {
     bool doVisualizeThreatenedEnemy = false;
     bool doVisualizeThreatenedFriendly = false;
 
+  public:
+    // KEEP PUBLIC
+
+    // Board variable
+    std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8> board;
+
     // Booleans to keep track of current checks
     bool blackInCheck = false;
     bool whiteInCheck = false;
-
-  public:
-    // Board variable
-    // KEEP PUBLIC
-    std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8> board;
 
 
     // ╔════════════════════════════════════════╗
