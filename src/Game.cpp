@@ -361,9 +361,12 @@ void Game::initializeGame() {
   }
 
   // White pawn row
-  for (int i = 0; i < 8; ++i) {
-    generatePiece(i, 1, PAWN, WHITE);
-  }
+  // for (int i = 0; i < 8; ++i) {
+  //   generatePiece(i, 1, PAWN, WHITE);
+  // }
+
+  generatePiece(2, 1, ROOK, BLACK);
+
 
   // White pieces bottom row
   generatePiece(0, 0, ROOK, WHITE);
@@ -516,22 +519,14 @@ void Game::setSelected(const int x, const int y, const bool _isSelected) {
   }
 }
 
-bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor color) const {
+bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor attackerColor) const {
   // For entire board
   for (const auto& row : board) {
     for (const auto& piece : row) {
       // Check if the piece is not null and matches the specified color
-      if (piece != nullptr && piece->getColor() == color) {
+      if (piece != nullptr && piece->getColor() == attackerColor) {
         // For all attacks for this piece, check if the given position is vulnerable
-
-        // King's getValidMoves() makes a call to this function trough other functions.
-        // getValidAttacks() makes a call to getValidMoves();
-        // To avoid an infinite function loop,
-        // when the type is KING, we need to get all moves excluding castling
-        // This doesn't affect anything since you can't capture with castling anyways.
-        for (const auto& attacks = (piece->getType() == KING)
-                                     ? dynamic_cast<King*>(piece.get())->getValidMovesExclCastling()
-                                     : piece->getValidAttacks();
+        for (const auto& attacks = piece->getValidMoves();
              const auto [_x, _y] : attacks) {
           if (_x == x && _y == y) {
             // The position can be attacked

@@ -147,7 +147,14 @@ class Game final : public ChessWindow {
     [[nodiscard]] Coords& findKing(ChessPieceColor color);
 
 
-    [[nodiscard]] bool canBeAttacked(int x, int y, ChessPieceColor color) const;
+    /**
+     * Checks if a specific cell can be attacked by a specific color
+     * @param x x-coordinate of the cell
+     * @param y y-coordinate of the cell
+     * @param attackerColor Color of the attacking side
+     * @return
+     */
+    [[nodiscard]] bool canBeAttacked(int x, int y, ChessPieceColor attackerColor) const;
 
 
     // ╔════════════════════════════════════════╗
