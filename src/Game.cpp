@@ -168,7 +168,6 @@ void Game::onClick(const int x, const int y) {
 
     // Check potential move against list of actually valid moves for that piece
 
-
     // if an iterator is returned
     if (const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
       std::ranges::find_if(validMoves,
@@ -301,9 +300,9 @@ Coords& Game::findKing(const ChessPieceColor color) {
 
 void Game::showVisualizeMoves(const int x, const int y) {
   // For all moves
-  for (const auto& move : board[x][y]->getValidMoves()) {
+  for (const auto [_x, _y] : board[x][y]->getValidMoves()) {
     // Mark cell
-    markCellAs(move.x, move.y, POSSIBLE);
+    markCellAs(_x, _y, POSSIBLE);
   }
 }
 
@@ -508,8 +507,8 @@ bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor color) 
       if (piece != nullptr && piece->getColor() == color) {
         // Check if any attack position matches the valid attacks
         for (const auto& attacks = piece->getValidAttacks();
-          const auto& attack : attacks) {
-          if (attack.x == x && attack.y == y) {
+          const auto [_x, _y] : attacks) {
+          if (_x == x && _y == y) {
             // The position can be attacked
             return true;
           }
