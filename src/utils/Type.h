@@ -39,6 +39,16 @@ enum BoardMarkingType {
   POSSIBLE
 };
 
+enum DemoScenarioType {
+  NO_DEMO,
+  CHOOSE_SCENARIO,
+  MOVES,
+  EN_PASSENT,
+  PROMOTION,
+  CASTLING,
+  CHECKMATE
+};
+
 /**
  * @brief Coordinate datatype\n
  * @note Contains a custom hash function for use in hashed datatypes.

@@ -2,7 +2,7 @@
 // ║ Name         : Game.h                                                            ║
 // ║ Description  : Definitions of the chess game logic                               ║
 // ║ Author(s)    : "Gilles Van pellicom" <r0997008@student.thomasmore.be>            ║
-// ║ Date         : 2024/02/12                                                        ║                
+// ║ Date         : 2024/02/12                                                        ║
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
@@ -62,6 +62,11 @@ class Game final : public ChessWindow {
 
     std::vector<std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8> > boardHistory;
     unsigned int currentMove = 0;
+
+    // Demo mode
+    DemoScenarioType demoMode = NO_DEMO;
+
+    bool winConditionEnabled = true;
 
   public:
     // KEEP PUBLIC
@@ -207,6 +212,8 @@ class Game final : public ChessWindow {
      * if another simulation was already running.
      */
     void stopSimulation();
+
+    void setVariablesDefault();
 
 
     // ╔════════════════════════════════════════╗
@@ -412,6 +419,48 @@ class Game final : public ChessWindow {
                                             const std::string& subtext) override;
 
     ChessPieceType promotionBox() override;
+
+    // Demo
+
+
+    /**
+    * Triggered on menubar action demo/enable or disable.
+    * @note Handler function. Not to be called manually.
+    */
+    void onDemoEnableDisable() override;
+
+    /**
+    * Triggered on menubar action demo/scenario moves.
+    * @note Handler function. Not to be called manually.
+    */
+    void onDemoScenarioMoves() override;
+
+    /**
+    * Triggered on menubar action demo/scenario en passent.
+    * @note Handler function. Not to be called manually.
+    */
+    void onDemoScenarioEnPassent() override;
+
+    /**
+    * Triggered on menubar action demo/scenario promotion.
+    * @note Handler function. Not to be called manually.
+    */
+    void onDemoScenarioPromotion() override;
+
+    /**
+    * Triggered on menubar action demo/scenario castling.
+    * @note Handler function. Not to be called manually.
+    */
+    void onDemoScenarioCastling() override;
+
+    /**
+    * Triggered on menubar action demo/scenario checkmate.
+    * @note Handler function. Not to be called manually.
+    */
+    void onDemoScenarioCheckmate() override;
+
+
+    void initializeDemo();
 };
 
 #endif //PRACTICEENTERPRISES_GAME_H_

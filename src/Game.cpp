@@ -115,9 +115,7 @@ void Game::onVisualizeThreatenedEnemy() {
 
   // TODO: Place code to retrieve and display threatened enemy pieces here
 
-  if (promotionBox() == QUEEN) {
-    std::cout << "great success" << std::endl;
-  }
+  std::cout << "Promotion." << std::endl;
 }
 
 
@@ -228,40 +226,42 @@ void Game::onClick(const int x, const int y) {
       movePiece(selected.x, selected.y, x, y);
       setSelected(x, y, false);
 
-      // Check check
-      check();
+      if (winConditionEnabled) {
+        // Check check
+        check();
 
-      if (whiteInCheck) {
-        // Possible white checkmate
-        checkMate(WHITE);
-      }
-
-      if (blackInCheck) {
-        // Possible white checkmate
-        checkMate(BLACK);
-      }
-
-      check();
-
-      if (checkmate != NO_COLOR) {
-        // Confirmed checkmate
-        if (checkmate == WHITE) {
-          std::cout << ", checkmate (white)";
-        } else {
-          std::cout << ", checkmate (black)";
+        if (whiteInCheck) {
+          // Possible white checkmate
+          checkMate(WHITE);
         }
-        std::cout << std::endl;
 
-        refreshGui();
-        customMsgBox("Checkmate!", "Checkmate", "Someone won!");
-        return;
-      }
+        if (blackInCheck) {
+          // Possible white checkmate
+          checkMate(BLACK);
+        }
 
-      if (whiteInCheck) {
-        std::cout << ", check (white)";
-      }
-      if (blackInCheck) {
-        std::cout << ", check (black)";
+        check();
+
+        if (checkmate != NO_COLOR) {
+          // Confirmed checkmate
+          if (checkmate == WHITE) {
+            std::cout << ", checkmate (white)";
+          } else {
+            std::cout << ", checkmate (black)";
+          }
+          std::cout << std::endl;
+
+          refreshGui();
+          customMsgBox("Checkmate!", "Checkmate", "Someone won!");
+          return;
+        }
+
+        if (whiteInCheck) {
+          std::cout << ", check (white)";
+        }
+        if (blackInCheck) {
+          std::cout << ", check (black)";
+        }
       }
 
       // Switch turns
@@ -386,65 +386,40 @@ void Game::showVisualizeMoves(const int x, const int y) {
 
 void Game::initializeGame() {
   // Reset variables from previous iteration
-  currentTurn = WHITE;
+  setVariablesDefault();
 
-  isSelected = false;
-  selected = {-1, -1};
+  // Black pieces top row
+  generatePiece(0, 7, ROOK, BLACK);
+  generatePiece(1, 7, KNIGHT, BLACK);
+  generatePiece(2, 7, BISHOP, BLACK);
+  generatePiece(3, 7, QUEEN, BLACK);
+  generatePiece(4, 7, KING, BLACK);
+  generatePiece(5, 7, BISHOP, BLACK);
+  generatePiece(6, 7, KNIGHT, BLACK);
+  generatePiece(7, 7, ROOK, BLACK);
 
-  whiteKingPos = {4, 0};
-  blackKingPos = {4, 7};
-
-  blackInCheck = false;
-  whiteInCheck = false;
-
-  // Initialize board as nullptrs
-  // Skipping this step leads to undefined cross-platform behavior
-  for (auto& i : board) {
-    for (int j = 0; j < std::size(board[0]); ++j) {
-      i[j] = nullptr;
-    }
+  // Black pawn row
+  for (int i = 0; i < 8; ++i) {
+    generatePiece(i, 6, PAWN, BLACK);
   }
 
-  // // Black pieces top row
-  // generatePiece(0, 7, ROOK, BLACK);
-  // generatePiece(1, 7, KNIGHT, BLACK);
-  // generatePiece(2, 7, BISHOP, BLACK);
-  // generatePiece(3, 7, QUEEN, BLACK);
-  // generatePiece(4, 7, KING, BLACK);
-  // generatePiece(5, 7, BISHOP, BLACK);
-  // generatePiece(6, 7, KNIGHT, BLACK);
-  // generatePiece(7, 7, ROOK, BLACK);
-  //
-  // // Black pawn row
-  // for (int i = 0; i < 8; ++i) {
-  //   generatePiece(i, 6, PAWN, BLACK);
-  // }
-  //
-  // // White pawn row
-  // for (int i = 0; i < 8; ++i) {
-  //   generatePiece(i, 1, PAWN, WHITE);
-  // }
-  //
-  // generatePiece(2, 1, ROOK, BLACK);
-  //
-  //
-  // // White pieces bottom row
-  // generatePiece(0, 0, ROOK, WHITE);
-  // generatePiece(1, 0, KNIGHT, WHITE);
-  // generatePiece(2, 0, BISHOP, WHITE);
-  // generatePiece(3, 0, QUEEN, WHITE);
-  // generatePiece(4, 0, KING, WHITE);
-  // generatePiece(5, 0, BISHOP, WHITE);
-  // generatePiece(6, 0, KNIGHT, WHITE);
-  // generatePiece(7, 0, ROOK, WHITE);
+  // White pawn row
+  for (int i = 0; i < 8; ++i) {
+    generatePiece(i, 1, PAWN, WHITE);
+  }
+
+  generatePiece(2, 1, ROOK, BLACK);
 
 
-  generatePiece(4, 7, KING, BLACK);
-
-  generatePiece(5, 5, QUEEN, WHITE);
-  generatePiece(5, 2, BISHOP, WHITE);
-
+  // White pieces bottom row
+  generatePiece(0, 0, ROOK, WHITE);
+  generatePiece(1, 0, KNIGHT, WHITE);
+  generatePiece(2, 0, BISHOP, WHITE);
+  generatePiece(3, 0, QUEEN, WHITE);
   generatePiece(4, 0, KING, WHITE);
+  generatePiece(5, 0, BISHOP, WHITE);
+  generatePiece(6, 0, KNIGHT, WHITE);
+  generatePiece(7, 0, ROOK, WHITE);
 
 
   refreshGui();
@@ -461,6 +436,11 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
   switch (type) {
     case KING: {
       board[x][y] = std::make_shared<King>(type, color, *this, x, y);
+      if (color == WHITE) {
+        whiteKingPos = {x, y};
+      } else {
+        blackKingPos = {x, y};
+      }
       break;
     }
 
@@ -650,6 +630,34 @@ void Game::movePieceSimulated(const int x1, const int y1, const int x2, const in
 }
 
 
+void Game::setVariablesDefault() {
+  currentTurn = WHITE;
+
+  isSelected = false;
+  selected = {-1, -1};
+
+  whiteKingPos = {4, 0};
+  blackKingPos = {4, 7};
+
+  blackInCheck = false;
+  whiteInCheck = false;
+  checkmate = NO_COLOR;
+
+  currentMove = 0;
+
+  simulationActive = false;
+
+  demoMode = NO_DEMO;
+
+  // Initialize board as nullptrs
+  for (auto& col : board) {
+    for (int i = 0; i < std::size(board[0]); ++i) {
+      col[i] = nullptr;
+    }
+  }
+}
+
+
 // ╔════════════════════════════════════════╗
 // ║          Inherited Functions           ║
 // ╚════════════════════════════════════════╝
@@ -691,3 +699,163 @@ QMessageBox::StandardButton Game::yesNoMsgBox(const std::string& title,
 ChessPieceType Game::promotionBox() {
   return ChessWindow::promotionBox();
 }
+
+
+// ╔════════════════════════════════════════╗
+// ║                 Demo                   ║
+// ╚════════════════════════════════════════╝
+
+void Game::initializeDemo() {
+  clearGUI();
+  // Default variables
+  winConditionEnabled = false;
+  setVariablesDefault();
+};
+
+
+void Game::onDemoEnableDisable() {
+  if (demoMode != NO_DEMO) {
+    // Disable demo mode
+    changeDemoActionText("Start Demo");
+    setDemoScenariosVisibility(false);
+    // Reset GUI
+    clearGUI();
+    // Set all game variables back to default
+    initializeGame();
+    doVisualizeMoves = false;
+    winConditionEnabled = true;
+  } else {
+    if (yesNoMsgBox(
+      "Demo mode",
+      "Are you sure you want to enter demo mode?",
+      "All changes will be lost.") == QMessageBox::Ok) {
+      // Enable demo mode
+      changeDemoActionText("Stop Demo");
+      setDemoScenariosVisibility(true);
+
+      initializeDemo();
+      demoMode = CHOOSE_SCENARIO;
+      doVisualizeMoves = true;
+    }
+  }
+};
+
+
+void Game::onDemoScenarioMoves() {
+  initializeDemo();
+  demoMode = MOVES;
+  winConditionEnabled = false;
+  // scenario begin
+
+  generatePiece(0, 0, ROOK, WHITE);
+  generatePiece(1, 2, KNIGHT, WHITE);
+  generatePiece(2, 0, KING, WHITE);
+  generatePiece(3, 2, QUEEN, WHITE);
+  generatePiece(4, 0, BISHOP, WHITE);
+  generatePiece(5, 2, PAWN, WHITE);
+
+  generatePiece(3, 7, ROOK, BLACK);
+  generatePiece(2, 5, KNIGHT, BLACK);
+  generatePiece(5, 7, KING, BLACK);
+  generatePiece(4, 5, QUEEN, BLACK);
+  generatePiece(7, 7, BISHOP, BLACK);
+  generatePiece(6, 5, PAWN, BLACK);
+
+  // scenario end
+  refreshGui();
+};
+
+
+void Game::onDemoScenarioEnPassent() {
+  initializeDemo();
+  demoMode = EN_PASSENT;
+  winConditionEnabled = false;
+  // scenario begin
+
+  //FIXME
+  generatePiece(1, 4, PAWN, WHITE);
+  generatePiece(6, 4, PAWN, WHITE);
+  generatePiece(5, 4, BISHOP, WHITE);
+  generatePiece(0, 0, KING, WHITE);
+
+
+  generatePiece(0, 7, KING, BLACK);
+  generatePiece(0, 6, PAWN, BLACK);
+  generatePiece(4, 5, PAWN, BLACK);
+  generatePiece(5, 5, KNIGHT, BLACK);
+
+  // scenario end
+  refreshGui();
+};
+
+
+void Game::onDemoScenarioPromotion() {
+  initializeDemo();
+  demoMode = PROMOTION;
+  winConditionEnabled = false;
+  // scenario begin
+
+  generatePiece(1, 6, PAWN, WHITE);
+  generatePiece(3, 6, PAWN, WHITE);
+  generatePiece(5, 6, PAWN, WHITE);
+  generatePiece(7, 6, PAWN, WHITE);
+
+  board[1][6]->setHasMoved(true);
+  board[3][6]->setHasMoved(true);
+  board[5][6]->setHasMoved(true);
+  board[7][6]->setHasMoved(true);
+
+  generatePiece(0, 1, PAWN, BLACK);
+  generatePiece(2, 1, PAWN, BLACK);
+  generatePiece(4, 1, PAWN, BLACK);
+  generatePiece(6, 1, PAWN, BLACK);
+
+  board[0][1]->setHasMoved(true);
+  board[2][1]->setHasMoved(true);
+  board[4][1]->setHasMoved(true);
+  board[6][1]->setHasMoved(true);
+
+
+  // scenario end
+  refreshGui();
+};
+
+
+void Game::onDemoScenarioCastling() {
+  initializeDemo();
+  demoMode = CASTLING;
+  winConditionEnabled = false;
+  // scenario begin
+  generatePiece(0, 0, ROOK, WHITE);
+  generatePiece(7, 0, ROOK, WHITE);
+  generatePiece(4, 0, KING, WHITE);
+
+  generatePiece(1, 1, BISHOP, BLACK);
+  generatePiece(0, 7, ROOK, BLACK);
+  generatePiece(7, 7, ROOK, BLACK);
+  generatePiece(4, 7, KING, BLACK);
+
+  // scenario end
+  refreshGui();
+};
+
+
+void Game::onDemoScenarioCheckmate() {
+  initializeDemo();
+  demoMode = CHECKMATE;
+  winConditionEnabled = true;
+  // scenario begin
+  generatePiece(5, 1, PAWN, WHITE);
+  generatePiece(6, 1, PAWN, WHITE);
+  generatePiece(7, 1, PAWN, WHITE);
+  generatePiece(6, 0, KING, WHITE);
+  generatePiece(4, 4, ROOK, WHITE);
+
+  generatePiece(5, 6, PAWN, BLACK);
+  generatePiece(6, 6, PAWN, BLACK);
+  generatePiece(7, 6, PAWN, BLACK);
+  generatePiece(6, 7, KING, BLACK);
+
+  // scenario end
+  refreshGui();
+};
