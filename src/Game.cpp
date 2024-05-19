@@ -146,6 +146,11 @@ void Game::onVisualizeThreatenedFriendly() {
 // MouseClickEvent Handler
 
 void Game::onClick(const int x, const int y) {
+  // If game has ended don't handle clicks
+  if (checkmate != NO_COLOR) {
+    return;
+  }
+
   std::cout << "click: (" << x << ", " << y << ") => ";
   // Remove all markings from previous iteration
   removeAllMarkingsType(POSSIBLE);
@@ -197,8 +202,7 @@ void Game::onClick(const int x, const int y) {
           movePiece(selected.x, selected.y, x, y + dy);
 
           // Modify selected coordinates to reflect move
-          selected.x = x;
-          selected.y = y + dy;
+          selected = {x, y + dy};
 
           // Let final location movement and potential double capture be handled by main code
         }
@@ -226,6 +230,27 @@ void Game::onClick(const int x, const int y) {
 
       // Check check
       check();
+
+      if (whiteInCheck) {
+        // Possible white checkmate
+        std::cout << ", checkmate? (white)";
+
+        checkMate(WHITE);
+      }
+
+      if (blackInCheck) {
+        // Possible white checkmate
+        std::cout << ", checkmate? (black)";
+
+        checkMate(BLACK);
+      }
+
+      check();
+
+      if (checkmate != NO_COLOR) {
+        // Confirmed checkmate
+        customMsgBox("Checkmate!", "Checkmate", "Someone won!");
+      }
 
       if (whiteInCheck) {
         std::cout << ", check (white)";
@@ -283,6 +308,43 @@ void Game::check() {
   whiteInCheck = isAttackable(whiteKingPos.x, whiteKingPos.y, BLACK);
   blackInCheck = isAttackable(blackKingPos.x, blackKingPos.y, WHITE);
 }
+
+void Game::checkMate(const ChessPieceColor color) {
+  for (const auto& col : board) {
+    for (const auto& p : col) {
+      // Skip pieces of wrong color
+      if (p == nullptr || p->getColor() != color) {
+        continue;
+      }
+
+      const int x1 = p->getX();
+      const int y1 = p->getY();
+      for (const auto [x2, y2] : p->getValidMoves()) {
+          simulateMove(x1, y1, x2, y2);
+          check();
+          if ((color == WHITE && !whiteInCheck) || (color == BLACK && !blackInCheck)) {
+            // Escape possible
+            // Stop simulation
+            stopSimulation();
+            // Return check state to before simulation
+            check();
+            refreshGui();
+            std::cout << "Escape possible" << std::endl;
+
+            return;
+          }
+          stopSimulation();
+
+      }
+    }
+  }
+
+
+  std::cout << "No escape possible" << std::endl;
+  // No escape possible, color is in checkmate
+  checkmate = color;
+}
+
 
 
 bool Game::isAttackable(const int x, const int y, const ChessPieceColor attackerColor) {
@@ -345,38 +407,47 @@ void Game::initializeGame() {
     }
   }
 
-  // Black pieces top row
-  generatePiece(0, 7, ROOK, BLACK);
-  generatePiece(1, 7, KNIGHT, BLACK);
-  generatePiece(2, 7, BISHOP, BLACK);
-  generatePiece(3, 7, QUEEN, BLACK);
-  generatePiece(4, 7, KING, BLACK);
-  generatePiece(5, 7, BISHOP, BLACK);
-  generatePiece(6, 7, KNIGHT, BLACK);
-  generatePiece(7, 7, ROOK, BLACK);
-
-  // Black pawn row
-  for (int i = 0; i < 8; ++i) {
-    generatePiece(i, 6, PAWN, BLACK);
-  }
-
-  // White pawn row
+  // // Black pieces top row
+  // generatePiece(0, 7, ROOK, BLACK);
+  // generatePiece(1, 7, KNIGHT, BLACK);
+  // generatePiece(2, 7, BISHOP, BLACK);
+  // generatePiece(3, 7, QUEEN, BLACK);
+  // generatePiece(4, 7, KING, BLACK);
+  // generatePiece(5, 7, BISHOP, BLACK);
+  // generatePiece(6, 7, KNIGHT, BLACK);
+  // generatePiece(7, 7, ROOK, BLACK);
+  //
+  // // Black pawn row
+  // for (int i = 0; i < 8; ++i) {
+  //   generatePiece(i, 6, PAWN, BLACK);
+  // }
+  //
+  // // White pawn row
   // for (int i = 0; i < 8; ++i) {
   //   generatePiece(i, 1, PAWN, WHITE);
   // }
-
-  generatePiece(2, 1, ROOK, BLACK);
-
-
-  // White pieces bottom row
-  generatePiece(0, 0, ROOK, WHITE);
+  //
+  // generatePiece(2, 1, ROOK, BLACK);
+  //
+  //
+  // // White pieces bottom row
+  // generatePiece(0, 0, ROOK, WHITE);
   // generatePiece(1, 0, KNIGHT, WHITE);
   // generatePiece(2, 0, BISHOP, WHITE);
   // generatePiece(3, 0, QUEEN, WHITE);
-  generatePiece(4, 0, KING, WHITE);
+  // generatePiece(4, 0, KING, WHITE);
   // generatePiece(5, 0, BISHOP, WHITE);
   // generatePiece(6, 0, KNIGHT, WHITE);
-  generatePiece(7, 0, ROOK, WHITE);
+  // generatePiece(7, 0, ROOK, WHITE);
+
+
+  generatePiece(4, 7, KING, BLACK);
+
+  generatePiece(5, 5, QUEEN, WHITE);
+  generatePiece(5, 2, BISHOP, WHITE);
+
+  generatePiece(4, 0, KING, WHITE);
+
 
 
   refreshGui();
@@ -434,7 +505,6 @@ bool Game::generatePiece(const int x, const int y, const ChessPieceType type, co
 
 void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   ChessPiecePtr& current = board[x1][y1];
-  ChessPieceColor win = NO_COLOR;
 
   // If piece has not moved
   if (!current->getHasMoved()) {
@@ -448,7 +518,7 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
     // If piece captured is a king
     if (const ChessPiecePtr& p = board[x2][y2]; p->getType() == KING) {
       // Set win variable to appropriate side
-      win = p->getColor() == WHITE ? BLACK : WHITE;
+      checkmate = invertColor(p->getColor());
     }
     board[x2][y2].reset();
   }
@@ -481,11 +551,9 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   // Remember king position
   if (board[x2][y2]->getType() == KING) {
     if (board[x2][y2]->getColor() == WHITE) {
-      whiteKingPos.x = x2;
-      whiteKingPos.y = y2;
+      whiteKingPos = {x2, y2};
     } else {
-      blackKingPos.x = x2;
-      blackKingPos.y = y2;
+      blackKingPos = {x2, y2};
     }
   }
 
@@ -495,13 +563,6 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
 
   setChessItem(x2, y2, board[x2][y2]->getType(), board[x2][y2]->getColor());
 
-  // Game over
-  if (win != NO_COLOR) {
-    const std::string name = win == WHITE ? "White" : "Black";
-    customMsgBox("Checkmate", "Checkmate", name + " is the winner");
-    clearGUI();
-    initializeGame();
-  }
 }
 
 
@@ -509,13 +570,13 @@ void Game::setSelected(const int x, const int y, const bool _isSelected) {
   if (_isSelected) {
     markCellAs(x, y, SELECTED);
     this->isSelected = true;
-    selected.x = x;
-    selected.y = y;
+    selected = {x, y};
+
   } else {
     removeAllMarkingsType(SELECTED);
     this->isSelected = false;
-    selected.x = -1;
-    selected.y = -1;
+    selected = {-1, -1};
+
   }
 }
 
@@ -526,7 +587,15 @@ bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor attacke
       // Check if the piece is not null and matches the specified color
       if (piece != nullptr && piece->getColor() == attackerColor) {
         // For all attacks for this piece, check if the given position is vulnerable
-        for (const auto& attacks = piece->getValidMoves();
+
+        // King's getValidMoves() makes a call to this function trough other functions.
+        // getValidAttacks() makes a call to getValidMoves();
+        // To avoid an infinite function loop,
+        // when the type is KING, we need to get all moves excluding castling
+        // This doesn't affect anything since you can't capture with castling anyways.
+        for (const auto& attacks = (piece->getType() == KING)
+                                     ? dynamic_cast<King*>(piece.get())->getValidMovesExclCastling()
+                                     : piece->getValidMoves();
              const auto [_x, _y] : attacks) {
           if (_x == x && _y == y) {
             // The position can be attacked
@@ -541,7 +610,49 @@ bool Game::canBeAttacked(const int x, const int y, const ChessPieceColor attacke
 }
 
 void Game::takeBoardSnapshot() {
+}
 
+void Game::simulateMove(const int x1, const int y1, const int x2, const int y2) {
+  // If a previous simulation is active, stop.
+  if (simulationActive) {
+    stopSimulation();
+  }
+  movePieceSimulated(x1, y1, x2, y2);
+}
+
+void Game::stopSimulation() {
+  if (!simulationActive) return;
+
+  // Revert move based on saved data
+  movePieceSimulated(simCoords2.x, simCoords2.y, simCoords1.x, simCoords1.y);
+  // Return captured piece from limbo if applicable
+  if (simulationLimbo != nullptr) {
+    board[simulationLimboCoords.x][simulationLimboCoords.y] = std::move(simulationLimbo);
+  }
+  // Mark simulation as inactive
+  simulationActive = false;
+}
+
+void Game::movePieceSimulated(const  int x1, const int y1, const int x2, const int y2) {
+  simulationActive = true;
+
+  // Save state for revert
+  simCoords1 = {x1, y1};
+  simCoords2 = {x2, y2};
+
+  // If move is capture
+  if (board[x2][y2] != nullptr) {
+    // Save piece to limbo
+    simulationLimbo = std::move(board[x2][y2]);
+    simulationLimboCoords = {x2, y2};
+  }
+
+  board[x2][y2] = std::move(board[x1][y1]);
+  board[x1][y1] = nullptr;
+
+  // Make piece aware of its own position
+  board[x2][y2]->setX(x2);
+  board[x2][y2]->setY(y2);
 }
 
 

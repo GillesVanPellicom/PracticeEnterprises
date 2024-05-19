@@ -53,8 +53,15 @@ class Game final : public ChessWindow {
     bool doVisualizeThreatenedEnemy = false;
     bool doVisualizeThreatenedFriendly = false;
 
-   std::vector<std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8>> boardHistory;
-   unsigned int currentMove = 0;
+    // Simulation variables
+    bool simulationActive = false;
+    Coords simCoords1 = {-1, -1};
+    Coords simCoords2 = {-1, -1};
+    std::shared_ptr<ChessPiece> simulationLimbo;
+    Coords simulationLimboCoords = {-1, -1};
+
+    std::vector<std::array<std::array<std::shared_ptr<ChessPiece>, 8>, 8> > boardHistory;
+    unsigned int currentMove = 0;
 
   public:
     // KEEP PUBLIC
@@ -65,6 +72,8 @@ class Game final : public ChessWindow {
     // Booleans to keep track of current checks
     bool blackInCheck = false;
     bool whiteInCheck = false;
+
+    ChessPieceColor checkmate = NO_COLOR;
 
 
     // ╔════════════════════════════════════════╗
@@ -135,6 +144,8 @@ class Game final : public ChessWindow {
      */
     void check();
 
+    void checkMate(ChessPieceColor color);
+
     /**
      * Inverts a color. Eg. BLACK => WHITE and WHITE => BLACK
      * @param color Color to be inverted
@@ -164,6 +175,22 @@ class Game final : public ChessWindow {
      * Increments moveCounter by 1;
      */
     void takeBoardSnapshot();
+
+    /**
+     * 
+     * @param x1 
+     * @param y1 
+     * @param x2 
+     * @param y2 
+     */
+    void simulateMove(int x1, int y1, int x2, int y2);
+
+    void simulateMovePiece();
+
+    void movePieceSimulated(int x1, int y1, int x2, int y2);
+
+
+    void stopSimulation();
 
 
     // ╔════════════════════════════════════════╗

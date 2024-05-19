@@ -60,7 +60,7 @@ class ChessPiece {
     [[nodiscard]] ChessPieceType getType() const;
     [[nodiscard]] ChessPieceColor getColor() const;
 
-    bool isValidMove(int x, int y) const;
+    [[nodiscard]] bool isValidMove(int x, int y) const;
 
     void setHasMoved(bool hasMoved);
     [[nodiscard]] bool getHasMoved() const;

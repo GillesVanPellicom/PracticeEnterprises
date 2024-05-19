@@ -42,9 +42,6 @@ std::vector<Coords> King::getValidMoves() {
   isValidCastleKS = false;
   isValidCastleQS = false;
 
-  // Row 0 for white, 7 for black
-  const int row = color == WHITE ? 0 : 7;
-
   // If king has moved or king is in check
   if (hasMoved ||
     (getInstance().blackInCheck && color == BLACK) || (getInstance().whiteInCheck && color == WHITE)) {
@@ -56,7 +53,7 @@ std::vector<Coords> King::getValidMoves() {
   // for left and right rook cells
   for (const int col : {0, 7}) {
     // If current cell is empty or current piece isn't a rook or current piece has moved
-    if (const auto& curr = board[col][row];
+    if (const auto& curr = board[col][y];
       curr == nullptr || curr->getType() != ROOK || curr->getHasMoved()) {
       // Next iteration
       continue;
@@ -70,7 +67,7 @@ std::vector<Coords> King::getValidMoves() {
     bool lineChecksPassed = true;
     for (int i = 4 + dx; i > 0 && i < 7; i += dx) {
       // Check line of sight
-      if (board[i][row] != nullptr) {
+      if (board[i][y] != nullptr) {
         // Line of sight not clear
         lineChecksPassed = false;
         break;
@@ -78,7 +75,7 @@ std::vector<Coords> King::getValidMoves() {
 
       // Check pass trough check
       if (const ChessPieceColor attackingColor = color == WHITE ? BLACK : WHITE;
-        getInstance().canBeAttacked(i, row, attackingColor)) {
+        getInstance().canBeAttacked(i, y, attackingColor)) {
         // Pass trough check
         lineChecksPassed = false;
         break;
@@ -92,18 +89,18 @@ std::vector<Coords> King::getValidMoves() {
     // Castling possible
     // Move is always one before rook
     const int newCol = col == 0 ? 2 : 6;
-    moves.emplace_back(newCol, row);
+    moves.emplace_back(newCol, y);
 
     // Set castling variable for move function
 
     if (col == 0) {
       // Left side or queenside
       isValidCastleQS = true;
-      castleQS = {newCol, row};
+      castleQS = {newCol, y};
     } else {
       // Right side or kingside
       isValidCastleKS = true;
-      castleKS = {newCol, row};
+      castleKS = {newCol, y};
     }
   }
 

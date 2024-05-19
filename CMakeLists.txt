@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 26)
 add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
 
+# Flags
 set(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror")
 
 # Qt6
