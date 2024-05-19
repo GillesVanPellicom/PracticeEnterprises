@@ -177,19 +177,35 @@ class Game final : public ChessWindow {
     void takeBoardSnapshot();
 
     /**
-     * 
-     * @param x1 
-     * @param y1 
-     * @param x2 
-     * @param y2 
+     * Moves a piece on the board for sake of simulation.
+     * Only one movement can be made per simulation.
+     * If this function is called while another simulation is active,
+     * deactivate that simulation first.
+     * After this function has been called at least once,
+     * call stopSimulation() to return the game to it's original state.
+     * @param x1 x-coordinate of the origin
+     * @param y1 y-coordinate of the origin
+     * @param x2 x-coordinate of the destinaiton
+     * @param y2 y-coordinate of the destination
      */
     void simulateMove(int x1, int y1, int x2, int y2);
 
-    void simulateMovePiece();
-
+    /**
+     * Helper function for simulation functions.
+     * Moves a piece irregardless of validity.
+     * Saves data so move can be reverted.
+     * @param x1 x-coordinate of the origin
+     * @param y1 y-coordinate of the origin
+     * @param x2 x-coordinate of the destinaiton
+     * @param y2 y-coordinate of the destination
+     */
     void movePieceSimulated(int x1, int y1, int x2, int y2);
 
-
+    /**
+     * Returns the game to it's origingal state after a simulation.
+     * This function get's called automatically by simulateMove()
+     * if another simulation was already running.
+     */
     void stopSimulation();
 
 

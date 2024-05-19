@@ -233,15 +233,11 @@ void Game::onClick(const int x, const int y) {
 
       if (whiteInCheck) {
         // Possible white checkmate
-        std::cout << ", checkmate? (white)";
-
         checkMate(WHITE);
       }
 
       if (blackInCheck) {
         // Possible white checkmate
-        std::cout << ", checkmate? (black)";
-
         checkMate(BLACK);
       }
 
@@ -249,7 +245,16 @@ void Game::onClick(const int x, const int y) {
 
       if (checkmate != NO_COLOR) {
         // Confirmed checkmate
+        if (checkmate == WHITE) {
+          std::cout << ", checkmate (white)";
+        } else {
+          std::cout << ", checkmate (black)";
+        }
+        std::cout << std::endl;
+
+        refreshGui();
         customMsgBox("Checkmate!", "Checkmate", "Someone won!");
+        return;
       }
 
       if (whiteInCheck) {
@@ -313,28 +318,23 @@ void Game::checkMate(const ChessPieceColor color) {
   for (const auto& col : board) {
     for (const auto& p : col) {
       // Skip pieces of wrong color
-      if (p == nullptr || p->getColor() != color) {
-        continue;
-      }
+      if (p == nullptr || p->getColor() != color) continue;
 
-      const int x1 = p->getX();
-      const int y1 = p->getY();
       for (const auto [x2, y2] : p->getValidMoves()) {
-          simulateMove(x1, y1, x2, y2);
-          check();
-          if ((color == WHITE && !whiteInCheck) || (color == BLACK && !blackInCheck)) {
-            // Escape possible
-            // Stop simulation
-            stopSimulation();
-            // Return check state to before simulation
-            check();
-            refreshGui();
-            std::cout << "Escape possible" << std::endl;
-
-            return;
-          }
+        simulateMove(p->getX(), p->getY(), x2, y2);
+        check();
+        if ((color == WHITE && !whiteInCheck) || (color == BLACK && !blackInCheck)) {
+          // Escape possible
+          // Stop simulation
           stopSimulation();
+          // Return check state to before simulation
+          check();
+          refreshGui();
+          std::cout << "Escape possible" << std::endl;
 
+          return;
+        }
+        stopSimulation();
       }
     }
   }
@@ -346,21 +346,19 @@ void Game::checkMate(const ChessPieceColor color) {
 }
 
 
-
 bool Game::isAttackable(const int x, const int y, const ChessPieceColor attackerColor) {
   // For the entire board
-  for (const auto& i : board) {
-    for (const auto& j : i) {
-      // If current cell is not empty and is an attacker
-      if (j != nullptr && j->getColor() == attackerColor) {
-        // Generate it's valid moves and see if one of these moves is a check, if so return true
-        if (const auto moves = j->getValidMoves();
-          std::ranges::any_of(moves,
-                              [&](const auto& move) {
-                                return move.x == x && move.y == y;
-                              })) {
-          return true;
-        }
+  for (const auto& col : board) {
+    for (const auto& p : col) {
+      // If current cell empty or piece color not attackerCollor, continue.
+      if (p == nullptr || p->getColor() != attackerColor) continue;
+      // Generate it's valid moves and see if one of these moves is a check, if so return true
+      if (const auto moves = p->getValidMoves();
+        std::ranges::any_of(moves,
+                            [&](const auto& move) {
+                              return move.x == x && move.y == y;
+                            })) {
+        return true;
       }
     }
   }
@@ -447,7 +445,6 @@ void Game::initializeGame() {
   generatePiece(5, 2, BISHOP, WHITE);
 
   generatePiece(4, 0, KING, WHITE);
-
 
 
   refreshGui();
@@ -562,7 +559,6 @@ void Game::movePiece(const int x1, const int y1, const int x2, const int y2) {
   setChessItem(x2, y2, EMPTY, NO_COLOR);
 
   setChessItem(x2, y2, board[x2][y2]->getType(), board[x2][y2]->getColor());
-
 }
 
 
@@ -571,12 +567,10 @@ void Game::setSelected(const int x, const int y, const bool _isSelected) {
     markCellAs(x, y, SELECTED);
     this->isSelected = true;
     selected = {x, y};
-
   } else {
     removeAllMarkingsType(SELECTED);
     this->isSelected = false;
     selected = {-1, -1};
-
   }
 }
 
@@ -633,7 +627,7 @@ void Game::stopSimulation() {
   simulationActive = false;
 }
 
-void Game::movePieceSimulated(const  int x1, const int y1, const int x2, const int y2) {
+void Game::movePieceSimulated(const int x1, const int y1, const int x2, const int y2) {
   simulationActive = true;
 
   // Save state for revert
@@ -654,7 +648,6 @@ void Game::movePieceSimulated(const  int x1, const int y1, const int x2, const i
   board[x2][y2]->setX(x2);
   board[x2][y2]->setY(y2);
 }
-
 
 
 // ╔════════════════════════════════════════╗

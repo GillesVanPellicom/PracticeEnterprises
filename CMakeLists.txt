@@ -1,24 +1,24 @@
 cmake_minimum_required(VERSION 3.28)
 project(chess)
 
-set(CMAKE_CXX_STANDARD 26)
+# C++ Standard
+set(CMAKE_CXX_STANDARD 26)  # Use C++26 for modern features
 
 # ASAN
 add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
 
-# Flags
-set(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror")
+# Compiler Flags
+set(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror")  # Strict warnings and errors
 
-# Qt6
+# Qt6 Integration
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
-# Source file
+# Source Files
 set(SOURCE_FILES src/main.cpp
         src/gui/ChessWindow.cpp
         src/gui/ChessWindow.h
@@ -44,11 +44,12 @@ set(SOURCE_FILES src/main.cpp
         src/chessPiece/rook/Rook.cpp
         src/chessPiece/rook/Rook.h
 )
+
+# Executable Creation
 add_executable(chess ${SOURCE_FILES})
 
-# More Qt stuff
+# Link with Qt Libraries
 target_link_libraries(chess
         Qt::Core
         Qt6::Widgets
 )
-
