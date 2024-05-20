@@ -221,23 +221,23 @@ void ChessScene::setCellMarkedSelected(int x, int y) {
   if (!(selected.x == x && selected.y == y)) {
     // Check if this operation will override a marking of lower precedence.
     // Remember the marking to be overwritten
-    inactiveMarking = {{x, y}, markings[x][y]};
+      inactiveMarking = {{x, y}, markings[x][y]};
 
 
     // Mark cell as selected.
-    selected.x = x;
-    selected.y = y;
+    selected = {x, y};
     markings[x][y] = SELECTED;
-  } else {
-    selected.x = -1;
-    selected.y = -1;
   }
 }
 
 
 void ChessScene::removeCellMarkedSelected() {
+
   const Coords c = inactiveMarking.first;
   markings[c.x][c.y] = inactiveMarking.second;
+  isInactiveMarkingUsed = false;
+  inactiveMarking = {{-1, -1}, NONE};
+  selected = {-1, -1};
 }
 
 
