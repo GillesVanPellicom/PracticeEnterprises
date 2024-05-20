@@ -244,23 +244,25 @@ void Game::onClick(const int x, const int y) {
 
         if (checkmate != NO_COLOR) {
           // Confirmed checkmate
+          std::cout << ", checkmate ";
           if (checkmate == WHITE) {
-            std::cout << ", checkmate (white)";
+            std::cout << "(white)";
           } else {
-            std::cout << ", checkmate (black)";
+            std::cout << "(black)";
           }
           std::cout << std::endl;
 
           refreshGui();
-          customMsgBox("Checkmate!", "Checkmate", "Someone won!");
+          customMsgBox("Checkmate", "Checkmate", checkmate == WHITE ? "Black won" : "White won");
           return;
         }
 
+        std::cout << ", check ";
         if (whiteInCheck) {
-          std::cout << ", check (white)";
+          std::cout << "(white)";
         }
         if (blackInCheck) {
-          std::cout << ", check (black)";
+          std::cout << "(black)";
         }
       }
 
@@ -319,10 +321,10 @@ void Game::checkMate(const ChessPieceColor color) {
     for (const auto& p : col) {
       // Skip pieces of wrong color
       if (p == nullptr || p->getColor() != color) continue;
-
       for (const auto [x2, y2] : p->getValidMoves()) {
         simulateMove(p->getX(), p->getY(), x2, y2);
         check();
+
         if ((color == WHITE && !whiteInCheck) || (color == BLACK && !blackInCheck)) {
           // Escape possible
           // Stop simulation
@@ -330,7 +332,6 @@ void Game::checkMate(const ChessPieceColor color) {
           // Return check state to before simulation
           check();
           refreshGui();
-          std::cout << "Escape possible" << std::endl;
 
           return;
         }
@@ -339,8 +340,6 @@ void Game::checkMate(const ChessPieceColor color) {
     }
   }
 
-
-  std::cout << "No escape possible" << std::endl;
   // No escape possible, color is in checkmate
   checkmate = color;
 }
@@ -627,6 +626,15 @@ void Game::movePieceSimulated(const int x1, const int y1, const int x2, const in
   // Make piece aware of its own position
   board[x2][y2]->setX(x2);
   board[x2][y2]->setY(y2);
+
+  if (const auto& k = dynamic_cast<King*>(board[x2][y2].get());
+    k != nullptr && k->getType() == KING) {
+    if (k->getColor() == WHITE) {
+      whiteKingPos = {x2, y2};
+    } else {
+      blackKingPos = {x2, y2};
+    }
+  }
 }
 
 
@@ -773,16 +781,11 @@ void Game::onDemoScenarioEnPassent() {
   // scenario begin
 
   //FIXME
-  generatePiece(1, 4, PAWN, WHITE);
-  generatePiece(6, 4, PAWN, WHITE);
-  generatePiece(5, 4, BISHOP, WHITE);
-  generatePiece(0, 0, KING, WHITE);
+  generatePiece(3, 1, PAWN, WHITE);
 
+  generatePiece(4, 3, PAWN, BLACK);
+  board[4][3]->setHasMoved(true);
 
-  generatePiece(0, 7, KING, BLACK);
-  generatePiece(0, 6, PAWN, BLACK);
-  generatePiece(4, 5, PAWN, BLACK);
-  generatePiece(5, 5, KNIGHT, BLACK);
 
   // scenario end
   refreshGui();
@@ -799,7 +802,6 @@ void Game::onDemoScenarioPromotion() {
   generatePiece(3, 6, PAWN, WHITE);
   generatePiece(5, 6, PAWN, WHITE);
   generatePiece(7, 6, PAWN, WHITE);
-
   board[1][6]->setHasMoved(true);
   board[3][6]->setHasMoved(true);
   board[5][6]->setHasMoved(true);
@@ -809,7 +811,6 @@ void Game::onDemoScenarioPromotion() {
   generatePiece(2, 1, PAWN, BLACK);
   generatePiece(4, 1, PAWN, BLACK);
   generatePiece(6, 1, PAWN, BLACK);
-
   board[0][1]->setHasMoved(true);
   board[2][1]->setHasMoved(true);
   board[4][1]->setHasMoved(true);
@@ -829,8 +830,9 @@ void Game::onDemoScenarioCastling() {
   generatePiece(0, 0, ROOK, WHITE);
   generatePiece(7, 0, ROOK, WHITE);
   generatePiece(4, 0, KING, WHITE);
+  generatePiece(2, 7, KNIGHT, WHITE);
 
-  generatePiece(1, 1, BISHOP, BLACK);
+  generatePiece(5, 4, BISHOP, BLACK);
   generatePiece(0, 7, ROOK, BLACK);
   generatePiece(7, 7, ROOK, BLACK);
   generatePiece(4, 7, KING, BLACK);
@@ -845,12 +847,13 @@ void Game::onDemoScenarioCheckmate() {
   demoMode = CHECKMATE;
   winConditionEnabled = true;
   // scenario begin
-  generatePiece(5, 1, PAWN, WHITE);
-  generatePiece(6, 1, PAWN, WHITE);
-  generatePiece(7, 1, PAWN, WHITE);
-  generatePiece(6, 0, KING, WHITE);
+  generatePiece(0, 0, KING, WHITE);
   generatePiece(4, 4, ROOK, WHITE);
+  generatePiece(3, 7, BISHOP, WHITE);
 
+
+  generatePiece(2, 7, QUEEN, BLACK);
+  generatePiece(0, 7, ROOK, BLACK);
   generatePiece(5, 6, PAWN, BLACK);
   generatePiece(6, 6, PAWN, BLACK);
   generatePiece(7, 6, PAWN, BLACK);
