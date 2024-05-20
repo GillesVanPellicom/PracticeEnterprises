@@ -1,7 +1,5 @@
 # Practice enterprises - Chess project
 
-Made by Bert Schenkelaars & Gilles Van pellicom
-
 ## Build requirements
 - Linux environement
 - Qt 6
