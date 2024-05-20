@@ -6,10 +6,11 @@
 // ║ License      : GPL-3.0                                                           ║
 // ╚══════════════════════════════════════════════════════════════════════════════════╝
 
-#include <iostream>
 
 #ifndef CHESS_SRC_UTILS_TYPE_H_
 #define CHESS_SRC_UTILS_TYPE_H_
+
+#include <iostream>
 
 /**
  * @brief Collection of datatypes used in the project
