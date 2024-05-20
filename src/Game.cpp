@@ -24,9 +24,9 @@ Game::Game() {
 // MenuBar
 void Game::onFileQuit() {
   // TODO: Handle all option branches
-  QMessageBox::StandardButton returnValue = saveQuitMsgBox();
 
-  if (returnValue == QMessageBox::Save) {
+  if (QMessageBox::StandardButton returnValue = saveQuitMsgBox();
+    returnValue == QMessageBox::Save) {
     // User clicked Save
     std::cout << "Save clicked" << std::endl;
   } else if (returnValue == QMessageBox::Discard) {
@@ -195,7 +195,6 @@ void Game::onClick(const int x, const int y) {
 
           // Movement goes down for white, up for black.
           const int dy = p->getColor() == WHITE ? -1 : 1;
-
           // Special case, take piece under or above location to be moved to
           movePiece(selected.x, selected.y, x, y + dy);
 
@@ -257,14 +256,14 @@ void Game::onClick(const int x, const int y) {
           return;
         }
 
-        std::cout << ", check ";
         if (whiteInCheck) {
-          std::cout << "(white)";
+          std::cout << ", \u001b[31mcheck (white)";
         }
         if (blackInCheck) {
-          std::cout << "(black)";
+          std::cout << ", \u001b[31mcheck (black)";
         }
       }
+      std::cout << "\u001b[0m";
 
       // Switch turns
       currentTurn = (currentTurn == WHITE) ? BLACK : WHITE;
