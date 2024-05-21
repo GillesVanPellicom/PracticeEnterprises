@@ -174,8 +174,9 @@ void Game::onClick(const int x, const int y) {
     // if an iterator is returned
     if (const auto& validMoves = board[selected.x][selected.y]->getValidMoves();
       std::ranges::find_if(validMoves,
-                           [x, y](const auto& move) {
-                             return move.x == x && move.y == y;
+                           [&](const auto& move) {
+                             return move.x == x && move.y == y &&
+                               (board[x][y] == nullptr || board[x][y]->getType() != KING);
                            }) != validMoves.end()) {
       // confirmed move
       std::cout << "move";
