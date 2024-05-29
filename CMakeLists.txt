@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 3.28)
 project(chess)
 
 # C++ Standard
-set(CMAKE_CXX_STANDARD 26)  # Use C++26 for modern features
+set(CMAKE_CXX_STANDARD 26)
 
 # ASAN
 add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
 
 # Compiler Flags
-set(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror")  # Strict warnings and errors
+set(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror -Ofast")
 
 # Qt6 Integration
 set(CMAKE_AUTOMOC ON)
